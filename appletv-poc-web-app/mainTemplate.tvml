@@ -1,0 +1,15 @@
+<document>
+  <catalogTemplate>
+
+    <banner>
+      <title>My Videos</title>
+    </banner>
+
+    <list>
+      <section id="playlists">
+      </section>
+    </list>
+
+  </catalogTemplate>
+
+</document>
