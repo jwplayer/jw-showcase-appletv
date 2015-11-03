@@ -1,0 +1,9 @@
+<listItemLockup>
+  <title><![CDATA[${list_title}]]></title>
+    <relatedContent>
+      <grid>
+        <section>
+        </section>
+      </grid>
+    </relatedContent>
+</listItemLockup>

@@ -1,0 +1,4 @@
+<lockup>
+    <img height="168" src="${itemObj.artworkImageURL}" width="300"/>
+    <title><![CDATA[${itemObj.title}]]></title>
+</lockup>

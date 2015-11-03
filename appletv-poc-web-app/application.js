@@ -1,11 +1,12 @@
 var appOptions;
+var templates;
 
 /** Load an XML document and send it to a handler **/
 function getDocument(url, callback) {
     var templateXHR = new XMLHttpRequest();
     templateXHR.responseType = "document";
     templateXHR.addEventListener("load", function() {
-                                 callback(templateXHR.responseXML);
+                                 callback(templateXHR.responseXML, templateXHR.responseText);
                                  }, false);
     templateXHR.open("GET", url, true);
     templateXHR.send();
@@ -80,25 +81,30 @@ function parseItem(itemXML) {
   return newItem;
 }
 
+function getTemplates() {
+  templates = {};
+
+  getDocument(appOptions.baseURL + "/playlistTemplate.tvml",
+    function(xml, templateString) {
+      templates.list = templateString;
+    }
+  );
+
+  getDocument(appOptions.baseURL + "/playlistItemTemplate.tvml",
+    function(xml, templateString) {
+      templates.item = templateString;
+    }
+  );
+}
+
 /** Playlist template **/
 function playlistTemplate(list_title) {
-  return `<listItemLockup>
-    <title><![CDATA[${list_title}]]></title>
-      <relatedContent>
-        <grid>
-          <section>
-          </section>
-        </grid>
-      </relatedContent>
-  </listItemLockup>`;
+  return eval("`"+templates.list+"`");
 }
 
 /** Playlist item template **/
 function playlistItemTemplate(itemObj) {
-  return `<lockup>
-      <img height="168" src="${itemObj.artworkImageURL}" width="300"/>
-      <title><![CDATA[${itemObj.title}]]></title>
-    </lockup>`;
+  return eval("`"+templates.item+"`");
 }
 
 /** Apply playlist template to the playlist object and insert it into the DOM **/
@@ -146,4 +152,6 @@ App.onLaunch = function(options) {
   appOptions = options;
   appOptions.baseURL = options.location.split("/").slice(0, -1).join("/");
   getDocument(appOptions.baseURL + "/mainTemplate.tvml", pushDoc);
+
+  getTemplates();
 }
