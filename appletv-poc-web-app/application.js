@@ -16,10 +16,6 @@ function getDocument(url, callback) {
 /** Adds the root interface to the document stack **/
 function pushDoc(document) {
   navigationDocument.pushDocument(document);
-
-  // Load a couple of playlists
-  loadPlaylist("cKF0NRAt");
-  loadPlaylist("1AxTdxJn");
 }
 
 /** Load an mRSS XML feed **/
@@ -60,7 +56,6 @@ function parsePlaylist(playlistXML) {
   }
 
   addPlaylist(newPlaylist);
-
 }
 
 /** Parse an mRSS item tag and return it in a TVJS MediaItem format **/
@@ -154,4 +149,8 @@ App.onLaunch = function(options) {
   getDocument(appOptions.baseURL + "/mainTemplate.tvml", pushDoc);
 
   getTemplates();
+
+  // Load a couple of playlists
+  loadPlaylist("cKF0NRAt");
+  loadPlaylist("1AxTdxJn");
 }
