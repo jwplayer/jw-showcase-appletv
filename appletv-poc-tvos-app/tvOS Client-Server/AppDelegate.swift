@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
         
         let appControllerContext = TVApplicationControllerContext()
         
-        let javascriptURL = NSURL(string: "http://localhost/tvos/application.js")
+        let javascriptURL = NSURL(string: "http://localhost/appletv/appletv-poc-web-app/application.js")
         
         appControllerContext.javaScriptApplicationURL = javascriptURL!
         

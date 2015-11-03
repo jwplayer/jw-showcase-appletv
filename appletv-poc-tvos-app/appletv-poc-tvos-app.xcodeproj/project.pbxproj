@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6E566F801BE3BC5B00CCB4DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E566F7F1BE3BC5B00CCB4DC /* AppDelegate.swift */; };
 		6E566F871BE3BC5B00CCB4DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E566F861BE3BC5B00CCB4DC /* Assets.xcassets */; };
-		6E566F941BE3C9D000CCB4DC /* tvos in Resources */ = {isa = PBXBuildFile; fileRef = 6E566F931BE3C9D000CCB4DC /* tvos */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,7 +16,6 @@
 		6E566F7F1BE3BC5B00CCB4DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E566F861BE3BC5B00CCB4DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E566F881BE3BC5B00CCB4DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6E566F931BE3C9D000CCB4DC /* tvos */ = {isa = PBXFileReference; lastKnownFileType = folder; name = tvos; path = ../../../../Dev/tvos; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +50,6 @@
 			children = (
 				6E566F7F1BE3BC5B00CCB4DC /* AppDelegate.swift */,
 				6E566F861BE3BC5B00CCB4DC /* Assets.xcassets */,
-				6E566F931BE3C9D000CCB4DC /* tvos */,
 				6E566F881BE3BC5B00CCB4DC /* Info.plist */,
 			);
 			name = "appletv-poc-tvos-app";
@@ -117,7 +114,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E566F941BE3C9D000CCB4DC /* tvos in Resources */,
 				6E566F871BE3BC5B00CCB4DC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
