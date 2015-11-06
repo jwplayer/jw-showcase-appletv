@@ -18,6 +18,15 @@ function pushDoc(document) {
   navigationDocument.pushDocument(document);
 }
 
+/** Load playlists specified in application's Info.plist **/
+function loadPlaylists() {
+  if (appOptions.playlists instanceof Array) {
+    appOptions.playlists.forEach(function(playlist) {
+      loadPlaylist(playlist);
+    });
+  }
+}
+
 /** Load an mRSS XML feed **/
 function loadPlaylist(list_id) {
   getDocument("http://content.jwplatform.com/feeds/"+list_id+".rss", parsePlaylist);
@@ -94,6 +103,7 @@ function getTemplates() {
 
 /** Playlist template **/
 function playlistTemplate(list_title) {
+  /** Using eval to apply string template to tags loaded in the markup **/
   return eval("`"+templates.list+"`");
 }
 
@@ -150,7 +160,5 @@ App.onLaunch = function(options) {
 
   getTemplates();
 
-  // Load a couple of playlists
-  loadPlaylist("cKF0NRAt");
-  loadPlaylist("1AxTdxJn");
+  loadPlaylists();
 }

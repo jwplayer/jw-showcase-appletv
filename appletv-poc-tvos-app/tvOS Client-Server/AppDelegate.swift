@@ -15,10 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     var window: UIWindow?
     var appController: TVApplicationController?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        let infoBundle = NSBundle.mainBundle()
         
         let appControllerContext = TVApplicationControllerContext()
         
@@ -33,6 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
                 }
             }
         }
+
+        appControllerContext.launchOptions["playlists"] = infoBundle.infoDictionary?["jwplayer.playlists"]
+
         
         self.appController = TVApplicationController(context: appControllerContext, window: self.window, delegate: self)
         
