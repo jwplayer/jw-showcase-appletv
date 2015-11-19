@@ -18,6 +18,8 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>jwplayer.account_key</key>
+	<string>JvOpsvoq</string>
 	<key>jwplayer.playlists</key>
 	<array>
 		<string>cKF0NRAt</string>

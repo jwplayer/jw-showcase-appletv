@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
         }
 
         appControllerContext.launchOptions["playlists"] = infoBundle.infoDictionary?["jwplayer.playlists"]
+        appControllerContext.launchOptions["account_key"] = infoBundle.infoDictionary?["jwplayer.account_key"]
 
         
         self.appController = TVApplicationController(context: appControllerContext, window: self.window, delegate: self)
