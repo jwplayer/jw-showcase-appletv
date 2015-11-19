@@ -29,7 +29,7 @@ function loadPlaylists() {
 
 /** Load an mRSS XML feed **/
 function loadPlaylist(list_id) {
-  getDocument("http://content.jwplatform.com/feeds/"+list_id+".rss", parsePlaylist);
+  getDocument(`http://content.jwplatform.com/feeds/${list_id}.rss`, parsePlaylist.bind({id: list_id}));
 }
 
 
@@ -57,6 +57,7 @@ function parsePlaylist(playlistXML) {
 
   var listTitle = channel.getElementsByTagName("title").item(0).textContent;
   newPlaylist['title'] = listTitle;
+  newPlaylist['id'] = this.id;
 
   var mediaItems = channel.getElementsByTagName("item");
   for (var i = 0; i < mediaItems.length; i++) {
@@ -102,7 +103,7 @@ function getTemplates() {
 }
 
 /** Playlist template **/
-function playlistTemplate(list_title) {
+function playlistTemplate(list_title, list_id) {
   /** Using eval to apply string template to tags loaded in the markup **/
   return eval("`"+templates.list+"`");
 }
@@ -121,7 +122,7 @@ function addPlaylist(playlistObj) {
   // of constructing a TVML node from a template, but this works for now.
   var itemFactory = currDoc.createElement("document");
 
-  itemFactory.innerHTML = playlistTemplate(playlistObj['title']);
+  itemFactory.innerHTML = playlistTemplate(playlistObj['title'], playlistObj['id']);
 
   var listItemLockup = itemFactory.firstChild;
   listContainer.appendChild(listItemLockup);
@@ -162,3 +163,10 @@ App.onLaunch = function(options) {
 
   loadPlaylists();
 }
+
+/** Interesting stuff
+
+To see the TVML DOM, run this in the Safari debugger:
+(new XMLSerializer).serializeToString(navigationDocument.documents[0])
+
+**/

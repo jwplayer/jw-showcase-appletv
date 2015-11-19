@@ -1,4 +1,4 @@
-<listItemLockup>
+<listItemLockup id="jw-list-${list_id}">
   <title><![CDATA[${list_title}]]></title>
     <relatedContent>
       <grid>
