@@ -34,7 +34,11 @@ var Template = function() { return `<?xml version="1.0" encoding="UTF-8" ?>
   </head>
   <stackTemplate theme="dark" class="darkBackgroundColor">
     <collectionList>
-
+        <banner>
+      <background>
+        <img src="${this.BASEURL}resources/images/npr/npr-header.png" width="1920" height="400" />
+      </background>
+    </banner>
       <carousel>
         <section>
   

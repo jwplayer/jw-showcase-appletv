@@ -23,6 +23,15 @@ var Template = function() { return `<?xml version="1.0" encoding="UTF-8" ?>
     .darkBackgroundColor {
       background-color: #212c4b;
     }
+    .playBtn {
+      padding: 5px 20px 5px 20px;
+      margin: -20px 0 0 0;
+    }
+    .playlist-title {
+      color: rgba(255,255,255,.75);
+      margin: 0 0 50px 0;
+    }
+
     </style>
   </head>
   <productTemplate theme="dark" class="darkBackgroundColor">
@@ -36,12 +45,11 @@ var Template = function() { return `<?xml version="1.0" encoding="UTF-8" ?>
       <stack>
         <title>Banks</title>
 
-        <description allowsZooming="true" template="${this.BASEURL}templates/AlertWithDescription.xml.js" presentation="modalDialogPresenter"> Tiny Desk Concerts often require creative and logistical transformations, from electric bands going acoustic to big bands squashing into a tiny space to many players gathering around a single microphone. But the setting is particularly challenging for vocalists, especially those accustomed to heavy production, effects or — in the case of recent guest T-Pain — generous dollops of Auto-Tune.</description>
+        <description allowsZooming="true" template="${this.BASEURL}templates/AlertWithDescription.xml.js" presentation="modalDialogPresenter"> Tiny Desk Concerts often require creative and logistical transformations, from electric bands going acoustic to big bands squashing into a tiny space to many players gathering around a single microphone.</description>
         <row>
-          <buttonLockup>
-            <badge src="resource://button-remove" class="whiteBadge" />
-            <title>Play Video</title>
-          </buttonLockup>
+          <button class="playBtn">
+            <text>Play Video</text>
+          </button>
 
         </row>
       </stack>
@@ -75,10 +83,7 @@ var Template = function() { return `<?xml version="1.0" encoding="UTF-8" ?>
             <img src="${this.BASEURL}resources/images/videos/img-24.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 6</title>
           </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/videos/img-25.jpg" width="360" height="202" />
-            <title class="showTextOnHighlight">Title 7</title>
-          </lockup>
+
         </section>
       </shelf>
   

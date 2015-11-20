@@ -45,31 +45,31 @@ var Template = function() { return `<?xml version="1.0" encoding="UTF-8" ?>
         </header>
         <section>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-19.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-19.jpg" width="360" height="202" />
             <title class="scrollTextOnHighlight">Title 1</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-20.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-20.jpg" width="360" height="202" />
             <title class="showAndScrollTextOnHighlight">Title 2</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-21.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-21.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 3</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-22.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-22.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 4</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-23.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-23.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 5</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-24.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-24.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 6</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-25.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-25.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 7</title>
           </lockup>
         </section>
@@ -81,31 +81,31 @@ var Template = function() { return `<?xml version="1.0" encoding="UTF-8" ?>
         </header>
         <section>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-1.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-1.jpg" width="360" height="202" />
             <title class="scrollTextOnHighlight">Title 1</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-2.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-2.jpg" width="360" height="202" />
             <title class="showAndScrollTextOnHighlight">Title 2</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-3.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-3.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 3</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-4.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-4.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 4</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-5.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-5.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 5</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-6.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-6.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 6</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-7.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-7.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 7</title>
           </lockup>
         </section>
@@ -117,31 +117,31 @@ var Template = function() { return `<?xml version="1.0" encoding="UTF-8" ?>
         </header>
         <section>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-8.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-8.jpg" width="360" height="202" />
             <title class="scrollTextOnHighlight">Title 1</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-9.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-9.jpg" width="360" height="202" />
             <title class="showAndScrollTextOnHighlight">Title 2</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-10.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-10.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 3</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-11.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-11.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 4</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-12.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-12.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 5</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-13.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-13.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 6</title>
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/field-sessions/img-14.jpg" width="360" height="202" />
+            <img src="${this.BASEURL}resources/images/videos/img-14.jpg" width="360" height="202" />
             <title class="showTextOnHighlight">Title 7</title>
           </lockup>
         </section>
