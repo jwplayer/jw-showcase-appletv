@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     var appController: TVApplicationController?
 
     static let TVBaseURL = "http://localhost/appletv/appletv-poc-web-app"
+    static let TVConfigURL = "\(AppDelegate.TVBaseURL)/resources/configs"
     static let TVBootURL = "\(AppDelegate.TVBaseURL)/js/application.js"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -28,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
         
         
         appControllerContext.launchOptions["baseURL"] = AppDelegate.TVBaseURL
-        appControllerContext.launchOptions["playlists"] = infoBundle.infoDictionary?["jwplayer.playlists"]
+        appControllerContext.launchOptions["configService"] = AppDelegate.TVConfigURL
         appControllerContext.launchOptions["account_key"] = infoBundle.infoDictionary?["jwplayer.account_key"]
         appControllerContext.javaScriptApplicationURL = NSURL(string: AppDelegate.TVBootURL)!
         

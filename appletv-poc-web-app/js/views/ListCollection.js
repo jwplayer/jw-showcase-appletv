@@ -5,8 +5,11 @@ ViewManager.registerView("ListCollection", function(doc) {
   var collectionDoc = doc;
 
   var playlists = collectionDoc.firstChild.getAttribute("data-playlists").split(",");
+  var featured = collectionDoc.firstChild.getAttribute("data-featured");
+  console.log("Featured; %s", featured);
+
   var collectionList = collectionDoc.getElementsByTagName("collectionList").item(0);
-  var featured = OPTIONS.featured;
+  //var featured = OPTIONS.featured;
 
   var templates = {
     "list": undefined,

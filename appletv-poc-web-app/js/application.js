@@ -1,4 +1,4 @@
-var OPTIONS;
+var OPTIONS, CONFIG;
 var templateLoader;
 var domParser;
 
@@ -12,20 +12,28 @@ App.onLaunch = function(opts) {
   var scripts = [
     `${OPTIONS.baseURL}/js/TemplateLoader.js`,
     `${OPTIONS.baseURL}/js/ViewManager.js`,
-    `${OPTIONS.baseURL}/js/PlaylistLoader.js`
+    `${OPTIONS.baseURL}/js/PlaylistLoader.js`,
+    `${OPTIONS.baseURL}/js/ConfigLoader.js`
   ];
 
   evaluateScripts(scripts, function(success) {
     if (success) {
-      templateLoader = new TemplateLoader();
-      templateLoader.load("templates/index.tvml", function(templateDoc) {
-        navigationDocument.pushDocument(templateDoc);
-      });
+      configLoader = new ConfigLoader();
+      configLoader.loadConfig(OPTIONS.account_key, configLoaded);
     } else {
       showAlert("Error", "Unable to evaluate scripts.")
     }
   });
 
+}
+
+function configLoaded(config) {
+  CONFIG = config;
+
+  templateLoader = new TemplateLoader();
+  templateLoader.load("templates/index.tvml", function(templateDoc) {
+    navigationDocument.pushDocument(templateDoc);
+  });
 }
 
 function resetApp() {
