@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document
+  data-view="SplashScreen"
+  data-splash-delay="1"
+  data-splash-next="templates/ListCollection.tvml">
+
+  <divTemplate>
+    <img src="${this.baseURL}/resources/images/npr/npr-main.png"
+      width="1920" height="1080" />
+  </divTemplate>
+</document>
