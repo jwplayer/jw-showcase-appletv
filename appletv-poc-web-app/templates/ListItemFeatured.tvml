@@ -1,0 +1,7 @@
+<lockup id="jw-item-${this.externalID}" data-media-id="${this.externalID}">
+  <img src="${this.artworkImageURL}" width="800" height="450" />
+  <overlay>
+    <title><![CDATA[${this.title}]]></title>
+    <subtitle></subtitle>
+  </overlay>
+</lockup>

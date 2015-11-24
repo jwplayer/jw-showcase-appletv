@@ -6,51 +6,66 @@ ViewManager.registerView("ListCollection", function(doc) {
 
   var playlists = collectionDoc.firstChild.getAttribute("data-playlists").split(",");
   var collectionList = collectionDoc.getElementsByTagName("collectionList").item(0);
-  var listTemplate;
-  var itemTemplate;
+  var featured = OPTIONS.featured;
 
-  loader.loadFragment("templates/List.tvml", listTemplateLoaded, false);
-  loader.loadFragment("templates/ListItem.tvml", listItemTemplateLoaded, false);
+  var templates = {
+    "list": undefined,
+    "item": undefined,
+    "featured": undefined
+  };
 
-  function listTemplateLoaded(templateDoc) {
-    listTemplate = templateDoc;
-    templatesLoaded();
-  }
+  loader.loadFragment("templates/List.tvml", templateLoaded.bind({template:"list"}), false);
+  loader.loadFragment("templates/ListItem.tvml", templateLoaded.bind({template:"item"}), false);
+  loader.loadFragment("templates/ListItemFeatured.tvml", templateLoaded.bind({template:"featured"}), false);
 
-  function listItemTemplateLoaded(templateDoc) {
-    itemTemplate = templateDoc;
+  function templateLoaded(templateDoc) {
+    templates[this.template] = templateDoc;
     templatesLoaded();
   }
 
   function templatesLoaded() {
-    if (listTemplate && itemTemplate) {
-      playlists.forEach(insertPlaylist);
+    for (var t in templates) {
+      if (!templates[t]) return;
     }
+    playlists.forEach(insertPlaylist);
   }
 
   function insertPlaylist(list_id) {
-    var newList = listTemplate.cloneNode();
+    var newList = templates.list.cloneNode();
     newList.setAttribute("id", `playlist-id-${list_id}`);
     newList.setAttribute("data-list-id", list_id);
-    newList.innerHTML = listTemplate.innerHTML;
-    collectionList.appendChild(newList);
+    newList.innerHTML = templates.list.innerHTML;
+
+    if (list_id != featured) {
+      collectionList.appendChild(newList);
+    }
+
     listLoader.loadPlaylist(list_id, renderPlaylist);
   }
 
   function renderPlaylist(list) {
-    var shelf = document.getElementById(`playlist-id-${list.id}`);
-    var title = shelf.getElementsByTagName("title").item(0);
-    title.innerHTML = loader.evalTemplate.call(list, title.innerHTML);
+    var section, template;
 
-    var section = shelf.getElementsByTagName("section").item(0);
+    if (list.id == featured) {
+      section = collectionList.getElementsByTagName("carousel").item(0).getElementsByTagName("section").item(0);
+      template = templates.featured;
+    } else {
+      var shelf = document.getElementById(`playlist-id-${list.id}`);
+      var title = shelf.getElementsByTagName("title").item(0);
+      title.innerHTML = loader.evalTemplate.call(list, title.innerHTML);
 
-    insertItems(section, list);
+      section = shelf.getElementsByTagName("section").item(0);
+      template = templates.item;
+    }
+
+    insertItems(section, template, list);
+
   }
 
-  function insertItems(section, list) {
+  function insertItems(section, template, list) {
     for(var i=0; i<list.items.length; i++) {
-      var newItem = itemTemplate.cloneNode();
-      newItem.innerHTML = loader.evalTemplate.call(list.items.item(i), itemTemplate.innerHTML);
+      var newItem = template.cloneNode();
+      newItem.innerHTML = loader.evalTemplate.call(list.items.item(i), template.innerHTML);
       section.appendChild(newItem);
     }
 
