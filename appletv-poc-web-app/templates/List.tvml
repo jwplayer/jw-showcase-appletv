@@ -1,35 +1,6 @@
 <shelf class="playlist-shelf">
   <header>
-    <title class="playlist-title">Tiny Desk</title>
+    <title class="playlist-title">${this.title}</title>
   </header>
-  <section>
-    <lockup>
-      <img height="202" src="${this.baseURL}/resources/images/videos/img-19.jpg" width="360"/>
-      <title class="scrollTextOnHighlight">Title 1</title>
-    </lockup>
-    <lockup>
-      <img height="202" src="${this.baseURL}/resources/images/videos/img-20.jpg" width="360"/>
-      <title class="showAndScrollTextOnHighlight">Title 2</title>
-    </lockup>
-    <lockup>
-      <img height="202" src="${this.baseURL}/resources/images/videos/img-21.jpg" width="360"/>
-      <title class="showTextOnHighlight">Title 3</title>
-    </lockup>
-    <lockup>
-      <img height="202" src="${this.baseURL}/resources/images/videos/img-22.jpg" width="360"/>
-      <title class="showTextOnHighlight">Title 4</title>
-    </lockup>
-    <lockup>
-      <img height="202" src="${this.baseURL}/resources/images/videos/img-23.jpg" width="360"/>
-      <title class="showTextOnHighlight">Title 5</title>
-    </lockup>
-    <lockup>
-      <img height="202" src="${this.baseURL}/resources/images/videos/img-24.jpg" width="360"/>
-      <title class="showTextOnHighlight">Title 6</title>
-    </lockup>
-    <lockup>
-      <img height="202" src="${this.baseURL}/resources/images/videos/img-25.jpg" width="360"/>
-      <title class="showTextOnHighlight">Title 7</title>
-    </lockup>
-  </section>
+  <section></section>
 </shelf>

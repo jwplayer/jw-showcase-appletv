@@ -26,7 +26,7 @@ function PlaylistLoader() {
 
     var listTitle = channel.getElementsByTagName("title").item(0).textContent;
     newPlaylist['title'] = listTitle;
-    newPlaylist['id'] = this.id;
+    newPlaylist['id'] = this.list_id;
 
     var mediaItems = channel.getElementsByTagName("item");
     for (var i = 0; i < mediaItems.length; i++) {
@@ -58,7 +58,7 @@ function PlaylistLoader() {
 
     var content = self.getElementsByTagNameNS(itemXML, "media", "content");
     if (content.length > 0) {
-      var thumbs = getElementsByTagNameNS(content[0], "media", "thumbnail");
+      var thumbs = self.getElementsByTagNameNS(content[0], "media", "thumbnail");
       if (thumbs.length > 0) {
         newItem.artworkImageURL = thumbs[0].getAttribute("url");
       }
