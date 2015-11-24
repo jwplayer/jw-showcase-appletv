@@ -1,18 +1,36 @@
 function TemplateLoader(document) {
-  this.baseURL = OPTIONS.baseURL;
-  this.parser = new DOMParser();
-  this.document = document || navigationDocument.documents[0];
+  var _self = this;
+  _self.baseURL = OPTIONS.baseURL;
+  _self.parser = new DOMParser();
+  _self.document = document || navigationDocument.documents[0];
 
-  this._createDocument = function(docString) {
-    var templateString = this._applyTemplate.call(this, docString);
-    return this.parser.parseFromString(templateString, "application/xml");
+  _self._createDocument = function(docString, evaluate) {
+    var templateString = evaluate ? _self.evalTemplate.call(_self, docString) : docString;
+    return _self.parser.parseFromString(templateString, "application/xml");
   }
 
-  this._applyTemplate = function(templateString) {
-    return eval("`"+templateString+"`");
+  _self._createFragment = function(fragmentString, evaluate) {
+    var newDoc = _self.document.createElement("div");
+    newDoc.innerHTML = evaluate ? _self.evalTemplate(fragmentString) : fragmentString;
+    return newDoc.firstChild;
+  }
+
+  _self._applyTemplate = function(templateString, evaluate) {
+    if (typeof evaluate == "undefined") evaluate = true;
+    var doc = _self._createDocument(templateString, evaluate);
+    var viewName = doc.childNodes.item(0).getAttribute("data-view");
+    if (viewName) {
+      ViewManager.applyView(viewName, doc);
+    }
+    return doc;
   }
 
 }
+
+TemplateLoader.prototype.evalTemplate = function(templateString) {
+  return eval("`"+templateString+"`");
+}
+
 
 TemplateLoader.prototype.loadResource = function(url, callback) {
   var toLoad = url;
@@ -30,20 +48,12 @@ TemplateLoader.prototype.loadResource = function(url, callback) {
   return templateXHR;
 };
 
-TemplateLoader.prototype.applyTemplate = function(templateString) {
-  var doc = this._createDocument(templateString);
-  var viewName = doc.childNodes.item(0).getAttribute("data-view");
-  if (viewName) {
-    ViewManager.applyView(viewName, doc);
-  }
-  return doc;
-}
-
-TemplateLoader.prototype.load = function(url, callback) {
+TemplateLoader.prototype.load = function(url, callback, evaluate) {
   var self = this;
+  if (typeof evaluate == "undefined") evaluate = true;
 
   self.loadResource(url, function(response) {
-    var doc = self.applyTemplate(response);
+    var doc = self._applyTemplate(response, evaluate);
     callback.call(self, doc);
   });
 }
@@ -54,12 +64,11 @@ TemplateLoader.prototype.load = function(url, callback) {
 
   Otherwise, you run the risk of getting a IKDOMException (documents don't match)
 **/
-TemplateLoader.prototype.loadFragment = function(url, callback) {
+TemplateLoader.prototype.loadFragment = function(url, callback, evaluate) {
   var self = this;
+  if (typeof evaluate == "undefined") evaluate = true;
 
   self.loadResource(url, function(response) {
-    var newDoc = self.document.createElement("div");
-    newDoc.innerHTML = self._applyTemplate(response);
-    callback.call(self, newDoc.firstChild);
+    callback.call(self, self._createFragment(response, evaluate));
   });
 }

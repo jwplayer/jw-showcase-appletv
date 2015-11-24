@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     var window: UIWindow?
     var appController: TVApplicationController?
 
+    static let TVBaseURL = "http://localhost/appletv/appletv-poc-web-app"
+    static let TVBootURL = "\(AppDelegate.TVBaseURL)/js/application.js"
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -23,9 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
         
         let appControllerContext = TVApplicationControllerContext()
         
-        let javascriptURL = NSURL(string: "http://localhost/appletv/appletv-poc-web-app/application.js")
         
-        appControllerContext.javaScriptApplicationURL = javascriptURL!
+        appControllerContext.launchOptions["baseURL"] = AppDelegate.TVBaseURL
+        appControllerContext.launchOptions["playlists"] = infoBundle.infoDictionary?["jwplayer.playlists"]
+        appControllerContext.launchOptions["account_key"] = infoBundle.infoDictionary?["jwplayer.account_key"]
+        appControllerContext.javaScriptApplicationURL = NSURL(string: AppDelegate.TVBootURL)!
         
         if let options = launchOptions {
             for (kind, value) in options {
@@ -34,10 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
                 }
             }
         }
-
-        appControllerContext.launchOptions["playlists"] = infoBundle.infoDictionary?["jwplayer.playlists"]
-        appControllerContext.launchOptions["account_key"] = infoBundle.infoDictionary?["jwplayer.account_key"]
-
         
         self.appController = TVApplicationController(context: appControllerContext, window: self.window, delegate: self)
         

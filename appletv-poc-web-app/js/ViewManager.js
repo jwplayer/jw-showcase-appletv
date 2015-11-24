@@ -6,7 +6,6 @@ var ViewManager = {
   },
 
   registerView: function(viewName, viewClass) {
-    console.log("Registering view %s", viewName);
     if (!ViewManager.isRegistered(viewName)) {
       ViewManager._views[viewName] = viewClass;
     }

@@ -19,8 +19,6 @@ App.onLaunch = function(opts) {
     if (success) {
       templateLoader = new TemplateLoader();
       templateLoader.load("templates/index.tvml", function(templateDoc) {
-        console.log("Successfully loaded doc: %o", templateDoc);
-        console.dir(templateDoc)
         navigationDocument.pushDocument(templateDoc);
       });
     } else {
