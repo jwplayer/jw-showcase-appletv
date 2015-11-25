@@ -9,23 +9,28 @@ function TemplateLoader(document) {
     return _self.parser.parseFromString(templateString, "application/xml");
   }
 
-  _self._createFragment = function(fragmentString, evaluate) {
-    var newDoc = _self.document.createElement("div");
-    newDoc.innerHTML = evaluate ? _self.evalTemplate(fragmentString) : fragmentString;
-    return newDoc.firstChild;
-  }
-
   _self._applyTemplate = function(templateString, evaluate) {
     if (typeof evaluate == "undefined") evaluate = true;
     var doc = _self._createDocument(templateString, evaluate);
-    var viewName = doc.childNodes.item(0).getAttribute("data-view");
-    if (viewName) {
-      ViewManager.applyView(viewName, doc);
-    }
+    _self.applyView(doc);
     return doc;
   }
 
+  _self._createFragment = function(fragmentString, evaluate) {
+    var newDoc = _self.document.createElement("div");
+    newDoc.innerHTML = evaluate ? _self.evalTemplate(fragmentString) : fragmentString;
+    return newDoc;
+  }
+
 }
+
+TemplateLoader.prototype.applyView = function(doc) {
+  var viewName = doc.firstChild.getAttribute("data-view");
+  if (viewName) {
+    ViewManager.applyView(viewName, doc);
+  }
+}
+
 
 TemplateLoader.prototype.evalTemplate = function(templateString) {
   return eval("`"+templateString+"`");
@@ -69,6 +74,7 @@ TemplateLoader.prototype.loadFragment = function(url, callback, evaluate) {
   if (typeof evaluate == "undefined") evaluate = true;
 
   self.loadResource(url, function(response) {
-    callback.call(self, self._createFragment(response, evaluate));
+    var doc = self._createFragment(response, evaluate);
+    callback.call(self, doc);
   });
 }

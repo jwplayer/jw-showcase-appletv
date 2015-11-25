@@ -34,7 +34,7 @@ function PlaylistLoader() {
       newPlaylist.items.push(m);
     }
 
-    this.callback.call(self, newPlaylist);
+    this.callback(newPlaylist);
   }
 
   /** TVJS doesn't seem to support getElementsByTagNameNS, so here's a polyfill of sorts **/

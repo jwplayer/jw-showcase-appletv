@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <document
-  data-playlists="${CONFIG.playlists}" 
+  data-playlists="${CONFIG.playlists}"
   data-featured="${CONFIG.featuredPlaylist}"
   data-view="ListCollection">
   <head>
@@ -29,8 +29,8 @@
       </background>
     </banner>
     <collectionList>
-      <carousel id="featured-playlist">
-        <section></section>
+      <carousel>
+        <section id="featured-playlist"></section>
       </carousel>
     </collectionList>
   </stackTemplate>

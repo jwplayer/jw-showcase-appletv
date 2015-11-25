@@ -1,4 +1,4 @@
-<shelf class="playlist-shelf">
+<shelf class="playlist-shelf" id="playlist-${this.id}" data-playlist-id="${this.id}">
   <header>
     <title class="playlist-title">${this.title}</title>
   </header>

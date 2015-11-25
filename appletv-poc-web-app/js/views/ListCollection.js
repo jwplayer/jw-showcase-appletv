@@ -6,10 +6,9 @@ ViewManager.registerView("ListCollection", function(doc) {
 
   var playlists = collectionDoc.firstChild.getAttribute("data-playlists").split(",");
   var featured = collectionDoc.firstChild.getAttribute("data-featured");
-  console.log("Featured; %s", featured);
+  if (featured === "undefined") featured = undefined;
 
   var collectionList = collectionDoc.getElementsByTagName("collectionList").item(0);
-  //var featured = OPTIONS.featured;
 
   var templates = {
     "list": undefined,
@@ -30,34 +29,52 @@ ViewManager.registerView("ListCollection", function(doc) {
     for (var t in templates) {
       if (!templates[t]) return;
     }
+
+    // Display the featured playlist
+    if (featured) insertPlaylist(featured);
+
+    // Insert the rest of the playlists
     playlists.forEach(insertPlaylist);
   }
 
+  function duplicateFragment(templateDoc, context) {
+    var newElement = templateDoc.cloneNode();
+    var newHTML = templateDoc.innerHTML;
+    if (context) newHTML = loader.evalTemplate.call(context, newHTML);
+    newElement.innerHTML = newHTML;
+    return newElement.firstChild;
+  }
+
   function insertPlaylist(list_id) {
-    var newList = templates.list.cloneNode();
-    newList.setAttribute("id", `playlist-id-${list_id}`);
-    newList.setAttribute("data-list-id", list_id);
-    newList.innerHTML = templates.list.innerHTML;
+    var placeholder;
 
     if (list_id != featured) {
-      collectionList.appendChild(newList);
+      placeholder = document.createElement("div");
+       // Create a placecholder in the CollectionList so the lists are inserted in order
+      collectionList.appendChild(placeholder);
     }
 
-    listLoader.loadPlaylist(list_id, renderPlaylist);
+    // Bind the placeholder to the callback so it can be replaced with the templated markup
+    listLoader.loadPlaylist(list_id, renderPlaylist.bind(placeholder));
   }
 
   function renderPlaylist(list) {
-    var section, template;
+    var section,
+      template,
+      placeholder = this;
 
     if (list.id == featured) {
-      section = collectionList.getElementsByTagName("carousel").item(0).getElementsByTagName("section").item(0);
+      section = document.getElementById("featured-playlist");
       template = templates.featured;
-    } else {
-      var shelf = document.getElementById(`playlist-id-${list.id}`);
-      var title = shelf.getElementsByTagName("title").item(0);
-      title.innerHTML = loader.evalTemplate.call(list, title.innerHTML);
 
-      section = shelf.getElementsByTagName("section").item(0);
+    } else {
+      // Create a new List fragment from the template
+      var listShelf = duplicateFragment(templates.list, list);
+
+      // Replace the placeholder div with the templated list
+      collectionList.insertBefore(listShelf, placeholder);
+
+      section = listShelf.getElementsByTagName("section").item(0);
       template = templates.item;
     }
 
@@ -67,8 +84,8 @@ ViewManager.registerView("ListCollection", function(doc) {
 
   function insertItems(section, template, list) {
     for(var i=0; i<list.items.length; i++) {
-      var newItem = template.cloneNode();
-      newItem.innerHTML = loader.evalTemplate.call(list.items.item(i), template.innerHTML);
+      var newItem = duplicateFragment(template, list.items.item(i));
+      loader.applyView(newItem);
       section.appendChild(newItem);
     }
 

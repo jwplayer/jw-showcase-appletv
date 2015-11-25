@@ -1,10 +1,9 @@
 {
   "playlists": [
     "cKF0NRAt",
-    "1AxTdxJn",
     "AH3xPHmS"
   ],
-  "featuredPlaylist": "AH3xPHmS",
+  "featuredPlaylist": "1AxTdxJn",
   "splashScreen": "images/npr-main.png",
   "bannerImage": "images/npr-header.png",
   "backgroundColor": "#212c4b"

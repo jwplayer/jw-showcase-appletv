@@ -1,4 +1,4 @@
-<lockup id="jw-item-${this.externalID}">
+<lockup data-media-id="${this.externalID}">
   <img height="202" src="${this.artworkImageURL}" width="360"/>
   <title class="scrollTextOnHighlight"><![CDATA[${this.title}]]></title>
 </lockup>
