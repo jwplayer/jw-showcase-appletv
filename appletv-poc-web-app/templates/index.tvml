@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document
+  data-view="SplashScreen"
+  data-splash-delay="2"
+  data-splash-next="templates/ListCollection.tvml">
+
+  <divTemplate>
+    <img src="${CONFIG.configURL}/${CONFIG.splashScreen}"
+      width="1920" height="1080" />
+  </divTemplate>
+</document>

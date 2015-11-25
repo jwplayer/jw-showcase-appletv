@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document
+  data-playlists="${CONFIG.playlists}"
+  data-featured="${CONFIG.featuredPlaylist}"
+  data-view="ListCollection">
+  <head>
+    <style>
+      .showTextOnHighlight {
+        tv-labels-state: show-on-highlight;
+      }
+      @media -tv-template and (-tv-uber) {
+        .darkBackgroundColor {
+          background-color: ${CONFIG.backgroundColor};
+        }
+        .playlist-shelf {
+          margin: 0 0 50px;
+        }
+        .playlist-title {
+          color: rgba(255,255,255,.75);
+          margin: 0 0 50px;
+        }
+      }
+    </style>
+  </head>
+  <stackTemplate class="darkBackgroundColor" theme="dark">
+    <banner>
+      <background>
+        <img height="400" src="${CONFIG.configURL}/${CONFIG.bannerImage}" width="1920"/>
+      </background>
+    </banner>
+    <collectionList>
+      <carousel>
+        <section id="featured-playlist"></section>
+      </carousel>
+    </collectionList>
+  </stackTemplate>
+</document>
