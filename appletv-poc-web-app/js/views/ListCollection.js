@@ -37,14 +37,6 @@ ViewManager.registerView("ListCollection", function(doc) {
     playlists.forEach(insertPlaylist);
   }
 
-  function duplicateFragment(templateDoc, context) {
-    var newElement = templateDoc.cloneNode();
-    var newHTML = templateDoc.innerHTML;
-    if (context) newHTML = loader.evalTemplate.call(context, newHTML);
-    newElement.innerHTML = newHTML;
-    return newElement.firstChild;
-  }
-
   function insertPlaylist(list_id) {
     var placeholder;
 
@@ -69,10 +61,10 @@ ViewManager.registerView("ListCollection", function(doc) {
 
     } else {
       // Create a new List fragment from the template
-      var listShelf = duplicateFragment(templates.list, list);
+      var listShelf = loader.duplicateFragment(templates.list, list);
 
       // Replace the placeholder div with the templated list
-      collectionList.insertBefore(listShelf, placeholder);
+      collectionList.replaceChild(listShelf, placeholder);
 
       section = listShelf.getElementsByTagName("section").item(0);
       template = templates.item;
@@ -84,9 +76,11 @@ ViewManager.registerView("ListCollection", function(doc) {
 
   function insertItems(section, template, list) {
     for(var i=0; i<list.items.length; i++) {
-      var newItem = duplicateFragment(template, list.items.item(i));
-      loader.applyView(newItem);
-      section.appendChild(newItem);
+      var item = list.items.item(i);
+      item.related = list.id;
+      var itemDoc = loader.duplicateFragment(template, item);
+      loader.applyView(itemDoc);
+      section.appendChild(itemDoc);
     }
 
   }

@@ -1,5 +1,6 @@
 var ViewManager = {
   _views: {},
+  _loading: {},
 
   isRegistered: function(viewName) {
     return (typeof ViewManager._views[viewName] == "function");
@@ -24,17 +25,27 @@ var ViewManager = {
   },
 
   loadAndApply: function(viewName, docToApply) {
+    var loading = ViewManager._loading;
+
     if (ViewManager.isRegistered(viewName)) {
       throw `Loading a view which already exists: ${viewName}`;
     }
 
-    evaluateScripts([`${OPTIONS.baseURL}/js/views/${viewName}.js`], function(success) {
-      if (success && ViewManager.isRegistered(viewName)) {
-        ViewManager.applyView(viewName, docToApply);
-      } else {
-        throw `Couldn't apply view ${viewName}`;
-      }
-    });
+    if (loading[viewName]) {
+      loading[viewName].push(docToApply);
+    } else {
+      loading[viewName] = [docToApply];
+      evaluateScripts([`${OPTIONS.baseURL}/js/views/${viewName}.js`], function(success) {
+        if (success && ViewManager.isRegistered(viewName)) {
+          loading[viewName].forEach(function(doc) {
+            ViewManager.applyView(viewName, doc);
+          });
+        } else {
+          throw `Couldn't apply view ${viewName}`;
+        }
+        delete loading[viewName];
+      });
+    }
   }
 
 }

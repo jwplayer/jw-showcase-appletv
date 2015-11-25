@@ -1,7 +1,13 @@
-<lockup id="jw-item-${this.externalID}" data-media-id="${this.externalID}">
-  <img src="${this.artworkImageURL}" width="800" height="450" />
+<lockup
+  data-href="templates/ItemDetail.tvml"
+  data-media-id="${this.externalID}"
+  data-related-playlist="${this.related}"
+  data-view="ListItem">
+  <img height="450" src="${this.artworkImageURL}" width="800"/>
   <overlay>
-    <title><![CDATA[${this.title}]]></title>
+    <title>
+      <![CDATA[${this.title}]]>
+    </title>
     <subtitle></subtitle>
   </overlay>
 </lockup>

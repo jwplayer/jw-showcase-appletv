@@ -34,11 +34,27 @@ function PlaylistLoader() {
       newPlaylist.items.push(m);
     }
 
+    self._registerPlaylist(newPlaylist);
+
     this.callback(newPlaylist);
   }
 
+  self._registerPlaylist = function(list) {
+    var list_id = list.id;
+
+    // Only register new playlists
+    if (PLAYLISTS[list_id]) return;
+    PLAYLISTS[list_id] = list;
+
+    for(var i=0; i<list.items.length; i++) {
+      var item = list.items.item(i);
+      MEDIA_ITEMS[item.externalID] = item;
+    }
+
+  }
+
   /** TVJS doesn't seem to support getElementsByTagNameNS, so here's a polyfill of sorts **/
-  self.getElementsByTagNameNS = function(elem, ns, tag) {
+  self._getElementsByTagNameNS = function(elem, ns, tag) {
     var nodes = [];
     for (var i = 0; i < elem.childNodes.length; i++) {
       if (elem.childNodes.item(i).tagName == ns + ":" + tag) {
@@ -55,10 +71,11 @@ function PlaylistLoader() {
     newItem.externalID = itemXML.getElementsByTagName("guid").item(0).textContent;
     newItem.title = itemXML.getElementsByTagName("title").item(0).textContent;
     newItem.url = "http://content.jwplatform.com/videos/" + newItem.externalID + ".m3u8";
+    newItem.description = itemXML.getElementsByTagName("description").item(0).textContent;
 
-    var content = self.getElementsByTagNameNS(itemXML, "media", "content");
+    var content = self._getElementsByTagNameNS(itemXML, "media", "content");
     if (content.length > 0) {
-      var thumbs = self.getElementsByTagNameNS(content[0], "media", "thumbnail");
+      var thumbs = self._getElementsByTagNameNS(content[0], "media", "thumbnail");
       if (thumbs.length > 0) {
         newItem.artworkImageURL = thumbs[0].getAttribute("url");
       }

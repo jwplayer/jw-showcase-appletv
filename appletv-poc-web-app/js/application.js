@@ -1,10 +1,13 @@
-var OPTIONS, CONFIG;
+var OPTIONS, CONFIG, PLAYLISTS, ITEMS;
 var templateLoader;
 var domParser;
 
 /** Launch the app **/
 App.onLaunch = function(opts) {
   OPTIONS = opts;
+  PLAYLISTS = {};
+  MEDIA_ITEMS = {};
+  
   domParser = new DOMParser();
 
   console.log("Initing with options %o", OPTIONS);
@@ -37,6 +40,7 @@ function configLoaded(config) {
 }
 
 function resetApp() {
+
   while (navigationDocument.documents.length > 0) {
     navigationDocument.removeDocument(navigationDocument.documents[0]);
   }

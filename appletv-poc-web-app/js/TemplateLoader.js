@@ -1,11 +1,13 @@
-function TemplateLoader(document) {
+function TemplateLoader(document, context) {
   var _self = this;
+  if (!context) context = this;
+
   _self.baseURL = OPTIONS.baseURL;
   _self.parser = new DOMParser();
   _self.document = document || navigationDocument.documents[0];
 
   _self._createDocument = function(docString, evaluate) {
-    var templateString = evaluate ? _self.evalTemplate.call(_self, docString) : docString;
+    var templateString = evaluate ? _self.evalTemplate.call(context, docString) : docString;
     return _self.parser.parseFromString(templateString, "application/xml");
   }
 
@@ -18,17 +20,23 @@ function TemplateLoader(document) {
 
   _self._createFragment = function(fragmentString, evaluate) {
     var newDoc = _self.document.createElement("div");
-    newDoc.innerHTML = evaluate ? _self.evalTemplate(fragmentString) : fragmentString;
+    newDoc.innerHTML = evaluate ? _self.evalTemplate.call(context, fragmentString) : fragmentString;
     return newDoc;
   }
 
 }
 
 TemplateLoader.prototype.applyView = function(doc) {
-  var viewName = doc.firstChild.getAttribute("data-view");
-  if (viewName) {
-    ViewManager.applyView(viewName, doc);
+  try {
+    var viewName = doc.firstChild.getAttribute("data-view") || doc.getAttribute("data-view");
+    if (viewName) {
+      ViewManager.applyView(viewName, doc);
+    }
+  } catch(e) {
+    // No view found
+    return;
   }
+
 }
 
 
@@ -77,4 +85,13 @@ TemplateLoader.prototype.loadFragment = function(url, callback, evaluate) {
     var doc = self._createFragment(response, evaluate);
     callback.call(self, doc);
   });
+}
+
+/** Evaluate a template from the context, and return a copy **/
+TemplateLoader.prototype.duplicateFragment = function(templateDoc, context) {
+  var newElement = templateDoc.cloneNode();
+  var newHTML = templateDoc.innerHTML;
+  if (context) newHTML = this.evalTemplate.call(context, newHTML);
+  newElement.innerHTML = newHTML;
+  return newElement.firstChild;
 }

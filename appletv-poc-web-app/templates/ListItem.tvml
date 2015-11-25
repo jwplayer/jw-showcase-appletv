@@ -1,4 +1,10 @@
-<lockup data-media-id="${this.externalID}">
+<lockup
+  data-href="templates/ItemDetail.tvml"
+  data-media-id="${this.externalID}"
+  data-related-playlist="${this.related}"
+  data-view="ListItem">
   <img height="202" src="${this.artworkImageURL}" width="360"/>
-  <title class="scrollTextOnHighlight"><![CDATA[${this.title}]]></title>
+  <title class="scrollTextOnHighlight">
+    <![CDATA[${this.title}]]>
+  </title>
 </lockup>
