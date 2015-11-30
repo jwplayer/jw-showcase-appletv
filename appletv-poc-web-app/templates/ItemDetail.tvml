@@ -16,12 +16,12 @@
       }
       .playBtn {
         padding: 5px 20px;
-        margin: -20px 0 0;
       }
       .playlist-title {
         color: rgba(255,255,255,.75);
         margin: 0 0 50px;
       }
+
     </style>
   </head>
   <productTemplate class="darkBackgroundColor" theme="dark">
@@ -38,11 +38,11 @@
           <![CDATA[${this.item.description}]]>
         </description>
         <row>
-          <button id="play-button" class="playBtn">
-            <text>Play Video</text>
-          </button>
+        <buttonLockup class="playBtn">
+          <text>Play Video</text>
+        </buttonLockup>
+      </row>
 
-        </row>
       </stack>
     </banner>
     <shelf id="related-section">

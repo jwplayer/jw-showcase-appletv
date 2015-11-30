@@ -8,6 +8,7 @@
       .showTextOnHighlight {
         tv-labels-state: show-on-highlight;
       }
+
       @media -tv-template and (-tv-uber) {
         .darkBackgroundColor {
           background-color: ${CONFIG.backgroundColor};
@@ -16,8 +17,11 @@
           margin: 0 0 50px;
         }
         .playlist-title {
-          color: rgba(255,255,255,.75);
+          color: rgba(255,255,255,1);
           margin: 0 0 50px;
+        }
+        .featured-title {
+          margin: 50px 0 50px;
         }
       }
     </style>
