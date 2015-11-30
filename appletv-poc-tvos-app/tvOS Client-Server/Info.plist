@@ -20,12 +20,6 @@
 	<string>????</string>
 	<key>jwplayer.account_key</key>
 	<string>JvOpsvoq</string>
-	<key>jwplayer.playlists</key>
-	<array>
-		<string>cKF0NRAt</string>
-		<string>1AxTdxJn</string>
-		<string>AH3xPHmS</string>
-	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
