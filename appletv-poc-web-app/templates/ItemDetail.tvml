@@ -38,11 +38,10 @@
           <![CDATA[${this.item.description}]]>
         </description>
         <row>
-        <buttonLockup class="playBtn">
-          <text>Play Video</text>
-        </buttonLockup>
-      </row>
-
+          <buttonLockup class="playBtn" id="play-button">
+            <text>Play Video</text>
+          </buttonLockup>
+        </row>
       </stack>
     </banner>
     <shelf id="related-section">
