@@ -78,6 +78,7 @@ ViewManager.registerView("ListCollection", function(doc) {
     for(var i=0; i<list.items.length; i++) {
       var item = list.items.item(i);
       item.related = list.id;
+      item.parentView = "ListCollection"
       var itemDoc = loader.duplicateFragment(template, item);
       loader.applyView(itemDoc);
       section.appendChild(itemDoc);

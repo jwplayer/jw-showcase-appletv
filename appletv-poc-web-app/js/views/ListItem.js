@@ -4,6 +4,7 @@ ViewManager.registerView("ListItem", function(doc) {
   var media_id = doc.getAttribute("data-media-id");
   var href = doc.getAttribute("data-href");
   var related = doc.getAttribute("data-related-playlist");
+  var parent_view = doc.getAttribute("data-parent-view");
 
   var item = MEDIA_ITEMS[media_id];
 
@@ -19,6 +20,10 @@ ViewManager.registerView("ListItem", function(doc) {
   }
 
   function detailTemplateLoaded(detailDocument) {
-    navigationDocument.pushDocument(detailDocument);
+    if (parent_view == "ItemDetail") {
+      navigationDocument.replaceDocument(detailDocument, document);
+    } else {
+      navigationDocument.pushDocument(detailDocument);
+    }
   }
 });

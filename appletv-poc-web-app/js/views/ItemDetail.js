@@ -29,7 +29,10 @@ ViewManager.registerView("ItemDetail", function(doc) {
     for(var i=0; i<related.items.length; i++) {
       var relatedItem = related.items.item(i);
       if (relatedItem.externalID != media_id) {
-        var itemDoc = loader.duplicateFragment(template, relatedItem);
+        var templateData = extend(relatedItem, {
+          parentView: "ItemDetail"
+        });
+        var itemDoc = loader.duplicateFragment(template, templateData);
         loader.applyView(itemDoc);
         section.appendChild(itemDoc);
       }
