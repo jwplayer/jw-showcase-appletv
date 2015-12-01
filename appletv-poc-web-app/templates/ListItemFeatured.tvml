@@ -3,7 +3,7 @@
   data-media-id="${this.externalID}"
   data-related-playlist="${this.related}"
   data-view="ListItem">
-  <img height="450" src="${this.artworkImageURL}" width="800"/>
+  <img class="item-image-featured" src="${this.artworkImageURL}" />
   <title class="featured-title">
     <![CDATA[${this.title}]]>
   </title>

@@ -23,6 +23,15 @@
         .featured-title {
           margin: 50px 0 50px;
         }
+        .item-image {
+          width: 360px;
+          height: 202px;
+        }
+        .item-image-featured {
+          width: 800px;
+          height: 450px;
+        }
+
       }
     </style>
   </head>
