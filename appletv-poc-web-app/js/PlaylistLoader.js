@@ -70,7 +70,7 @@ function PlaylistLoader() {
     var newItem = new MediaItem();
     newItem.externalID = itemXML.getElementsByTagName("guid").item(0).textContent;
     newItem.title = itemXML.getElementsByTagName("title").item(0).textContent;
-    newItem.url = "http://content.jwplatform.com/videos/" + newItem.externalID + ".m3u8";
+    newItem.url = `http://content.jwplatform.com/manifests/${newItem.externalID}.m3u8`;
     newItem.description = itemXML.getElementsByTagName("description").item(0).textContent;
 
     var content = self._getElementsByTagNameNS(itemXML, "media", "content");
