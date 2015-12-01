@@ -15,7 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     var window: UIWindow?
     var appController: TVApplicationController?
 
-    static let TVBaseURL = "http://localhost/appletv/appletv-poc-web-app"
+    // Uncomment the following line to debug locally
+    // static let TVBaseURL = "http://localhost/appletv/appletv-poc-web-app"
+    static let TVBaseURL = "https://tvos.jwpsrv.com"
     static let TVConfigURL = "\(AppDelegate.TVBaseURL)/resources/configs"
     static let TVBootURL = "\(AppDelegate.TVBaseURL)/js/application.js"
 
