@@ -16,7 +16,8 @@ App.onLaunch = function(opts) {
     `${OPTIONS.baseURL}/js/TemplateLoader.js`,
     `${OPTIONS.baseURL}/js/ViewManager.js`,
     `${OPTIONS.baseURL}/js/PlaylistLoader.js`,
-    `${OPTIONS.baseURL}/js/ConfigLoader.js`
+    `${OPTIONS.baseURL}/js/ConfigLoader.js`,
+    `${OPTIONS.baseURL}/js/TVOSAnalytics.js`
   ];
 
   evaluateScripts(scripts, function(success) {
