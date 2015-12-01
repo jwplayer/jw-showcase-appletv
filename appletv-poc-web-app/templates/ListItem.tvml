@@ -4,7 +4,7 @@
   data-related-playlist="${this.related}"
   data-parent-view="${this.parentView}"
   data-view="ListItem">
-  <img height="202" src="${this.artworkImageURL}" width="360"/>
+  <img class="item-image" src="${this.artworkImageURL}" />
   <title class="scrollTextOnHighlight">
     <![CDATA[${this.title}]]>
   </title>

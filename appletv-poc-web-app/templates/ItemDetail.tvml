@@ -21,13 +21,17 @@
         color: rgba(255,255,255,.75);
         margin: 0 0 50px;
       }
+      .item-image {
+        width: 360px;
+        height: 202px;
+      }
 
     </style>
   </head>
   <productTemplate class="darkBackgroundColor" theme="dark">
 
     <banner>
-      <heroImg src="${this.item.artworkImageURL}" width="480"/>
+      <heroImg src="${this.item.artworkImageURL}" />
       <infoList>
         <info></info>
       </infoList>
