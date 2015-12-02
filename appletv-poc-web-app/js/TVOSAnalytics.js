@@ -4,9 +4,11 @@
   hard-coded parameters.
 **/
 function TVOSAnalytics() {
-  var serverURL = "jwpltx.com",
+  var _self = this,
+    serverURL = "jwpltx.com",
     apiVersion = "v1",
-    bucketName = "tvos";
+    bucketName = "jwplayer6",
+    analyticsToken = CONFIG['analyticsToken'];
 
 
     /** @const */ var PARAM_CHECKSUM = 'h';
@@ -83,7 +85,6 @@ function TVOSAnalytics() {
       h = ((h << 5) - h) + c;
       h &= h;
     }
-
 
     return `h=${h}`;
   }

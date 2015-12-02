@@ -6,7 +6,8 @@ function ConfigLoader() {
     "featuredPlaylist": "",
     "splashScreen": "",
     "bannerImage": "",
-    "backgroundColor": "#000000"
+    "backgroundColor": "#000000",
+    "analyticsToken": ""
   };
 
   /** Load a JSON document and send it to a handler **/
