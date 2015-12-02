@@ -8,75 +8,78 @@ function TVOSAnalytics() {
     serverURL = "jwpltx.com",
     apiVersion = "v1",
     bucketName = "jwplayer6",
-    analyticsToken = CONFIG['analyticsToken'];
+    analyticsToken = CONFIG['analyticsToken'],
+    embedId = _genId(12);
 
 
-    /** @const */ var PARAM_CHECKSUM = 'h';
+  /** @const */ var PARAM_CHECKSUM = 'h';
 
-    //sent with all events
-    /** @const */ var PARAM_TRACKER_VERSION = 'tv';
-    /** @const */ var PARAM_NONCE   = 'n';
-    /** @const */ var PARAM_ANALYTICS_TOKEN = 'aid';
-    /** @const */ var PARAM_EVENT_TYPE      = 'e';
-    /** @const */ var PARAM_IFRAME          = 'i';
-    /** @const */ var PARAM_IFRAME_DEPTH    = 'ifd';
-    /** @const */ var PARAM_PLAYER_VERSION  = 'pv';
-    /** @const */ var PARAM_PAGE_URL        = 'pu';
-    /** @const */ var PARAM_PAGE_TITLE      = 'pt';
-    /** @const */ var PARAM_SDK_PLATFORM    = 'sdk';
+  //sent with all events
+  /** @const */ var PARAM_TRACKER_VERSION     = 'tv';
+  /** @const */ var PARAM_NONCE               = 'n';
+  /** @const */ var PARAM_ANALYTICS_TOKEN     = 'aid';
+  /** @const */ var PARAM_EVENT_TYPE          = 'e';
+  /** @const */ var PARAM_IFRAME              = 'i';
+  /** @const */ var PARAM_IFRAME_DEPTH        = 'ifd';
+  /** @const */ var PARAM_PLAYER_VERSION      = 'pv';
+  /** @const */ var PARAM_PAGE_URL            = 'pu';
+  /** @const */ var PARAM_PAGE_TITLE          = 'pt';
+  /** @const */ var PARAM_SDK_PLATFORM        = 'sdk';
+  /** @const */ var PARAM_AUTOSTART           = 'd';
+  /** @const */ var PARAM_AD_BLOCK            = 'eb';
+  /** @const */ var PARAM_EMBED_ID            = 'emi';
+  /** @const */ var PARAM_RENDERING_MODE      = 'm';
+  /** @const */ var PARAM_MEDIA_URL           = 'mu';
+  /** @const */ var PARAM_PLAYER_HOSTING      = 'ph';
+  /** @const */ var PARAM_ITEM_ID             = 'pli';
+  /** @const */ var PARAM_PLAYER_SIZE         = 'ps';
+  /** @const */ var PARAM_MOBILE_SDK_VERSION  = 'sv';
+  /** @const */ var PARAM_TITLE               = 't';
 
-    // Tracking Events
-    /** @const */ var EVENT_VIDEO_EMBED  = 'e';
-    /** @const */ var EVENT_VIDEO_PLAY   = 's';
-    /** @const */ var EVENT_TIME_WATCHED = 't';
+  //mobile SDK specific
+  /** @const */ var PARAM_MOBILE_APP_BUNDLEID = 'bi';
+  /** @const */ var PARAM_MOBILE_APP_NAME     = 'an';
+  /** @const */ var PARAM_MOBILE_DEVICE_ID    = 'did';
+  /** @const */ var PARAM_PLAYER_DEVICE_MODEL = 'dm';
 
-    //mobile SDK specific
-    /** @const */ var PARAM_MOBILE_SDK_VERSION  = 'sv';
-    /** @const */ var PARAM_MOBILE_APP_BUNDLEID = 'bi';
-    /** @const */ var PARAM_MOBILE_APP_NAME     = 'an';
-    /** @const */ var PARAM_MOBILE_DEVICE_ID    = 'did';
-    /** @const */ var PARAM_PLAYER_DEVICE_MODEL = 'dm';
+  // Tracking Parameter Keys
+  /** @const */ var PARAM_EDITION               = 'ed';
+  /** @const */ var PARAM_TIME_INTERVAL         = 'ti';
+  /** @const */ var PARAM_TIME_WATCHED          = 'pw';
+  /** @const */ var PARAM_VIDEO_SIZE            = 'vs';
+  /** @const */ var PARAM_PLAYER_WIDTH          = 'wd';
+  /** @const */ var PARAM_PLAYER_HEIGHT         = 'pl';
+  /** @const */ var PARAM_VIDEO_LENGTH          = 'l';
+  /** @const */ var PARAM_QUANTILES             = 'q';
+  /** @const */ var PARAM_MEDIA_ID              = 'id';
+  /** @const */ var PARAM_FLASH_VERSION         = 'fv';
+  /** @const */ var PARAM_SETUP_TIME            = 'st';
+  /** @const */ var PARAM_FIRST_FRAME           = 'ff';
+  /** @const */ var PARAM_PROVIDER              = 'pp';
+  /** @const */ var PARAM_VISUAL_PLAYLIST       = 'vp';
+  /** @const */ var PARAM_POSTER_IMAGE          = 'po';
+  /** @const */ var PARAM_SHARING               = 's';
+  /** @const */ var PARAM_RELATED               = 'r';
+  /** @const */ var PARAM_SKIN_NAME             = 'sn';
+  /** @const */ var PARAM_CASTING_BLOCK         = 'cb';
+  /** @const */ var PARAM_GA_BLOCK              = 'ga';
+  /** @const */ var PARAM_PLAY_REASON           = 'pr';
+  /** @const */ var PARAM_DASHBOARD_CONFIG_KEY  = 'pid';
+  /** @const */ var PARAM_DISPLAY_DESCRIPTION   = 'dd';
+  /** @const */ var PARAM_CHROMELESS_PLAYER     = 'cp';
+  /** @const */ var PARAM_ADVERTISING_BLOCK     = 'ab';
 
-
-    // Tracking Parameter Keys
-    /** @const */ var PARAM_EDITION         = 'ed';
-    /** @const */ var PARAM_AUTOSTART       = 'd';
-    /** @const */ var PARAM_PLAYER_HOSTING  = 'ph';
-    /** @const */ var PARAM_MEDIA_URL       = 'mu';
-    /** @const */ var PARAM_TITLE           = 't';
-    /** @const */ var PARAM_TIME_INTERVAL   = 'ti';
-    /** @const */ var PARAM_TIME_WATCHED    = 'pw';
-    /** @const */ var PARAM_PLAYER_SIZE     = 'ps';
-    /** @const */ var PARAM_VIDEO_SIZE      = 'vs';
-    /** @const */ var PARAM_PLAYER_WIDTH    = 'wd';
-    /** @const */ var PARAM_PLAYER_HEIGHT   = 'pl';
-    /** @const */ var PARAM_VIDEO_LENGTH    = 'l';
-    /** @const */ var PARAM_QUANTILES       = 'q';
-    /** @const */ var PARAM_RENDERING_MODE  = 'm';
-    /** @const */ var PARAM_MEDIA_ID        = 'id';
-    /** @const */ var PARAM_FLASH_VERSION   = 'fv';
-    /** @const */ var PARAM_AD_BLOCK        = 'eb';
-    /** @const */ var PARAM_SETUP_TIME      = 'st';
-    /** @const */ var PARAM_FIRST_FRAME     = 'ff';
-    /** @const */ var PARAM_PROVIDER        = 'pp';
-    /** @const */ var EMBED_ID              = 'emi';
-    /** @const */ var ITEM_ID               = 'pli';
-    /** @const */ var PARAM_VISUAL_PLAYLIST = 'vp';
-    /** @const */ var PARAM_POSTER_IMAGE    = 'po';
-    /** @const */ var PARAM_SHARING         = 's';
-    /** @const */ var PARAM_RELATED         = 'r';
-    /** @const */ var PARAM_SKIN_NAME       = 'sn';
-    /** @const */ var PARAM_CASTING_BLOCK   = 'cb';
-    /** @const */ var PARAM_GA_BLOCK        = 'ga';
-    /** @const */ var PARAM_PLAY_REASON     = 'pr';
-    /** @const */ var PARAM_DASHBOARD_CONFIG_KEY  = 'pid';
-    /** @const */ var PARAM_DISPLAY_DESCRIPTION   = 'dd';
-    /** @const */ var PARAM_CHROMELESS_PLAYER     = 'cp';
-    /** @const */ var PARAM_ADVERTISING_BLOCK     = 'ab';
-
+  // Tracking Events
+  /** @const */ var EVENT_VIDEO_EMBED  = 'e';
+  /** @const */ var EVENT_VIDEO_PLAY   = 's';
+  /** @const */ var EVENT_TIME_WATCHED = 't';
 
 
-   function _hashParam(s) {
+  function _genId(len) {
+      return new Array(len+1).join((Math.random().toString(36)+'00000000000000000').slice(2, 18)).slice(0, len);
+  }
+
+  function _hashParam(s) {
     s = decodeURIComponent(s);
     var h = 0;
 
@@ -96,7 +99,19 @@ function TVOSAnalytics() {
     parameters[PARAM_ANALYTICS_TOKEN] = analyticsToken;
     parameters[PARAM_EVENT_TYPE] = event;
     parameters[PARAM_SDK_PLATFORM] = 4; // 4 = AppleTV
-
+    parameters[PARAM_MOBILE_SDK_VERSION] = "tvos-0.1";
+    parameters[PARAM_TRACKER_VERSION] = "";
+    parameters[PARAM_IFRAME] = "";
+    parameters[PARAM_IFRAME_DEPTH] = 0;
+    parameters[PARAM_PLAYER_VERSION] = "";
+    parameters[PARAM_PAGE_URL] = "";
+    parameters[PARAM_PAGE_TITLE] = "";
+    parameters[PARAM_AUTOSTART] = 1;
+    parameters[PARAM_AD_BLOCK] = 0;
+    parameters[PARAM_EMBED_ID] = embedId;
+    parameters[PARAM_RENDERING_MODE] = "";
+    parameters[PARAM_PLAYER_HOSTING] = 0;
+    parameters[PARAM_PLAYER_SIZE] = "";
     parameters = extend(parameters, data);
 
     var trackingArgs = [];
@@ -115,5 +130,20 @@ function TVOSAnalytics() {
 
   }
 
+  function _mediaParams(item) {
+    var params = {};
+    params[PARAM_MEDIA_URL] = item.url;
+    params[PARAM_ITEM_ID] = item.externalID;
+    params[PARAM_TITLE] = item.title;
+    return params;
+  }
 
+  _self._sendStart = function(item) {
+    console.log("Ping: %s", _sendEvent(EVENT_VIDEO_PLAY, _mediaParams(item)));
+  }
+
+}
+
+TVOSAnalytics.prototype.sendStart = function(item) {
+  return this._sendStart(item);
 }
