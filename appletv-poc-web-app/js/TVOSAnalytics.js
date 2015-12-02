@@ -90,7 +90,15 @@ function TVOSAnalytics() {
   }
 
 
-  function _sendEvent(parameters) {
+  function _sendEvent(event, data) {
+    var parameters = {};
+    parameters[PARAM_NONCE] = Math.random().toFixed(16).substr(2, 16);
+    parameters[PARAM_ANALYTICS_TOKEN] = analyticsToken;
+    parameters[PARAM_EVENT_TYPE] = event;
+    parameters[PARAM_SDK_PLATFORM] = 4; // 4 = AppleTV
+
+    parameters = extend(parameters, data);
+
     var trackingArgs = [];
 
     for (var key in parameters) {
