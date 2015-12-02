@@ -1,4 +1,4 @@
-var OPTIONS, CONFIG, PLAYLISTS, ITEMS;
+var OPTIONS, CONFIG, PLAYLISTS, MEDIA_ITEMS;
 var templateLoader;
 var domParser;
 var analytics;
