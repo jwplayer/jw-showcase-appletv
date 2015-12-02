@@ -1,6 +1,7 @@
 var OPTIONS, CONFIG, PLAYLISTS, ITEMS;
 var templateLoader;
 var domParser;
+var analytics;
 
 /** Launch the app **/
 App.onLaunch = function(opts) {
@@ -33,6 +34,9 @@ App.onLaunch = function(opts) {
 
 function configLoaded(config) {
   CONFIG = config;
+
+  analytics = new TVOSAnalytics();
+  analytics.embed();
 
   templateLoader = new TemplateLoader();
   templateLoader.load("templates/index.tvml", function(templateDoc) {

@@ -139,11 +139,44 @@ function TVOSAnalytics() {
   }
 
   _self._sendStart = function(item) {
-    console.log("Ping: %s", _sendEvent(EVENT_VIDEO_PLAY, _mediaParams(item)));
+    var evt = _mediaParams(item);
+    evt[PARAM_VIDEO_LENGTH] = "";
+    evt[PARAM_QUANTILES] = "";
+    evt[PARAM_VIDEO_SIZE] = "";
+    evt[PARAM_FIRST_FRAME] = "";
+    evt[PARAM_PROVIDER] = "";
+    evt[PARAM_PLAY_REASON] = "";
+
+    console.log("Ping: %s", _sendEvent(EVENT_VIDEO_PLAY, evt));
+  }
+
+  _self._sendEmbed = function() {
+    var evt = {};
+    evt[PARAM_FLASH_VERSION] = "";
+    evt[PARAM_PLAYER_HEIGHT] = "1080"; // Hard-coded to 1080p
+    evt[PARAM_PLAYER_WIDTH] = "1920"; // Hard-coded to 1080p
+    evt[PARAM_SETUP_TIME] = -1; // TODO: instrument app setup time
+    evt[PARAM_VISUAL_PLAYLIST] = 0;
+    evt[PARAM_POSTER_IMAGE] = 1;
+    evt[PARAM_DISPLAY_DESCRIPTION] = 0;
+    evt[PARAM_SKIN_NAME] = "";
+    evt[PARAM_CHROMELESS_PLAYER] = 0;
+    evt[PARAM_SHARING] = 0;
+    evt[PARAM_RELATED] = 0;
+    evt[PARAM_CASTING_BLOCK] = 0;
+    evt[PARAM_GA_BLOCK] = 0;
+    evt[PARAM_DASHBOARD_CONFIG_KEY] = "";
+    evt[PARAM_ADVERTISING_BLOCK] = 0; // TODO: Set this appropriately if/when ads are implemented
+
+    console.log("Ping: %s", _sendEvent(EVENT_VIDEO_PLAY, evt));
   }
 
 }
 
-TVOSAnalytics.prototype.sendStart = function(item) {
+TVOSAnalytics.prototype.start = function(item) {
   return this._sendStart(item);
+}
+
+TVOSAnalytics.prototype.embed = function() {
+  return this._sendEmbed();
 }
