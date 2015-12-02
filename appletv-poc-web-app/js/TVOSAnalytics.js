@@ -168,7 +168,7 @@ function TVOSAnalytics() {
     evt[PARAM_DASHBOARD_CONFIG_KEY] = "";
     evt[PARAM_ADVERTISING_BLOCK] = 0; // TODO: Set this appropriately if/when ads are implemented
 
-    console.log("Ping: %s", _sendEvent(EVENT_VIDEO_PLAY, evt));
+    console.log("Ping: %s", _sendEvent(EVENT_VIDEO_EMBED, evt));
   }
 
 }

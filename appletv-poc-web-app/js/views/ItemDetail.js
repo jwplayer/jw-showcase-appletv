@@ -3,6 +3,7 @@ ViewManager.registerView("ItemDetail", function(doc) {
 
   var media_id = doc.firstChild.getAttribute("data-media-id");
   var item = MEDIA_ITEMS[media_id];
+  var started = false;
 
   var related_id = doc.firstChild.getAttribute("data-related-playlist")
   if (related_id != "undefined") {
@@ -41,10 +42,20 @@ ViewManager.registerView("ItemDetail", function(doc) {
   }
 
 
+  /** Handle player timeDidChange event **/
+  function timeHandler(evt) {
+    if (!started) {
+      // Only send the started event once per item.
+      started = true;
+      analytics.start(item);
+    }
+  }
+
 
   /** On a select event, create a Player and play the media **/
   function playMedia() {
     var player = new Player();
+    player.addEventListener("timeBoundaryDidCross", timeHandler, [0.1]);
     player.playlist = new Playlist();
     player.playlist.push(item);
     player.present();
