@@ -41,13 +41,12 @@ ViewManager.registerView("ItemDetail", function(doc) {
 
   }
 
-
-  /** Handle player timeDidChange event **/
-  function timeHandler(evt) {
-    if (!started) {
-      // Only send the started event once per item.
-      started = true;
+  /** Handle player stateDidChange event **/
+  function stateHandler(evt) {
+    if (evt.state == "begin") {
       analytics.start(item);
+    } else if (evt.state == "end") {
+      analytics.timeWatched(item, item.duration, 0);
     }
   }
 
@@ -55,7 +54,7 @@ ViewManager.registerView("ItemDetail", function(doc) {
   /** On a select event, create a Player and play the media **/
   function playMedia() {
     var player = new Player();
-    player.addEventListener("timeBoundaryDidCross", timeHandler, [0.1]);
+    player.addEventListener("stateDidChange", stateHandler);
     player.playlist = new Playlist();
     player.playlist.push(item);
     player.present();

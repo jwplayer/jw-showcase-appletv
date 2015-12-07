@@ -147,8 +147,8 @@ function TVOSAnalytics() {
     evt[PARAM_PROVIDER] = "";
     evt[PARAM_PLAY_REASON] = "";
 
-    console.log("Ping: %s", _sendEvent(EVENT_VIDEO_PLAY, evt));
-  }
+    _sendEvent(EVENT_VIDEO_PLAY, evt);
+  };
 
   _self._sendEmbed = function() {
     var evt = {};
@@ -168,8 +168,42 @@ function TVOSAnalytics() {
     evt[PARAM_DASHBOARD_CONFIG_KEY] = "";
     evt[PARAM_ADVERTISING_BLOCK] = 0; // TODO: Set this appropriately if/when ads are implemented
 
-    console.log("Ping: %s", _sendEvent(EVENT_VIDEO_EMBED, evt));
+    _sendEvent(EVENT_VIDEO_EMBED, evt);
+  };
+
+  function _numQuantiles(duration) {
+    if (duration == 0) return 0;
+    else if (duration < 30) return 1;
+    else if (duration < 60) return 4;
+    else if (duration < 180) return 8;
+    else if (duration < 300) return 16;
+    else return 32;
   }
+
+  function _pctQuantiles(current, duration) {
+    var numq = _numQuantiles(duration);
+    var q = 128 / numq;
+    var currentQuantile = Math.floor( ( (current / duration) * 128) / q) * q;
+    return currentQuantile;
+  }
+
+  _self._sendTime = function(item, currentTime, lastTime) {
+    var evt = _mediaParams(item);
+
+    var currentQuantile = _pctQuantiles(currentTime, item.duration);
+    var lastQuantile = _pctQuantiles(lastTime, item.duration)
+    var numQuantiles = _numQuantiles(item.duration);
+
+    evt[PARAM_TIME_WATCHED] = currentQuantile;
+    evt[PARAM_QUANTILES] = _numQuantiles(item.duration);
+    evt[PARAM_TIME_INTERVAL] = item.duration; // Hard-code to item duration, since we're only sending the last time event for now.
+    // TODO: implement time interval metric properly
+
+    if (currentQuantile > lastQuantile) {
+      _sendEvent(EVENT_TIME_WATCHED, evt);
+    }
+
+  };
 
 }
 
@@ -179,4 +213,8 @@ TVOSAnalytics.prototype.start = function(item) {
 
 TVOSAnalytics.prototype.embed = function() {
   return this._sendEmbed();
+}
+
+TVOSAnalytics.prototype.timeWatched = function(item, currentTime, lastTime) {
+  return this._sendTime(item, currentTime, lastTime);
 }
