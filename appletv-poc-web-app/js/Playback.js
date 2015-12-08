@@ -13,7 +13,6 @@ function Playback(mediaItem) {
     player.addEventListener("stateDidChange", stateHandler);
     player.addEventListener("timeDidChange", timeHandler, { interval: 1 });
     player.addEventListener("timeBoundaryDidCross", timeHandler, [item.duration]);
-    player.addEventListener("timedMetadata", metaHandler, ["time"]);
     player.playlist = new Playlist();
     player.playlist.push(item);
 

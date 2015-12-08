@@ -94,7 +94,7 @@ function TVOSAnalytics(item) {
     return `h=${h}`;
   }
 
-
+  /** Generate ping URL and send it **/
   function _sendEvent(event, data) {
     var parameters = {};
     parameters[PARAM_NONCE] = Math.random().toFixed(16).substr(2, 16);
@@ -116,19 +116,28 @@ function TVOSAnalytics(item) {
     parameters[PARAM_PLAYER_SIZE] = "";
     parameters = extend(parameters, data);
 
+    /** Generate list of key/value URL parameter pairs **/
     var trackingArgs = [];
-
     for (var key in parameters) {
       var value = encodeURIComponent(parameters[key]);
       trackingArgs.push(`${key}=${value}`);
     }
 
+    /** Generate ping request argument string **/
     var trackingArgsStr = trackingArgs.join("&");
+
+    /** MD5 hash for server-side integrity check **/
     var hash = _hashParam(trackingArgsStr);
 
-    var trackerURL = `//${serverURL}/${apiVersion}/${bucketName}/ping.gif?${hash}&${trackingArgsStr}`;
+    /** Compose ping URL **/
+    var trackerURL = `https://${serverURL}/${apiVersion}/${bucketName}/ping.gif?${hash}&${trackingArgsStr}`;
 
-    _requestURL(trackerURL);
+    /** Make a request to the analytics endpoint. No need to wait for a result **/
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", trackerURL);
+    xhr.send();
+
+    /** Record the last time a ping was sent **/
     lastPingSent = new Date();
 
     return trackerURL;
