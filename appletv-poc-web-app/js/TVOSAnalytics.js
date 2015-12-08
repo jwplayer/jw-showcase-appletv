@@ -9,7 +9,9 @@ function TVOSAnalytics(item) {
     apiVersion = "v1",
     bucketName = "jwplayer6",
     analyticsToken = CONFIG['analyticsToken'],
-    embedId = _genId(12);
+    embedId = _genId(12),
+    lastTime = 0,
+    lastPingSent;
 
 
   /** @const */ var PARAM_CHECKSUM = 'h';
@@ -126,6 +128,9 @@ function TVOSAnalytics(item) {
 
     var trackerURL = `//${serverURL}/${apiVersion}/${bucketName}/ping.gif?${hash}&${trackingArgsStr}`;
 
+    _requestURL(trackerURL);
+    lastPingSent = new Date();
+
     return trackerURL;
 
   }
@@ -187,6 +192,10 @@ function TVOSAnalytics(item) {
     return currentQuantile;
   }
 
+  function _timeDiff(now, last) {
+    return Math.floor((now.getTime() - last.getTime())/1000);
+  }
+
   _self._sendTime = function(currentTime) {
     var evt = _mediaParams();
 
@@ -196,12 +205,13 @@ function TVOSAnalytics(item) {
 
     evt[PARAM_TIME_WATCHED] = currentQuantile;
     evt[PARAM_QUANTILES] = _numQuantiles(item.duration);
-    evt[PARAM_TIME_INTERVAL] = item.duration; // Hard-code to item duration, since we're only sending the last time event for now.
-    // TODO: implement time interval metric properly
+    evt[PARAM_TIME_INTERVAL] = _timeDiff(new Date(), lastPingSent);
 
-    if (currentQuantile > lastQuantile) {
+    if (currentQuantile != lastQuantile) {
       _sendEvent(EVENT_TIME_WATCHED, evt);
     }
+
+    lastTime = currentTime;
 
   };
 
