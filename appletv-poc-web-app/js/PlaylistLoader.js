@@ -75,6 +75,7 @@ function PlaylistLoader() {
 
     var content = self._getElementsByTagNameNS(itemXML, "media", "content");
     if (content.length > 0) {
+      newItem.duration = Number(content[0].getAttribute("duration"));
       var thumbs = self._getElementsByTagNameNS(content[0], "media", "thumbnail");
       if (thumbs.length > 0) {
         newItem.artworkImageURL = thumbs[0].getAttribute("url");

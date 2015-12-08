@@ -1,4 +1,4 @@
-var OPTIONS, CONFIG, PLAYLISTS, ITEMS;
+var OPTIONS, CONFIG, PLAYLISTS, MEDIA_ITEMS;
 var templateLoader;
 var domParser;
 
@@ -7,7 +7,7 @@ App.onLaunch = function(opts) {
   OPTIONS = opts;
   PLAYLISTS = {};
   MEDIA_ITEMS = {};
-  
+
   domParser = new DOMParser();
 
   console.log("Initing with options %o", OPTIONS);
@@ -16,7 +16,9 @@ App.onLaunch = function(opts) {
     `${OPTIONS.baseURL}/js/TemplateLoader.js`,
     `${OPTIONS.baseURL}/js/ViewManager.js`,
     `${OPTIONS.baseURL}/js/PlaylistLoader.js`,
-    `${OPTIONS.baseURL}/js/ConfigLoader.js`
+    `${OPTIONS.baseURL}/js/ConfigLoader.js`,
+    `${OPTIONS.baseURL}/js/TVOSAnalytics.js`,
+    `${OPTIONS.baseURL}/js/Playback.js`
   ];
 
   evaluateScripts(scripts, function(success) {
@@ -32,6 +34,9 @@ App.onLaunch = function(opts) {
 
 function configLoaded(config) {
   CONFIG = config;
+
+  var analytics = new TVOSAnalytics();
+  analytics.embed();
 
   templateLoader = new TemplateLoader();
   templateLoader.load("templates/index.tvml", function(templateDoc) {
