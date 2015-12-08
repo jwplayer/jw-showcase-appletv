@@ -3,7 +3,7 @@
   plugin, but for MVP, we'll hand-roll something simple, with a lot of
   hard-coded parameters.
 **/
-function TVOSAnalytics() {
+function TVOSAnalytics(item) {
   var _self = this,
     serverURL = "jwpltx.com",
     apiVersion = "v1",
@@ -130,7 +130,7 @@ function TVOSAnalytics() {
 
   }
 
-  function _mediaParams(item) {
+  function _mediaParams() {
     var params = {};
     params[PARAM_MEDIA_URL] = item.url;
     params[PARAM_ITEM_ID] = item.externalID;
@@ -138,8 +138,8 @@ function TVOSAnalytics() {
     return params;
   }
 
-  _self._sendStart = function(item) {
-    var evt = _mediaParams(item);
+  _self._sendStart = function() {
+    var evt = _mediaParams();
     evt[PARAM_VIDEO_LENGTH] = "";
     evt[PARAM_QUANTILES] = "";
     evt[PARAM_VIDEO_SIZE] = "";
@@ -187,8 +187,8 @@ function TVOSAnalytics() {
     return currentQuantile;
   }
 
-  _self._sendTime = function(item, currentTime, lastTime) {
-    var evt = _mediaParams(item);
+  _self._sendTime = function(currentTime) {
+    var evt = _mediaParams();
 
     var currentQuantile = _pctQuantiles(currentTime, item.duration);
     var lastQuantile = _pctQuantiles(lastTime, item.duration)
@@ -207,14 +207,14 @@ function TVOSAnalytics() {
 
 }
 
-TVOSAnalytics.prototype.start = function(item) {
-  return this._sendStart(item);
+TVOSAnalytics.prototype.start = function() {
+  return this._sendStart();
 }
 
 TVOSAnalytics.prototype.embed = function() {
   return this._sendEmbed();
 }
 
-TVOSAnalytics.prototype.timeWatched = function(item, currentTime, lastTime) {
-  return this._sendTime(item, currentTime, lastTime);
+TVOSAnalytics.prototype.timeWatched = function(currentTime) {
+  return this._sendTime(currentTime);
 }

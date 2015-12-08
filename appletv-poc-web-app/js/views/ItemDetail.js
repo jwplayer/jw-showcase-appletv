@@ -3,7 +3,7 @@ ViewManager.registerView("ItemDetail", function(doc) {
 
   var media_id = doc.firstChild.getAttribute("data-media-id");
   var item = MEDIA_ITEMS[media_id];
-  var started = false;
+  var playback = new Playback(item);
 
   var related_id = doc.firstChild.getAttribute("data-related-playlist")
   if (related_id != "undefined") {
@@ -17,12 +17,11 @@ ViewManager.registerView("ItemDetail", function(doc) {
   }
 
   var playButton = doc.getElementById("play-button");
-  playButton.addEventListener("select", playMedia);
+  playButton.addEventListener("select", playback.play);
 
   function showRelated() {
     loader.loadFragment("templates/ListItem.tvml", templateLoaded, false);
   }
-
 
   function templateLoaded(template) {
     var section = doc.getElementById("related-items");
@@ -41,24 +40,5 @@ ViewManager.registerView("ItemDetail", function(doc) {
 
   }
 
-  /** Handle player stateDidChange event **/
-  function stateHandler(evt) {
-    if (evt.state == "begin") {
-      analytics.start(item);
-    } else if (evt.state == "end") {
-      analytics.timeWatched(item, item.duration, 0);
-    }
-  }
-
-
-  /** On a select event, create a Player and play the media **/
-  function playMedia() {
-    var player = new Player();
-    player.addEventListener("stateDidChange", stateHandler);
-    player.playlist = new Playlist();
-    player.playlist.push(item);
-    player.present();
-    player.play();
-  }
 
 });
