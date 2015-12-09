@@ -154,12 +154,12 @@ function TVOSAnalytics(item) {
 
   _self._sendStart = function() {
     var evt = _mediaParams();
-    evt[PARAM_VIDEO_LENGTH] = "";
-    evt[PARAM_QUANTILES] = "";
-    evt[PARAM_VIDEO_SIZE] = "";
-    evt[PARAM_FIRST_FRAME] = "";
+    evt[PARAM_VIDEO_LENGTH] = item.duration;
+    evt[PARAM_QUANTILES] = _numQuantiles(item.duration);
+    evt[PARAM_VIDEO_SIZE] = 5; // 5 = adaptive
+    evt[PARAM_FIRST_FRAME] = -1; // -1 = unsupported
     evt[PARAM_PROVIDER] = "";
-    evt[PARAM_PLAY_REASON] = "";
+    evt[PARAM_PLAY_REASON] = 1; // User interaction  TODO: If we implement auto-play recommendations, this needs to be dynamic
 
     _sendEvent(EVENT_VIDEO_PLAY, evt);
   };
