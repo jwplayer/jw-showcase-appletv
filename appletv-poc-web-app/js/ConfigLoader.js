@@ -22,25 +22,29 @@ function ConfigLoader() {
     return xhr;
   }
 
+  self._loadConfig = function(account_id, callback) {
+    var baseURL = `${OPTIONS.configService}/${account_id}`;
+    var jsonLocation = `${baseURL}/config.json`;
+    var self = this;
+
+    self._getDocument(jsonLocation, function(config) {
+      var returned = {
+        configURL: baseURL
+      };
+      for (var prop in self.defaults) {
+        returned[prop] = self.defaults[prop]
+      }
+      for (prop in config) {
+        returned[prop] = config[prop]
+      }
+
+      callback(returned);
+    });
+  }
+
 }
 
 /** Load an mRSS XML feed **/
 ConfigLoader.prototype.loadConfig = function(account_id, callback) {
-  var baseURL = `${OPTIONS.configService}/${account_id}`;
-  var jsonLocation = `${baseURL}/config.json`;
-  var self = this;
-
-  self._getDocument(jsonLocation, function(config) {
-    var returned = {
-      configURL: baseURL
-    };
-    for (var prop in self.defaults) {
-      returned[prop] = self.defaults[prop]
-    }
-    for (prop in config) {
-      returned[prop] = config[prop]
-    }
-
-    callback(returned);
-  });
+  this._loadConfig(account_id, callback);
 }
