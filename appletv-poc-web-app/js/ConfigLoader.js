@@ -50,8 +50,6 @@ function ConfigLoader() {
   function _complete() {
     _activeRequests--;
     if (_activeRequests == 0) {
-      console.log("All requests complete");
-      console.dir(_config);
       _callback(_config);
     }
   }
