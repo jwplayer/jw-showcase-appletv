@@ -96,11 +96,6 @@ function TVOSAnalytics(item) {
 
   /** Generate ping URL and send it **/
   function _sendEvent(event, data) {
-    if (!analyticsToken) {
-      // Don't send analytics pings without an analyticsToken
-      return;
-    }
-
     var parameters = {};
     parameters[PARAM_NONCE] = Math.random().toFixed(16).substr(2, 16);
     parameters[PARAM_ANALYTICS_TOKEN] = analyticsToken;
@@ -137,13 +132,17 @@ function TVOSAnalytics(item) {
     /** Compose ping URL **/
     var trackerURL = `https://${serverURL}/${apiVersion}/${bucketName}/ping.gif?${hash}&${trackingArgsStr}`;
 
+    /** Record the last time a ping was sent **/
+    lastPingSent = new Date();
+
+    /** Don't send analytics pings without an analyticsToken **/
+    if (!analyticsToken) return;
+
     /** Make a request to the analytics endpoint. No need to wait for a result **/
     var xhr = new XMLHttpRequest();
     xhr.open("GET", trackerURL);
     xhr.send();
 
-    /** Record the last time a ping was sent **/
-    lastPingSent = new Date();
 
     return trackerURL;
 
