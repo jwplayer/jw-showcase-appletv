@@ -132,13 +132,17 @@ function TVOSAnalytics(item) {
     /** Compose ping URL **/
     var trackerURL = `https://${serverURL}/${apiVersion}/${bucketName}/ping.gif?${hash}&${trackingArgsStr}`;
 
+    /** Record the last time a ping was sent **/
+    lastPingSent = new Date();
+
+    /** Don't send analytics pings without an analyticsToken **/
+    if (!analyticsToken) return;
+
     /** Make a request to the analytics endpoint. No need to wait for a result **/
     var xhr = new XMLHttpRequest();
     xhr.open("GET", trackerURL);
     xhr.send();
 
-    /** Record the last time a ping was sent **/
-    lastPingSent = new Date();
 
     return trackerURL;
 
