@@ -32,7 +32,7 @@ function ConfigLoader() {
   self._loadConfig = function(account_id, callback) {
     var baseURL = `${OPTIONS.configService}/${account_id}`;
     var jsonLocation = `${baseURL}/config.json`;
-    var analyticsTokenLocation = `http://content.jwplatform.com/accounts/${account_id}.json`;
+    var analyticsTokenLocation = `https://content.jwplatform.com/tvos/account/${account_id}.json`;
 
     _callback = callback;
     _config = extend({ configURL: baseURL }, self.defaults);
