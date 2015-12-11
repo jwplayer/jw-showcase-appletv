@@ -96,6 +96,11 @@ function TVOSAnalytics(item) {
 
   /** Generate ping URL and send it **/
   function _sendEvent(event, data) {
+    if (!analyticsToken) {
+      // Don't send analytics pings without an analyticsToken
+      return;
+    }
+
     var parameters = {};
     parameters[PARAM_NONCE] = Math.random().toFixed(16).substr(2, 16);
     parameters[PARAM_ANALYTICS_TOKEN] = analyticsToken;
