@@ -10,7 +10,7 @@ NOTE: The app is only support on 4th Generation (2015) Apple TV devices.
 
 - Populates your app's media content using RSS feeds. If you are using JW Platform, this happens auto-magically based on playlists that you specify. Using RSS feeds from other sources will require you to hack the source code.
 - Video titles, descriptions and hero images populated from RSS feed metadata.
-- Playback of HLS and MP4 video content from JW Platform playlists. You can add external URLs (for example, from your own server or CDN) to your playlists in the Content tab of your JW Player account dashboard, but they must be HLS or MP4 media.
+- Playback of HLS video content from JW Platform playlists. You can add external URLs (for example, from your own server or CDN) to your playlists in the Content tab of your JW Player account dashboard, but they must be HLS.
 - Customize the user interface with your own branding. The default app is configured for JW Player branding and content but you can easily change this to use your own assets by modifying the config.json file. Advanced customization is possible, but you will need to modify the source code.
 - Basic playback analytics reporting to your JW Dashboard.
 
