@@ -210,6 +210,9 @@ function TVOSAnalytics(item) {
   }
 
   _self._sendTime = function(currentTime) {
+    // If item duration is zero (which will be the case if duration was not set in the RSS feed) don't send time events
+    if (item.duration == 0) return;
+
     var evt = _mediaParams();
 
     var currentQuantile = _pctQuantiles(currentTime, item.duration);

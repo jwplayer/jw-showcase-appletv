@@ -70,16 +70,26 @@ function PlaylistLoader() {
     var newItem = new MediaItem();
     newItem.externalID = itemXML.getElementsByTagName("guid").item(0).textContent;
     newItem.title = itemXML.getElementsByTagName("title").item(0).textContent;
-    newItem.url = `http://content.jwplatform.com/manifests/${newItem.externalID}.m3u8`;
     newItem.description = itemXML.getElementsByTagName("description").item(0).textContent;
 
     var content = self._getElementsByTagNameNS(itemXML, "media", "content");
     if (content.length > 0) {
+      /** If the item is an external HLS stream, use that instead of the JW Platform stream **/
+      if (content[0].getAttribute("type") == "application/vnd.apple.mpegurl") {
+        //TODO: figure out the duration of externally hosted content, since AppleTV doesn't appear to expose this during playback
+        newItem.url = content[0].getAttribute("url");
+      }
+
       newItem.duration = Number(content[0].getAttribute("duration"));
       var thumbs = self._getElementsByTagNameNS(content[0], "media", "thumbnail");
       if (thumbs.length > 0) {
         newItem.artworkImageURL = thumbs[0].getAttribute("url");
       }
+    }
+
+    /** If no external HLS stream was specified, load the stream from JW Platform **/
+    if (!newItem.url) {
+      newItem.url = `http://content.jwplatform.com/manifests/${newItem.externalID}.m3u8`;
     }
 
     return newItem;
