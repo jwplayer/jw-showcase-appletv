@@ -69,8 +69,8 @@ function PlaylistLoader() {
   self.parseItem = function(itemXML) {
     var newItem = new MediaItem();
     newItem.externalID = itemXML.getElementsByTagName("guid").item(0).textContent;
-    newItem.title = itemXML.getElementsByTagName("title").item(0).textContent;
-    newItem.description = itemXML.getElementsByTagName("description").item(0).textContent;
+    newItem.title = he.encode(itemXML.getElementsByTagName("title").item(0).textContent);
+    newItem.description = he.encode(itemXML.getElementsByTagName("description").item(0).textContent);
 
     var content = self._getElementsByTagNameNS(itemXML, "media", "content");
     if (content.length > 0) {
