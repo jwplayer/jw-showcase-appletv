@@ -69,6 +69,12 @@ function PlaylistLoader() {
   self.parseItem = function(itemXML) {
     var newItem = new MediaItem();
     newItem.externalID = itemXML.getElementsByTagName("guid").item(0).textContent;
+
+    /**
+      Use "he" (HTML Entity) encoder to handle html-unsafe characters, such as "&"
+      This addresses the Apple TV aversion to rendering CDATA blocks, without
+      which the built-in DOM parser barfs on those characters.
+    **/
     newItem.title = he.encode(itemXML.getElementsByTagName("title").item(0).textContent);
     newItem.description = he.encode(itemXML.getElementsByTagName("description").item(0).textContent);
 
