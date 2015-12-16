@@ -13,6 +13,7 @@ App.onLaunch = function(opts) {
   console.log("Initing with options %o", OPTIONS);
 
   var scripts = [
+    `${OPTIONS.baseURL}/js/he.js`,
     `${OPTIONS.baseURL}/js/TemplateLoader.js`,
     `${OPTIONS.baseURL}/js/ViewManager.js`,
     `${OPTIONS.baseURL}/js/PlaylistLoader.js`,
