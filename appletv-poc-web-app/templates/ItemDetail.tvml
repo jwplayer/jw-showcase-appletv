@@ -38,9 +38,8 @@
       <stack>
         <title>${this.item.title}</title>
 
-        <description allowsZooming="true">
-          <![CDATA[${this.item.description}]]>
-        </description>
+        <description allowsZooming="true">${this.item.description}</description>
+
         <row>
           <buttonLockup class="playBtn" id="play-button">
             <text>Play Video</text>
