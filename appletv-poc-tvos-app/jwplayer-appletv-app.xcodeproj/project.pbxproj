@@ -84,7 +84,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0710;
-				ORGANIZATIONNAME = "Pablo Schklowsky";
+				ORGANIZATIONNAME = "JW Player";
 				TargetAttributes = {
 					6E566F7B1BE3BC5B00CCB4DC = {
 						CreatedOnToolsVersion = 7.1;
