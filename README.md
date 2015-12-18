@@ -42,6 +42,7 @@ Due to the lack of UIWebView support in tvOS, the app is not based on the HTML5 
 ## Requirements
 
 - Apple Xcode 7.1 or later
+- Apple TV 4th generation (2015) running tvOS 9.0 or later
 - A text editor
-- An HTTP server (or Amazon S3 bucket, etc.) to host your app's TVML, JavaScript, and config files
-- An Apple Developer account (only required if you want to list your app in the Apple Store)
+- An HTTP server (or Amazon S3 bucket, etc.) to host your app's TVML, JavaScript, and config files.
+- An Apple Developer account (only required if you want to list your app in the Apple Store).
