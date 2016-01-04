@@ -16,7 +16,6 @@
  
 //
 //  AppDelegate.swift
-//  tvOS Client-Server
 //
 //  Created by Pablo Schklowsky on 10/30/15.
 //  Copyright © 2015 Pablo Schklowsky. All rights reserved.
@@ -31,8 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     var window: UIWindow?
     var appController: TVApplicationController?
 
-    // Uncomment the following line to debug locally
-    // static let TVBaseURL = "http://localhost/appletv/appletv-web-app"
+    // Uncomment the following line to debug 
+    // static let TVBaseURL = "http://localhost/appletv/jwplayer-appletv-web-app"
     static let TVBaseURL = "https://tvos.jwpsrv.com"
     static let TVConfigURL = "\(AppDelegate.TVBaseURL)/resources/configs"
     static let TVBootURL = "\(AppDelegate.TVBaseURL)/js/application.js"
