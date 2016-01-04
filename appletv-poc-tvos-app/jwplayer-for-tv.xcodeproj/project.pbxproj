@@ -12,7 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6E566F7C1BE3BC5B00CCB4DC /* jwplayer-appletv-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "jwplayer-appletv-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E566F7C1BE3BC5B00CCB4DC /* jwplayer-for-tv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "jwplayer-for-tv.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E566F7F1BE3BC5B00CCB4DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E566F861BE3BC5B00CCB4DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E566F881BE3BC5B00CCB4DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -32,7 +32,7 @@
 		6E566F731BE3BC5B00CCB4DC = {
 			isa = PBXGroup;
 			children = (
-				6E566F7E1BE3BC5B00CCB4DC /* appletv-poc-tvos-app */,
+				6E566F7E1BE3BC5B00CCB4DC /* jwplayer-for-tv */,
 				6E566F7D1BE3BC5B00CCB4DC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,28 +40,28 @@
 		6E566F7D1BE3BC5B00CCB4DC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6E566F7C1BE3BC5B00CCB4DC /* jwplayer-appletv-app.app */,
+				6E566F7C1BE3BC5B00CCB4DC /* jwplayer-for-tv.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6E566F7E1BE3BC5B00CCB4DC /* appletv-poc-tvos-app */ = {
+		6E566F7E1BE3BC5B00CCB4DC /* jwplayer-for-tv */ = {
 			isa = PBXGroup;
 			children = (
 				6E566F7F1BE3BC5B00CCB4DC /* AppDelegate.swift */,
 				6E566F861BE3BC5B00CCB4DC /* Assets.xcassets */,
 				6E566F881BE3BC5B00CCB4DC /* Info.plist */,
 			);
-			name = "appletv-poc-tvos-app";
+			name = "jwplayer-for-tv";
 			path = "tvOS Client-Server";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6E566F7B1BE3BC5B00CCB4DC /* jwplayer-appletv-app */ = {
+		6E566F7B1BE3BC5B00CCB4DC /* jwplayer-for-tv */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6E566F8B1BE3BC5B00CCB4DC /* Build configuration list for PBXNativeTarget "jwplayer-appletv-app" */;
+			buildConfigurationList = 6E566F8B1BE3BC5B00CCB4DC /* Build configuration list for PBXNativeTarget "jwplayer-for-tv" */;
 			buildPhases = (
 				6E566F781BE3BC5B00CCB4DC /* Sources */,
 				6E566F791BE3BC5B00CCB4DC /* Frameworks */,
@@ -71,9 +71,9 @@
 			);
 			dependencies = (
 			);
-			name = "jwplayer-appletv-app";
+			name = "jwplayer-for-tv";
 			productName = "tvOS Client-Server";
-			productReference = 6E566F7C1BE3BC5B00CCB4DC /* jwplayer-appletv-app.app */;
+			productReference = 6E566F7C1BE3BC5B00CCB4DC /* jwplayer-for-tv.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -91,7 +91,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6E566F771BE3BC5B00CCB4DC /* Build configuration list for PBXProject "jwplayer-appletv-app" */;
+			buildConfigurationList = 6E566F771BE3BC5B00CCB4DC /* Build configuration list for PBXProject "jwplayer-for-tv" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -104,7 +104,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6E566F7B1BE3BC5B00CCB4DC /* jwplayer-appletv-app */,
+				6E566F7B1BE3BC5B00CCB4DC /* jwplayer-for-tv */,
 			);
 		};
 /* End PBXProject section */
@@ -221,7 +221,7 @@
 				INFOPLIST_FILE = "tvOS Client-Server/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jwplayer.appletv-app";
-				PRODUCT_NAME = "jwplayer-appletv-app";
+				PRODUCT_NAME = "jwplayer-for-tv";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
@@ -234,7 +234,7 @@
 				INFOPLIST_FILE = "tvOS Client-Server/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jwplayer.appletv-app";
-				PRODUCT_NAME = "jwplayer-appletv-app";
+				PRODUCT_NAME = "jwplayer-for-tv";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
@@ -242,7 +242,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6E566F771BE3BC5B00CCB4DC /* Build configuration list for PBXProject "jwplayer-appletv-app" */ = {
+		6E566F771BE3BC5B00CCB4DC /* Build configuration list for PBXProject "jwplayer-for-tv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6E566F891BE3BC5B00CCB4DC /* Debug */,
@@ -251,7 +251,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6E566F8B1BE3BC5B00CCB4DC /* Build configuration list for PBXNativeTarget "jwplayer-appletv-app" */ = {
+		6E566F8B1BE3BC5B00CCB4DC /* Build configuration list for PBXNativeTarget "jwplayer-for-tv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6E566F8C1BE3BC5B00CCB4DC /* Debug */,
