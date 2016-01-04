@@ -53,7 +53,7 @@
 				6E566F881BE3BC5B00CCB4DC /* Info.plist */,
 			);
 			name = "jwplayer-for-tv";
-			path = "tvOS Client-Server";
+			path = "jwplayer-for-tv";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
