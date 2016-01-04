@@ -72,7 +72,7 @@
 			dependencies = (
 			);
 			name = "jwplayer-for-tv";
-			productName = "tvOS Client-Server";
+			productName = "jwplayer-for-tv";
 			productReference = 6E566F7C1BE3BC5B00CCB4DC /* jwplayer-for-tv.app */;
 			productType = "com.apple.product-type.application";
 		};
