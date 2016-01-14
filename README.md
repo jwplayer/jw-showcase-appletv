@@ -1,6 +1,6 @@
 # JW Player for Apple TV
 
-This app enables you to easily put your JW Player-hosted video content on the new Apple TV with no coding and minimal configuration. It works with any JW Player edition, from Free to Enterprise (note that usage will count against your monthly JW streaming limits).
+This app enables you to easily put your JW Player-hosted video content on the new Apple TV® with no coding and minimal configuration. It works with any JW Player edition, from Free to Enterprise (note that usage will count against your monthly JW streaming limits).
 
 You can use the app with other content delivery platforms (or your own web server), but you will need to modify the source code.
 
@@ -16,28 +16,29 @@ NOTE: The app is only support on 4th Generation (2015) Apple TV devices.
 
 ### Unsupported Features
 
-Due to the lack of UIWebView support in tvOS, the app is not based on the HTML5 JW Player, so some features are not yet implemented. We will continue to add features to the app and always welcome pull requests from the community.
+Due to the lack of UIWebView support in tvOS, our app framework is not based on the HTML5 JW Player, so some features are not yet implemented. We will continue to add features and always welcome pull requests from the community.
 
 - Ad integrations (VAST, VPAID, GoogleIMA, etc.)
-- Security-related features (encrypted HLS, DRM, tokenized URLs)
+- Security-related features (encrypted HLS, DRM, signed URLs)
 - Captions
+- Search
 
 ## Usage Instructions (JW Platform integration)
 
 1. Log in to your [JW Player Dashboard](https://dashboard.jwplayer.com). If you do not have an account, you can [create a free one](http://www.jwplayer.com).
 1. Click Account > API Keys and copy your API key (for example, `WT2yg4NU`).
 1. Click Content > Playlists. Click the title of a playlist that you want to include in your app.
-1. In the playlist details page that opens, record the Playlist ID (for example, `PQkCnnIH`). You can add as many playlists as you want to the app and also specify one "featured" playlist.
-1. Clone the JW Player for Apple TV repo or [download the Zip  archive](https://github.com/jwplayer/appletv/archive/master.zip).
+1. In the playlist details page that opens, record the Playlist ID (for example, `PQkCnnIH`). Repeat this for all the playlists that you want int your app. You can add as many playlists as you want and also specify one "featured" playlist.
+1. Clone this repo or [download the Zip  archive](https://github.com/jwplayer/appletv/archive/master.zip).
 1. Copy the `jwplayer-appletv-web-app` directory to your web app server.
 1. In the `jwplayer-appletv-web-app/resources/configs` directory, rename the `VCyJXbpY` directory to the JW Player API key that you recorded in step 2.
 1. Open the `config.json` file in a text editor and replace the default values with your own. The recommended image sizes are 1920x1080 for the `splashScreen` image and 1920x400 for the `bannerImage`.
 1. Open the `jwplayer-appletv-tvos-app/jwplayer-for-tv.xcodeproj` project in Xcode.
 1. Open the `AppDelegate.swift` file. Change the `baseURL` variable to your web app server location.
-1. Open the `info.plist` file. Change the `jwplayer.account_key` value to your JW Player API key, and the `Bundle name` to your app name.
-2. Open the `Assets.xcassets` bundle and replace the top shelf and default app icon assets with your own images. For image specs, see the [AppleTV Branding Guide](jwplayer-appletv-app-branding.pdf) in this repo.
-1. Build the project in Xcode. We recommend running the app in the Xcode emulator to test that everything is configured properly. For instructions on using the emulator, see the Xcode documentation.
-1. Submit your app to the Apple App Store. (See [instructions](https://developer.apple.com/tvos/submit/))
+1. Open the `info.plist` file. Change the `jwplayer.account_key` value to the JW Player API key that you recorded in step 2, and the `Bundle name` to your desired app name.
+2. Open the `Assets.xcassets` bundle and replace the top shelf and default app icon assets with your own images. For image specs, see the [AppleTV Branding Guide](jwplayer-appletv-app-branding.pdf) in this repo. You can further customize your app by styling the TVML templates. See the [TVML documentation](https://developer.apple.com/library/tvos/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/index.html) for more details.
+1. Build the project in Xcode. We recommend running the app in the Xcode Apple TV emulator to test that everything is configured properly. For instructions on using the emulator, see the Xcode documentation.
+1. Submit your app to the Apple App Store. (See [instructions and guidelines](https://developer.apple.com/tvos/submit/))
 
 ## Requirements
 
@@ -46,3 +47,5 @@ Due to the lack of UIWebView support in tvOS, the app is not based on the HTML5 
 - A text editor
 - An HTTP server (or Amazon S3 bucket, etc.) to host your app's TVML, JavaScript, and config files.
 - An Apple Developer account (only required if you want to list your app in the Apple Store).
+
+Apple TV is a registered trademarks of Apple, Inc.
