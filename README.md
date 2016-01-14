@@ -48,4 +48,4 @@ Due to the lack of UIWebView support in tvOS, our app framework is not based on 
 - An HTTP server (or Amazon S3 bucket, etc.) to host your app's TVML, JavaScript, and config files.
 - An Apple Developer account (only required if you want to list your app in the Apple Store).
 
-Apple TV is a registered trademarks of Apple, Inc.
+Apple TV is a registered trademark of Apple, Inc.
