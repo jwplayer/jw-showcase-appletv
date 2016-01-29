@@ -4,7 +4,7 @@ This app enables you to easily put your JW Player-hosted video content on the ne
 
 You can use the app with other content delivery platforms (or your own web server), but you will need to modify the source code.
 
-NOTE: The app is only support on 4th Generation (2015) Apple TV devices.
+NOTE: The app is only supported on 4th Generation (2015) Apple TV devices.
 
 ## Supported features
 

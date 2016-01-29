@@ -13,13 +13,6 @@
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  **/
- 
-//
-//  AppDelegate.swift
-//
-//  Created by Pablo Schklowsky on 10/30/15.
-//  Copyright © 2015 Pablo Schklowsky. All rights reserved.
-//
 
 import UIKit
 import TVMLKit
@@ -30,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     var window: UIWindow?
     var appController: TVApplicationController?
 
-    // Uncomment the following line to debug 
+    // Uncomment the following line to debug
     // static let TVBaseURL = "http://localhost/appletv/jwplayer-appletv-web-app"
     static let TVBaseURL = "https://tvos.jwpsrv.com"
     static let TVConfigURL = "\(AppDelegate.TVBaseURL)/resources/configs"
@@ -39,17 +32,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
+
         let infoBundle = NSBundle.mainBundle()
-        
+
         let appControllerContext = TVApplicationControllerContext()
-        
-        
+
+
         appControllerContext.launchOptions["baseURL"] = AppDelegate.TVBaseURL
         appControllerContext.launchOptions["configService"] = AppDelegate.TVConfigURL
         appControllerContext.launchOptions["account_key"] = infoBundle.infoDictionary?["jwplayer.account_key"]
         appControllerContext.javaScriptApplicationURL = NSURL(string: AppDelegate.TVBootURL)!
-        
+
         if let options = launchOptions {
             for (kind, value) in options {
                 if let kindStr = kind as? String {
@@ -57,10 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
                 }
             }
         }
-        
+
         self.appController = TVApplicationController(context: appControllerContext, window: self.window, delegate: self)
-        
+
         return true
     }
 }
-
