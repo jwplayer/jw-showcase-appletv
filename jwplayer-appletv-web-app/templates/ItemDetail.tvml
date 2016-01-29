@@ -31,11 +31,8 @@
   <productTemplate class="darkBackgroundColor" theme="dark">
 
     <banner>
-      <heroImg src="${this.item.artworkImageURL}" />
-      <infoList>
-        <info></info>
-      </infoList>
-      <stack>
+      <heroImg src="${this.item.artworkImageURL}" style="width:640px" />
+      <stack style="width:720px; margin:100px 100px 0px 200px">
         <title>${this.item.title}</title>
 
         <description allowsZooming="true">${this.item.description}</description>
