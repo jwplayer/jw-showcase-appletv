@@ -1,0 +1,7 @@
+.s3ignore
+.git/*
+.gitignore
+.DS_Store
+
+# User Resource Files
+resources/configs/*
