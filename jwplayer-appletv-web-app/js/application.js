@@ -14,6 +14,7 @@
 * governing permissions and limitations under the License.
 **/
 
+var VERSION = '1.0.0';
 var OPTIONS, CONFIG, PLAYLISTS, MEDIA_ITEMS;
 var templateLoader;
 var domParser;

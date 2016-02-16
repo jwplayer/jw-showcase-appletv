@@ -117,7 +117,7 @@ function TVOSAnalytics(item) {
     parameters[PARAM_ANALYTICS_TOKEN] = analyticsToken;
     parameters[PARAM_EVENT_TYPE] = event;
     parameters[PARAM_SDK_PLATFORM] = 4; // 4 = AppleTV
-    parameters[PARAM_MOBILE_SDK_VERSION] = "tvos-0.2";
+    parameters[PARAM_MOBILE_SDK_VERSION] = VERSION;
     parameters[PARAM_TRACKER_VERSION] = "";
     parameters[PARAM_IFRAME] = "";
     parameters[PARAM_IFRAME_DEPTH] = 0;
