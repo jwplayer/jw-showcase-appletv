@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document>
+<head>
+  <style>
+    .advance-overlay {
+      text-align: center;
+    }
+    .countdown {
+      color: rgb(255, 255, 255);
+      tv-text-style: headline;
+      background-color: rgba(0, 0, 0, 0.5);
+      height: 140;
+      tv-position: top;
+    }
+  </style>
+</head>
+<divTemplate class="advance-overlay">
+  <description class="countdown">${autoAdvanceMessage}</description>
+</divTemplate>
+</document>

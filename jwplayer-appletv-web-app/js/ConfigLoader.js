@@ -22,11 +22,12 @@ function ConfigLoader() {
 
   self.defaults = {
     "playlists": [],
-    "featuredPlaylist": "",
+    "featuredPlaylist": {},
     "splashScreen": "",
     "bannerImage": "",
     "backgroundColor": "#000000",
-    "analyticsToken": ""
+    "analyticsToken": "",
+    "autoAdvanceMessage": "The next video will start in ${offset} seconds."
   };
 
   /** Load a JSON document and send it to a handler **/

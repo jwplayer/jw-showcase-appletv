@@ -42,11 +42,15 @@ function PlaylistLoader() {
 
     var listTitle = channel.getElementsByTagName("title").item(0).textContent;
     newPlaylist['title'] = listTitle;
-    newPlaylist['id'] = this.list_id;
+    newPlaylist['id'] = this.playlist.playlistId;
+    newPlaylist['config'] = this.playlist;
 
     var mediaItems = channel.getElementsByTagName("item");
     for (var i = 0; i < mediaItems.length; i++) {
       var m = self.parseItem(mediaItems.item(i));
+      // Save the playlistId in the MediaItem so that we can retrace the
+      // MediaItem back to the correct playlist in the Playback object.
+      m.playlistId = newPlaylist.id;
       newPlaylist.items.push(m);
     }
 
@@ -121,9 +125,9 @@ function PlaylistLoader() {
 
 
 /** Load an mRSS XML feed **/
-PlaylistLoader.prototype.loadPlaylist = function(list_id, callback) {
-  this._getDocument(`http://content.jwplatform.com/feeds/${list_id}.rss`, this._parsePlaylist.bind({
-    list_id: list_id,
+PlaylistLoader.prototype.loadPlaylist = function(playlist, callback) {
+  this._getDocument(`http://content.jwplatform.com/feeds/${playlist.playlistId}.rss`, this._parsePlaylist.bind({
+    playlist: playlist,
     callback: callback
   }));
 }

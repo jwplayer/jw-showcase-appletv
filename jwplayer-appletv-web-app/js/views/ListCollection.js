@@ -20,9 +20,12 @@ ViewManager.registerView("ListCollection", function(doc) {
   var listLoader = new PlaylistLoader();
   var collectionDoc = doc;
 
-  var playlists = collectionDoc.firstChild.getAttribute("data-playlists").split(",");
-  var featured = collectionDoc.firstChild.getAttribute("data-featured");
-  if (featured === "undefined") featured = undefined;
+  // Unfortunately we can not read this from TVML anymore since JSONArrays
+  // and Objects don't serialize well with JS template syntax.
+  // For this reason we read this from the global scope.
+  // Unfortunately this also makes this template less flexible.
+  var playlists = CONFIG.playlists;
+  var featured = CONFIG.featuredPlaylist;
 
   var collectionList = collectionDoc.getElementsByTagName("collectionList").item(0);
 
@@ -46,24 +49,28 @@ ViewManager.registerView("ListCollection", function(doc) {
       if (!templates[t]) return;
     }
 
-    // Display the featured playlist
-    if (featured) insertPlaylist(featured);
+    // First insert the featured playlist.
+    if (featured.playlistId) {
+      insertPlaylist(featured);
+    }
 
-    // Insert the rest of the playlists
-    playlists.forEach(insertPlaylist);
+    // Then insert the rest.
+    for (var i = 0; i < playlists.length; i++) {
+      insertPlaylist(playlists[i]);
+    }
   }
 
-  function insertPlaylist(list_id) {
+  function insertPlaylist(playlist) {
     var placeholder;
 
-    if (list_id != featured) {
+    if (playlist.playlistId != featured.playlistId) {
       placeholder = document.createElement("div");
        // Create a placecholder in the CollectionList so the lists are inserted in order
       collectionList.appendChild(placeholder);
     }
 
     // Bind the placeholder to the callback so it can be replaced with the templated markup
-    listLoader.loadPlaylist(list_id, renderPlaylist.bind(placeholder));
+    listLoader.loadPlaylist(playlist, renderPlaylist.bind(placeholder));
   }
 
   function renderPlaylist(list) {
@@ -71,7 +78,7 @@ ViewManager.registerView("ListCollection", function(doc) {
       template,
       placeholder = this;
 
-    if (list.id == featured) {
+    if (list.id == featured.playlistId) {
       section = document.getElementById("featured-playlist");
       template = templates.featured;
 
