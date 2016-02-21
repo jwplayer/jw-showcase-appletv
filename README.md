@@ -43,19 +43,11 @@ Due to the lack of UIWebView support in tvOS, our app framework is not based on 
 
 ## Auto Advance
 
-You can enable auto advance on a per playlist basis by editing `config.json`, and setting the `autoAdvance` boolean to true.
-Set the `autoAdvanceWarningOffset` to the amount of seconds that you want the warning message to display before playback of the current item ends.
+You can enable auto advance by editing `config.json`, and setting the `autoAdvance` boolean to true.
+The Auto Advance feature has the following configuration options:
 
-Example:
-
-```json
-"playlists": [
-  {
-    "playlistId": "K6Sl8yPJ",
-    "autoAdvance": true,
-    "autoAdvanceWarningOffset": 10
-  }]
-```
+* `autoAdvanceWarningOffset`: The amount of seconds before the end of playback of the current item to show the `autoAdvanceMessage`.
+* `autoAdvanceMessage`: The message to display before auto advancing to the next playlist item, this message takes one variable, `{$offset}`, which is the number of seconds remaining before the next video starts.
 
 ## Requirements
 
