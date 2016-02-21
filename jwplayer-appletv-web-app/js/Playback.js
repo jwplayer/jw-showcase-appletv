@@ -25,9 +25,8 @@ function Playback(mediaItem) {
     player,
     templateLoader,
     parser,
-    autoAdvance = false,
-    autoAdvanceOverlay,
-    playlistConfig;
+    autoAdvance = CONFIG.autoAdvance,
+    autoAdvanceOverlay;
 
   function init() {
     player = new Player();
@@ -42,12 +41,8 @@ function Playback(mediaItem) {
   }
 
   function initAutoAdvance() {
-    var playlist = PLAYLISTS[item.playlistId];
-
-    // Check if auto advance is enabled for this playlist
-    if (playlist.config.autoAdvance) {
-      autoAdvance = true;
-      playlistConfig = playlist.config;
+    if (autoAdvance) {
+      var playlist = PLAYLISTS[item.playlistId];
       // In case of auto advance we need to rebuild the playlist.
       var index;
       for (var i = 0; i < playlist.items.length; i++) {
@@ -122,7 +117,7 @@ function Playback(mediaItem) {
   /** Checks if the autoAdvanceOverlay should be displayed */
   function updateAutoAdvanceOverlay(playbackPosition) {
     if (autoAdvance && player.nextMediaItem &&
-      playbackPosition >= item.duration - playlistConfig.autoAdvanceWarningOffset) {
+      playbackPosition >= item.duration - CONFIG.autoAdvanceWarningOffset) {
       // Display the overlay
 
       var offset = item.duration - playbackPosition;

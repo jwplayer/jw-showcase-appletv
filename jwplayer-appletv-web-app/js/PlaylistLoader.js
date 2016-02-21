@@ -42,8 +42,7 @@ function PlaylistLoader() {
 
     var listTitle = channel.getElementsByTagName("title").item(0).textContent;
     newPlaylist['title'] = listTitle;
-    newPlaylist['id'] = this.playlist.playlistId;
-    newPlaylist['config'] = this.playlist;
+    newPlaylist['id'] = this.playlist;
 
     var mediaItems = channel.getElementsByTagName("item");
     for (var i = 0; i < mediaItems.length; i++) {
@@ -125,9 +124,9 @@ function PlaylistLoader() {
 
 
 /** Load an mRSS XML feed **/
-PlaylistLoader.prototype.loadPlaylist = function(playlist, callback) {
-  this._getDocument(`http://content.jwplatform.com/feeds/${playlist.playlistId}.rss`, this._parsePlaylist.bind({
-    playlist: playlist,
+PlaylistLoader.prototype.loadPlaylist = function(playlistId, callback) {
+  this._getDocument(`http://content.jwplatform.com/feeds/${playlistId}.rss`, this._parsePlaylist.bind({
+    playlist: playlistId,
     callback: callback
   }));
 }

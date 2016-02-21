@@ -22,11 +22,13 @@ function ConfigLoader() {
 
   self.defaults = {
     "playlists": [],
-    "featuredPlaylist": {},
+    "featuredPlaylist": "",
     "splashScreen": "",
     "bannerImage": "",
     "backgroundColor": "#000000",
     "analyticsToken": "",
+    "autoAdvance": false,
+    "autoAdvanceWarningOffset": 10,
     "autoAdvanceMessage": "The next video will start in ${offset} seconds."
   };
 

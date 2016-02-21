@@ -20,12 +20,9 @@ ViewManager.registerView("ListCollection", function(doc) {
   var listLoader = new PlaylistLoader();
   var collectionDoc = doc;
 
-  // Unfortunately we can not read this from TVML anymore since JSONArrays
-  // and Objects don't serialize well with JS template syntax.
-  // For this reason we read this from the global scope.
-  // Unfortunately this also makes this template less flexible.
-  var playlists = CONFIG.playlists;
-  var featured = CONFIG.featuredPlaylist;
+  var playlists = collectionDoc.firstChild.getAttribute("data-playlists").split(",");
+  var featured = collectionDoc.firstChild.getAttribute("data-featured");
+  if (featured === "undefined") featured = undefined;
 
   var collectionList = collectionDoc.getElementsByTagName("collectionList").item(0);
 
@@ -50,7 +47,7 @@ ViewManager.registerView("ListCollection", function(doc) {
     }
 
     // First insert the featured playlist.
-    if (featured.playlistId) {
+    if (featured) {
       insertPlaylist(featured);
     }
 
@@ -60,17 +57,17 @@ ViewManager.registerView("ListCollection", function(doc) {
     }
   }
 
-  function insertPlaylist(playlist) {
+  function insertPlaylist(playlistId) {
     var placeholder;
 
-    if (playlist.playlistId != featured.playlistId) {
+    if (playlistId != featured) {
       placeholder = document.createElement("div");
        // Create a placecholder in the CollectionList so the lists are inserted in order
       collectionList.appendChild(placeholder);
     }
 
     // Bind the placeholder to the callback so it can be replaced with the templated markup
-    listLoader.loadPlaylist(playlist, renderPlaylist.bind(placeholder));
+    listLoader.loadPlaylist(playlistId, renderPlaylist.bind(placeholder));
   }
 
   function renderPlaylist(list) {
@@ -78,7 +75,7 @@ ViewManager.registerView("ListCollection", function(doc) {
       template,
       placeholder = this;
 
-    if (list.id == featured.playlistId) {
+    if (list.id == featured) {
       section = document.getElementById("featured-playlist");
       template = templates.featured;
 

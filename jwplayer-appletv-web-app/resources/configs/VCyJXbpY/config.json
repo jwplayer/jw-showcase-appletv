@@ -1,25 +1,14 @@
 {
   "playlists": [
-    {
-      "playlistId": "K6Sl8yPJ",
-      "autoAdvance": true,
-      "autoAdvanceWarningOffset": 10
-    },
-    {
-      "playlistId": "BXatQw7p",
-      "autoAdvance": true,
-      "autoAdvanceWarningOffset": 10
-    },
-    {
-      "playlistId": "E12RS6r7"
-    }
+    "K6Sl8yPJ",
+    "BXatQw7p",
+    "E12RS6r7"
   ],
-  "featuredPlaylist": {
-    "playlistId": "1AxTdxJn",
-    "autoAdvance": false
-  },
+  "featuredPlaylist": "1AxTdxJn",
   "splashScreen": "images/jw-main.png",
   "bannerImage": "images/jw-header.png",
   "backgroundColor": "#7e0023",
+  "autoAdvance": true,
+  "autoAdvanceWarningOffset": 10,
   "autoAdvanceMessage": "The next video will start in ${offset} seconds."
 }
