@@ -26,6 +26,7 @@ function TVOSAnalytics(item) {
     bucketName = "jwplayer6",
     analyticsToken = CONFIG['analyticsToken'],
     embedId = _genId(12),
+    itemId,
     lastTime = 0,
     lastPingSent;
 
@@ -167,12 +168,14 @@ function TVOSAnalytics(item) {
   function _mediaParams() {
     var params = {};
     params[PARAM_MEDIA_URL] = item.url;
-    params[PARAM_ITEM_ID] = item.externalID;
+    params[PARAM_MEDIA_ID] = item.externalID;
     params[PARAM_TITLE] = item.title;
+    params[PARAM_ITEM_ID] = itemId;
     return params;
   }
 
   _self._sendStart = function(playReason) {
+    itemId = _genId(12);
     var evt = _mediaParams();
     evt[PARAM_VIDEO_LENGTH] = item.duration;
     evt[PARAM_QUANTILES] = _numQuantiles(item.duration);
