@@ -26,7 +26,10 @@ function ConfigLoader() {
     "splashScreen": "",
     "bannerImage": "",
     "backgroundColor": "#000000",
-    "analyticsToken": ""
+    "analyticsToken": "",
+    "autoAdvance": false,
+    "autoAdvanceWarningOffset": 10,
+    "autoAdvanceMessage": "The next video will start in ${offset} seconds."
   };
 
   /** Load a JSON document and send it to a handler **/

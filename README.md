@@ -11,6 +11,7 @@ NOTE: The app is only supported on 4th Generation (2015) Apple TV devices.
 - Populates your app's media content using RSS feeds. If you are using JW Platform, this happens auto-magically based on playlists that you specify. Using RSS feeds from other sources will require you to hack the source code.
 - Video titles, descriptions and hero images populated from RSS feed metadata.
 - Playback of HLS video content from JW Platform playlists. You can add external URLs (for example, from your own server or CDN) to your playlists in the Content tab of your JW Player account dashboard, but they must be HLS.
+- Auto Advancing of playlists, when a video in a playlist has completed playback, JW Player can automatically play the next item in the playlist.
 - Customize the user interface with your own branding. The default app is configured for JW Player branding and content but you can easily change this to use your own assets by modifying the config.json file. Advanced customization is possible, but you will need to modify the source code.
 - Basic playback analytics reporting to your JW Dashboard.
 
@@ -39,6 +40,14 @@ Due to the lack of UIWebView support in tvOS, our app framework is not based on 
 2. Open the `Assets.xcassets` bundle and replace the top shelf and default app icon assets with your own images. For image specs, see the [AppleTV Branding Guide](jwplayer-appletv-app-branding.pdf) in this repo. You can further customize your app by styling the TVML templates. See the [TVML documentation](https://developer.apple.com/library/tvos/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/index.html) for more details.
 1. Build the project in Xcode. We recommend running the app in the Xcode Apple TV emulator to test that everything is configured properly. For instructions on using the emulator, see the Xcode documentation.
 1. Submit your app to the Apple App Store. (See [instructions and guidelines](https://developer.apple.com/tvos/submit/))
+
+## Auto Advance
+
+You can enable auto advance by editing `config.json`, and setting the `autoAdvance` boolean to true.
+The Auto Advance feature has the following configuration options:
+
+* `autoAdvanceWarningOffset`: The amount of seconds before the end of playback of the current item to show the `autoAdvanceMessage`.
+* `autoAdvanceMessage`: The message to display before auto advancing to the next playlist item, this message takes one variable, `{$offset}`, which is the number of seconds remaining before the next video starts.
 
 ## Requirements
 

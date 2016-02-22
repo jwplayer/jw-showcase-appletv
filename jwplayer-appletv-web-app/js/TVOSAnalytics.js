@@ -174,7 +174,7 @@ function TVOSAnalytics(item) {
     return params;
   }
 
-  _self._sendStart = function() {
+  _self._sendStart = function(playReason) {
     itemId = _genId(12);
     var evt = _mediaParams();
     evt[PARAM_VIDEO_LENGTH] = item.duration;
@@ -182,7 +182,7 @@ function TVOSAnalytics(item) {
     evt[PARAM_VIDEO_SIZE] = 5; // 5 = adaptive
     evt[PARAM_FIRST_FRAME] = -1; // -1 = unsupported
     evt[PARAM_PROVIDER] = "";
-    evt[PARAM_PLAY_REASON] = 1; // User interaction  TODO: If we implement auto-play recommendations, this needs to be dynamic
+    evt[PARAM_PLAY_REASON] = playReason ? playReason : 1; // 1: User interaction by default.
 
     _sendEvent(EVENT_VIDEO_PLAY, evt);
   };
@@ -252,8 +252,11 @@ function TVOSAnalytics(item) {
 
 }
 
-TVOSAnalytics.prototype.start = function() {
-  return this._sendStart();
+/**
+ * @param playReason 0 - Unknown reason:we cannot tell, 1 - A viewer interacts with JW Player UI, 2 - Autoplay based on the configuration of the player (autostart), 3 - Repeat, 4 - External api: a script calls it, 5 - Internal api: related , 6 - internal api: Playlist progression
+ */
+TVOSAnalytics.prototype.start = function(playReason) {
+  return this._sendStart(playReason);
 }
 
 TVOSAnalytics.prototype.embed = function() {

@@ -46,24 +46,28 @@ ViewManager.registerView("ListCollection", function(doc) {
       if (!templates[t]) return;
     }
 
-    // Display the featured playlist
-    if (featured) insertPlaylist(featured);
+    // First insert the featured playlist.
+    if (featured) {
+      insertPlaylist(featured);
+    }
 
-    // Insert the rest of the playlists
-    playlists.forEach(insertPlaylist);
+    // Then insert the rest.
+    for (var i = 0; i < playlists.length; i++) {
+      insertPlaylist(playlists[i]);
+    }
   }
 
-  function insertPlaylist(list_id) {
+  function insertPlaylist(playlistId) {
     var placeholder;
 
-    if (list_id != featured) {
+    if (playlistId != featured) {
       placeholder = document.createElement("div");
        // Create a placecholder in the CollectionList so the lists are inserted in order
       collectionList.appendChild(placeholder);
     }
 
     // Bind the placeholder to the callback so it can be replaced with the templated markup
-    listLoader.loadPlaylist(list_id, renderPlaylist.bind(placeholder));
+    listLoader.loadPlaylist(playlistId, renderPlaylist.bind(placeholder));
   }
 
   function renderPlaylist(list) {
