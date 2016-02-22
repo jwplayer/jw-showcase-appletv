@@ -15,11 +15,11 @@
 **/
 
 /**
-  Analytics for TVOS app.  Ultimately this should mirror the Player's analytics
+  Analytics for TVOS app. Ultimately this should mirror the Player's analytics
   plugin, but for MVP, we'll hand-roll something simple, with a lot of
   hard-coded parameters.
 **/
-function TVOSAnalytics(item) {
+function TVOSAnalytics() {
   var _self = this,
     serverURL = "jwpltx.com",
     apiVersion = "v1",
@@ -160,25 +160,26 @@ function TVOSAnalytics(item) {
     xhr.open("GET", trackerURL);
     xhr.send();
 
+    console.log(trackerURL);
 
     return trackerURL;
 
   }
 
-  function _mediaParams() {
+  function _mediaParams(mediaItem) {
     var params = {};
-    params[PARAM_MEDIA_URL] = item.url;
-    params[PARAM_MEDIA_ID] = item.externalID;
-    params[PARAM_TITLE] = item.title;
+    params[PARAM_MEDIA_URL] = mediaItem.url;
+    params[PARAM_MEDIA_ID] = mediaItem.externalID;
+    params[PARAM_TITLE] = mediaItem.title;
     params[PARAM_ITEM_ID] = itemId;
     return params;
   }
 
-  _self._sendStart = function() {
+  _self._sendStart = function(mediaItem) {
     itemId = _genId(12);
-    var evt = _mediaParams();
-    evt[PARAM_VIDEO_LENGTH] = item.duration;
-    evt[PARAM_QUANTILES] = _numQuantiles(item.duration);
+    var evt = _mediaParams(mediaItem);
+    evt[PARAM_VIDEO_LENGTH] = mediaItem.duration;
+    evt[PARAM_QUANTILES] = _numQuantiles(mediaItem.duration);
     evt[PARAM_VIDEO_SIZE] = 5; // 5 = adaptive
     evt[PARAM_FIRST_FRAME] = -1; // -1 = unsupported
     evt[PARAM_PROVIDER] = "";
@@ -228,18 +229,18 @@ function TVOSAnalytics(item) {
     return Math.floor((now.getTime() - last.getTime())/1000);
   }
 
-  _self._sendTime = function(currentTime) {
-    // If item duration is zero (which will be the case if duration was not set in the RSS feed) don't send time events
-    if (item.duration == 0) return;
+  _self._sendTime = function(currentTime, mediaItem) {
+    // If mediaItem.duration is zero (which will be the case if duration was not set in the RSS feed) don't send time events
+    if (mediaItem.duration == 0) return;
 
-    var evt = _mediaParams();
+    var evt = _mediaParams(mediaItem);
 
-    var currentQuantile = _pctQuantiles(currentTime, item.duration);
-    var lastQuantile = _pctQuantiles(lastTime, item.duration)
-    var numQuantiles = _numQuantiles(item.duration);
+    var currentQuantile = _pctQuantiles(currentTime, mediaItem.duration);
+    var lastQuantile = _pctQuantiles(lastTime, mediaItem.duration)
+    var numQuantiles = _numQuantiles(mediaItem.duration);
 
     evt[PARAM_TIME_WATCHED] = currentQuantile;
-    evt[PARAM_QUANTILES] = _numQuantiles(item.duration);
+    evt[PARAM_QUANTILES] = _numQuantiles(mediaItem.duration);
     evt[PARAM_TIME_INTERVAL] = _timeDiff(new Date(), lastPingSent);
 
     if (currentQuantile != lastQuantile) {
@@ -250,16 +251,28 @@ function TVOSAnalytics(item) {
 
   };
 
-}
+  EventBus.subscribe(Events.PLAYER_STATE, playerStateHandler);
+  EventBus.subscribe(Events.MEDIA_TIME, timeHandler);
+  EventBus.subscribe(Events.MEDIA_COMPLETE, completeHandler);
 
-TVOSAnalytics.prototype.start = function() {
-  return this._sendStart();
+  function playerStateHandler(event) {
+    console.log('TVOSAnalytics playerStateHandler(event), event: %O', event);
+    if (event.state == 'begin') {
+      _self._sendStart(event.player.currentMediaItem);
+    }
+  }
+
+  function timeHandler(event) {
+    console.log('TVOSAnalytics timeHandler(event), event: %O', event);
+    _self._sendTime(event.time, event.player.currentMediaItem);
+  }
+
+  function completeHandler(event) {
+    console.log('TVOSAnalytics completeHandler(event), event: %O', event);
+    _self._sendTime(event.item.duration, event.player.currentMediaItem);
+  }
 }
 
 TVOSAnalytics.prototype.embed = function() {
   return this._sendEmbed();
-}
-
-TVOSAnalytics.prototype.timeWatched = function(currentTime) {
-  return this._sendTime(currentTime);
 }

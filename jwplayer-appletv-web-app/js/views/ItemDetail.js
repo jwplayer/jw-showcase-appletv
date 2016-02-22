@@ -19,7 +19,10 @@ ViewManager.registerView("ItemDetail", function(doc) {
 
   var media_id = doc.firstChild.getAttribute("data-media-id");
   var item = MEDIA_ITEMS[media_id];
-  var playback = new Playback(item);
+  var player = new Playback();
+  var playlist = new Playlist();
+  playlist.push(item);
+  player.load(playlist);
 
   var related_id = doc.firstChild.getAttribute("data-related-playlist")
   if (related_id != "undefined") {
@@ -33,7 +36,7 @@ ViewManager.registerView("ItemDetail", function(doc) {
   }
 
   var playButton = doc.getElementById("play-button");
-  playButton.addEventListener("select", playback.play);
+  playButton.addEventListener("select", player.play);
 
   function showRelated() {
     loader.loadFragment("templates/ListItem.tvml", templateLoaded, false);
