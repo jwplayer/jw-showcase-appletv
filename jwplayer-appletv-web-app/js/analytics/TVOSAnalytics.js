@@ -23,7 +23,7 @@ var TVOSAnalytics = (function () {
   var serverURL = "jwpltx.com",
     apiVersion = "v1",
     bucketName = "jwplayer6",
-    embedId = genId(12),
+    embedId = Utils.genId(12),
     itemId,
     lastTime = 0,
     lastPingSent;
@@ -123,7 +123,7 @@ var TVOSAnalytics = (function () {
       parameters[PARAM_RENDERING_MODE] = "";
       parameters[PARAM_PLAYER_HOSTING] = 0;
       parameters[PARAM_PLAYER_SIZE] = "";
-      parameters = extend(parameters, data);
+      parameters = Utils.extend(parameters, data);
 
       /** Generate list of key/value URL parameter pairs **/
       var trackingArgs = [];
@@ -165,7 +165,7 @@ var TVOSAnalytics = (function () {
     }
 
     function _sendStart(mediaItem) {
-      itemId = genId(12);
+      itemId = Utils.genId(12);
       var evt = _mediaParams(mediaItem);
       evt[PARAM_VIDEO_LENGTH] = mediaItem.duration;
       evt[PARAM_QUANTILES] = _numQuantiles(mediaItem.duration);
