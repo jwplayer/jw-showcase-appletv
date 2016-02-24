@@ -59,6 +59,13 @@ function ConfigLoader() {
   }
 
   function _configLoaded(loadedConfig) {
+    if (loadedConfig.modules) {
+      evaluateScripts(loadedConfig.modules, function(success) {
+        if (success) {
+          console.log('Succesfully loaded modules.');
+        }
+      });
+    }
     _config = extend(_config, loadedConfig);
     _complete();
   }

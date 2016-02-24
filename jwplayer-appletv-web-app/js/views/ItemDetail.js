@@ -19,7 +19,7 @@ ViewManager.registerView("ItemDetail", function(doc) {
 
   var media_id = doc.firstChild.getAttribute("data-media-id");
   var item = MEDIA_ITEMS[media_id];
-  var player = new Playback();
+  var player = Playback;
   var playlist = new Playlist();
   playlist.push(item);
   player.load(playlist);

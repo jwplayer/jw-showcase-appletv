@@ -20,6 +20,7 @@
 var Events = (function() {
   return {
     // Media
+    PLAYLIST_START: 'playlistStart',
     MEDIA_COMPLETE: 'complete',
     PLAYLIST_COMPLETE: 'playlistComplete',
     MEDIA_SEEK: 'seek',
@@ -35,6 +36,7 @@ var Events = (function() {
     PLAYER_OVERLAY: 'playerOverlay',
 
     // Utility
-    ERROR: 'error'
+    ERROR: 'error',
+    CONFIG_LOADED: 'configLoaded'
   };
 })();
