@@ -59,12 +59,23 @@ function ConfigLoader() {
   }
 
   function _configLoaded(loadedConfig) {
-    if (loadedConfig.modules) {
-      evaluateScripts(loadedConfig.modules, function(success) {
-        if (success) {
-          console.log('Succesfully loaded modules.');
+    if (loadedConfig.modules && Array.isArray(loadedConfig.modules)) {
+      var isStringArray = true;
+      for (var i = 0; i < loadedConfig.modules.length; i++) {
+        if (typeof loadedConfig.modules[i] != 'string') {
+          isStringArray = false;
+          break;
         }
-      });
+      }
+      if (isStringArray) {
+        evaluateScripts(loadedConfig.modules, function(success) {
+          if (success) {
+            console.log('Succesfully loaded modules.');
+          }
+        });
+      } else {
+        console.error('Invalid config parameter: modules');
+      }
     }
     _config = extend(_config, loadedConfig);
     _complete();
