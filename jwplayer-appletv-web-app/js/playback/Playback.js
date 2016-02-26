@@ -28,7 +28,7 @@ var Playback = (function() {
   });
   player.addEventListener("mediaItemWillChange", mediaItemWillChangeHandler);
   player.addEventListener("mediaItemDidChange", mediaItemChangedHandler);
-  player.addEventListener("requestSeekToTime", requestSeekToTimeHandler);
+  //player.addEventListener("requestSeekToTime", requestSeekToTimeHandler);
   player.addEventListener("timedMetadata", timedMetadataHandler);
   player.addEventListener("shouldHandleStateChange", shouldHandleStateChangeHandler);
 
@@ -141,13 +141,13 @@ var Playback = (function() {
   /**
    * Handles the requestSeekToTime event.
    */
-  function requestSeekToTimeHandler(evt) {
-    //console.log('requestSeekToTimeHandler %O', evt);
-    EventBus.publish(Events.SEEK, { // TODO: Should be seeked? TV JS docs seem to be incorrect on this event.
-      currentTime: evt.currentTime,
-      requestedTime: evt.requestedTime
-    });
-  }
+  // function requestSeekToTimeHandler(evt) {
+  //   //console.log('requestSeekToTimeHandler %O', evt);
+  //   EventBus.publish(Events.SEEK, { // TODO: Should be seeked? TV JS docs seem to be incorrect on this event.
+  //     currentTime: evt.currentTime,
+  //     requestedTime: evt.requestedTime
+  //   });
+  // }
 
   function timedMetadataHandler(evt) {
     //console.log('timedMetadataHandler %O', evt);
@@ -174,7 +174,7 @@ var Playback = (function() {
     timeHandler: timeHandler,
     mediaItemChangedHandler: mediaItemChangedHandler,
     mediaItemWillChangeHandler: mediaItemWillChangeHandler,
-    requestSeekToTimeHandler: requestSeekToTimeHandler,
+    //requestSeekToTimeHandler: requestSeekToTimeHandler,
     timedMetadataHandler: timedMetadataHandler
   }
 })();

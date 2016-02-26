@@ -39,6 +39,7 @@ App.onLaunch = function(opts) {
     `${OPTIONS.baseURL}/js/ViewManager.js`,
     `${OPTIONS.baseURL}/js/PlaylistLoader.js`,
     `${OPTIONS.baseURL}/js/analytics/TVOSAnalytics.js`,
+    `${OPTIONS.baseURL}/js/playback/PlayerStates.js`,
     `${OPTIONS.baseURL}/js/playback/Playback.js`
   ];
 
