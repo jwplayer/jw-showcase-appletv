@@ -74,6 +74,8 @@ function ConfigLoader() {
         evaluateScripts(loadedConfig.modules, function(success) {
           if (success) {
             console.log('Succesfully loaded modules.');
+          } else {
+            console.error('Error loading modules.');
           }
         });
       } else {

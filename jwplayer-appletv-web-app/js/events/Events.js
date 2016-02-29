@@ -35,6 +35,9 @@ var Events = (function() {
     PLAYER_STATE: 'playerState',
     PLAYER_OVERLAY: 'playerOverlay',
 
+    // Auto Advance
+    AUTOADVANCE_INITIALIZED: 'autoAdvanceInitialized',
+
     // Utility
     ERROR: 'error',
     CONFIG_LOADED: 'configLoaded'

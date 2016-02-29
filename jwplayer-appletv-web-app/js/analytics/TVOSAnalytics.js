@@ -251,7 +251,8 @@ var TVOSAnalytics = (function () {
     function _mediaStartHandler(event) {
       if (Playback.player.currentMediaItem) {
         if (event.reason &&
-          (PlayerStates[event.reason] == 'PLAYED_TO_END' || PlayerStates[event.reason] == 'FORWARDED_TO_END')) {
+          (PlayerStates[event.reason] == 'PLAYED_TO_END' || PlayerStates[event.reason] == 'FORWARDED_TO_END')
+          && !event.previousMediaItem.ad) {
           _sendStart(Playback.player.currentMediaItem, 6); // playReason 6 -> playlist progression, see spec.
         } else {
           _sendStart(Playback.player.currentMediaItem);

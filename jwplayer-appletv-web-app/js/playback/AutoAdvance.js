@@ -32,11 +32,16 @@ Playback.AutoAdvance = (function() {
       }
       Playback.load(newPlaylist, false);
     }
+
+    EventBus.publish(Events.AUTOADVANCE_INITIALIZED, {
+      playlist: newPlaylist
+    });
   }
 
   function _timeHandler(event) {
     if (Playback.player.nextMediaItem
-      && event.time >= Playback.player.currentMediaItem.duration - CONFIG.autoAdvanceWarningOffset) {
+      && event.time >= Playback.player.currentMediaItem.duration - CONFIG.autoAdvanceWarningOffset
+      && !Playback.player.currentMediaItem.ad) {
       // Display the overlay
       _displayOverlay(event.time);
     }
