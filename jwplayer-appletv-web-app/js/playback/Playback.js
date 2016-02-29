@@ -22,9 +22,6 @@
 var Playback = (function() {
 
   var player = new Player();
-    // _autoAdvance = CONFIG.autoAdvance,
-    // _templateLoader,
-    // _parser;
 
   player.addEventListener("stateDidChange", stateHandler);
   player.addEventListener("timeDidChange", timeHandler, {
@@ -91,9 +88,6 @@ var Playback = (function() {
       EventBus.publish(Events.PLAYLIST_COMPLETE, {
         playlist: player.playlist
       });
-      // if (_autoAdvance) {
-      //   navigationDocument.popToRootDocument();
-      // }
     }
   }
 
