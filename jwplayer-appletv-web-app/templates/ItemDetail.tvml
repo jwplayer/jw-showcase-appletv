@@ -33,10 +33,13 @@
     <banner>
       <heroImg src="${this.item.artworkImageURL}" style="width:640px" />
       <stack style="width:720px; margin:100px 100px 0px 200px">
-        <title>${this.item.title}</title>
-
-        <description allowsZooming="true">${this.item.description}</description>
-
+        <!--
+          Use "he" (HTML Entity) encoder to handle html-unsafe characters, such as "&"
+          This addresses the Apple TV aversion to rendering CDATA blocks, without
+          which the built-in DOM parser barfs on those characters.
+        -->
+        <title>${he.encode(this.item.title)}</title>
+        <description allowsZooming="true">${he.encode(this.item.description)}</description>
         <row>
           <buttonLockup class="playBtn" id="play-button">
             <text>Play Video</text>
