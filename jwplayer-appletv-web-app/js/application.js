@@ -84,6 +84,4 @@ function showAlert(alertTitle, alertText) {
 
   var alertDoc = domParser.parseFromString(alertTVML, "application/xml");
   navigationDocument.pushDocument(alertDoc);
-
-  throw (alertText);
 }
