@@ -31,6 +31,10 @@ ViewManager.registerView("ItemDetail", function(doc) {
     description.textContent = "No description";
   }
 
+  description.addEventListener("select", function() {
+    showAlert(item.title, item.description);
+  });
+
   var playButton = doc.getElementById("play-button");
   playButton.addEventListener("select", function() {
     var playlist = new Playlist();
