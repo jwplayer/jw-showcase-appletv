@@ -15,10 +15,12 @@
 **/
 
 ViewManager.registerView("ItemDetail", function(doc) {
-  var loader = new TemplateLoader(doc);
+  var self = this;
+
+  var loader = new TemplateLoader(doc, this);
 
   var media_id = doc.firstChild.getAttribute("data-media-id");
-  var item = MEDIA_ITEMS[media_id];
+  self.item = MEDIA_ITEMS[media_id];
 
   var related_id = doc.firstChild.getAttribute("data-related-playlist")
   if (related_id != "undefined") {
@@ -31,10 +33,16 @@ ViewManager.registerView("ItemDetail", function(doc) {
     description.textContent = "No description";
   }
 
+  description.addEventListener("select", function() {
+    loader.load("templates/ItemDescription.tvml", function(descriptionDoc) {
+      navigationDocument.pushDocument(descriptionDoc);
+    });
+  });
+
   var playButton = doc.getElementById("play-button");
   playButton.addEventListener("select", function() {
     var playlist = new Playlist();
-    playlist.push(item);
+    playlist.push(self.item);
     Playback.load(playlist);
     Playback.play();
   });

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document>
+  <descriptiveAlertTemplate>
+    <title>${he.encode(this.item.title)}</title>
+    <description allowsZooming="true">${he.encode(this.item.description)}</description>
+  </descriptiveAlertTemplate>
+</document>
