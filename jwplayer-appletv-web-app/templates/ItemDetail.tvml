@@ -49,7 +49,7 @@
     </banner>
     <shelf id="related-section">
       <header>
-        <title class="playlist-title">${this.related.title}</title>
+        <title class="playlist-title">${he.encode(this.related.title)}</title>
       </header>
       <section id="related-items"></section>
     </shelf>

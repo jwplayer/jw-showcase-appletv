@@ -4,5 +4,5 @@
   data-related-playlist="${this.related}"
   data-view="ListItem">
   <img class="item-image-featured" src="${this.artworkImageURL}" />
-  <title class="featured-title">${this.title}</title>
+  <title class="featured-title">${he.encode(this.title)}</title>
 </lockup>

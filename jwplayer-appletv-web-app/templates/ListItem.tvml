@@ -5,5 +5,5 @@
   data-parent-view="${this.parentView}"
   data-view="ListItem">
   <img class="item-image" src="${this.artworkImageURL}" />
-  <title class="scrollTextOnHighlight">${this.title}</title>
+  <title class="scrollTextOnHighlight">${he.encode(this.title)}</title>
 </lockup>
