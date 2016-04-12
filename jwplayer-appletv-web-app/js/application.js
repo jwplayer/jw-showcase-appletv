@@ -55,12 +55,29 @@ App.onLaunch = function(opts) {
 
 }
 
+App.onResume = function() {
+  reloadPlaylists();
+}
+
+function reloadPlaylists() {
+  PLAYLISTS = {};
+  MEDIA_ITEMS = {};
+  var templateLoader = new TemplateLoader();
+  templateLoader.load("templates/ListCollection.tvml", function (templateDoc) {
+    // We're assuming that the ListCollection is always on the bottom of the document stack.
+    // This may not be the smartest thing to do, ideally we would want to have some "tag" attached
+    // to documents that we can use to safely determine whether we are replacing the correct document.
+    var oldListCollectionDoc = navigationDocument.documents[0];
+    navigationDocument.replaceDocument(templateDoc, oldListCollectionDoc);
+  });
+}
+
 function configLoaded(config) {
   CONFIG = config;
   EventBus.publish(Events.CONFIG_LOADED, {
     config: CONFIG
   });
-  templateLoader = new TemplateLoader();
+  var templateLoader = new TemplateLoader();
   templateLoader.load("templates/index.tvml", function(templateDoc) {
     navigationDocument.pushDocument(templateDoc);
   });

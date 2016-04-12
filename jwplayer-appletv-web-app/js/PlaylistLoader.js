@@ -119,7 +119,8 @@ function PlaylistLoader() {
 
 /** Load an mRSS XML feed **/
 PlaylistLoader.prototype.loadPlaylist = function(playlistId, callback) {
-  this._getDocument(`http://content.jwplatform.com/feeds/${playlistId}.rss`, this._parsePlaylist.bind({
+  // Note that we use ?t=<timestamp> to bust the cache.
+  this._getDocument(`http://content.jwplatform.com/feeds/${playlistId}.rss?t=${new Date().getTime()}`, this._parsePlaylist.bind({
     playlist: playlistId,
     callback: callback
   }));
