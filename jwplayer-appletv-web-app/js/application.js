@@ -16,16 +16,12 @@
 
 var VERSION = '1.0.0';
 var OPTIONS, CONFIG, PLAYLISTS, MEDIA_ITEMS;
-var templateLoader;
-var domParser;
 
 /** Launch the app **/
 App.onLaunch = function(opts) {
   OPTIONS = opts;
   PLAYLISTS = {};
   MEDIA_ITEMS = {};
-
-  domParser = new DOMParser();
 
   console.log("Initing with options %o", OPTIONS);
 
@@ -99,6 +95,7 @@ function showAlert(alertTitle, alertText) {
   </alertTemplate>
 </document>`;
 
+  var domParser = new DOMParser();
   var alertDoc = domParser.parseFromString(alertTVML, "application/xml");
   navigationDocument.pushDocument(alertDoc);
 }
