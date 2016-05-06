@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TVApplicationControllerDe
 
     // Uncomment the following line to debug
     // static let TVBaseURL = "http://localhost/appletv/jwplayer-appletv-web-app"
-    static let TVBaseURL = "https://tvos.jwpsrv.com/current"
-    static let TVConfigURL = "https://tvos.jwpsrv.com/resources/configs"
+    static let TVBaseURL = "https://tvos.jwpsrv.com"
+    static let TVConfigURL = "\(AppDelegate.TVBaseURL)/resources/configs"
     static let TVBootURL = "\(AppDelegate.TVBaseURL)/js/application.js"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
