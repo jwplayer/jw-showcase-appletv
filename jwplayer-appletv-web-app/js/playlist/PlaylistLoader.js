@@ -95,7 +95,7 @@ var PlaylistLoader = function() {
 
         // Figure out the url of the stream for this playlist item.
         var foundStream = false;
-        if (playlistItem.sources) {
+        if (playlistItem.sources && playlistItem.sources instanceof Array) {
           foundStream = playlistItem.sources.some(function(source) {
             if (source.type && source.type === 'application/vnd.apple.mpegurl'
                 || source.type === 'application/x-mpegURL') {
