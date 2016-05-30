@@ -1,4 +1,4 @@
-<shelf class="playlist-shelf" id="playlist-${this.id}" data-playlist-id="${this.id}">
+<shelf class="playlist-shelf" id="playlist-${this.feedid}" data-playlist-id="${this.feedid}">
   <header>
     <title class="playlist-title">${he.encode(this.title)}</title>
   </header>
