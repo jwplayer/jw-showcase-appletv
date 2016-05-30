@@ -31,7 +31,7 @@ Playback.AutoAdvance = (function() {
   }
 
   function _playlistLoadedHandler(event) {
-    var playlist = PLAYLISTS[event.playlist.item(0).playlistId];
+    var playlist = PLAYLISTS[event.playlist.item(0).feedid];
     // Rebuild the loaded playlist.
     var index;
     for (var i = 0; i < playlist.items.length; i++) {

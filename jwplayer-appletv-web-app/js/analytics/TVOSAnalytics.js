@@ -158,7 +158,7 @@ var TVOSAnalytics = (function () {
     function _mediaParams(mediaItem) {
       var params = {};
       params[PARAM_MEDIA_URL] = mediaItem.url;
-      params[PARAM_MEDIA_ID] = mediaItem.externalID;
+      params[PARAM_MEDIA_ID] = mediaItem.mediaid;
       params[PARAM_TITLE] = mediaItem.title;
       params[PARAM_ITEM_ID] = itemId;
       return params;
