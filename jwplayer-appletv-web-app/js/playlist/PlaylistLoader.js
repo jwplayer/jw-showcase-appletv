@@ -23,7 +23,7 @@ var PlaylistLoader = function() {
       var xhr = new XMLHttpRequest();
       xhr.responseType = "json";
       xhr.addEventListener("load", function(xhr) {
-        _playlistLoaded(xhr.target.response, callback);
+        _playlistLoaded(playlistId, xhr.target.response, callback);
       }, false);
       xhr.addEventListener("error", function(e) {
         _playlistLoadError(playlistId, e);
@@ -33,7 +33,13 @@ var PlaylistLoader = function() {
       return xhr;
     }
 
-    function _playlistLoaded(playlist, callback) {
+    function _playlistLoaded(playlistId, playlist, callback) {
+      // At minimum we need playlist.playlist to be defined.
+      if (!playlist.playlist || !playlist.playlist instanceof Array) {
+        console.warn('Unable to parse playlist ' + playlistId + '.');
+        return;
+      }
+
       // Parse MediaItems out of the playlist
       playlist.items = _parseMediaItems(playlist.playlist, playlist.feedid);
 
@@ -88,31 +94,34 @@ var PlaylistLoader = function() {
         mediaItem.feedid = feedid;
 
         // Figure out the url of the stream for this playlist item.
-        var foundStream = playlistItem.sources.some(function(source) {
-          if (source.type && source.type === 'application/vnd.apple.mpegurl'
-              || source.type === 'application/x-mpegURL') {
-                mediaItem.url = _checkScheme(source.file);
-                return true;
-              }
-          return false;
-        });
-
-        // Figure out the duration of the media item, the HLS stream source does
-        // not expose this, but other sources, such as mp4 may.
-        var foundDuration = playlistItem.sources.some(function(source) {
-          if (source.duration) {
-            mediaItem.duration = source.duration;
-            return true;
-          }
-          return false;
-        });
-
-        if (!foundDuration) {
-          // No duration has been found
-          mediaItem.duration = 0;
+        var foundStream = false;
+        if (playlistItem.sources) {
+          foundStream = playlistItem.sources.some(function(source) {
+            if (source.type && source.type === 'application/vnd.apple.mpegurl'
+                || source.type === 'application/x-mpegURL') {
+                  mediaItem.url = _checkScheme(source.file);
+                  return true;
+                }
+            return false;
+          });
         }
 
         if (foundStream) {
+          // Figure out the duration of the media item, the HLS stream source does
+          // not expose this, but other sources, such as mp4 may.
+          var foundDuration = playlistItem.sources.some(function(source) {
+            if (source.duration) {
+              mediaItem.duration = source.duration;
+              return true;
+            }
+            return false;
+          });
+
+          if (!foundDuration) {
+            // No duration has been found
+            mediaItem.duration = 0;
+          }
+
           mediaItems.push(mediaItem);
         } else {
            console.warn('Warning: No HLS stream available for video with media id: '
