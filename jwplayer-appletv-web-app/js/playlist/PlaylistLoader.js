@@ -109,13 +109,22 @@ var PlaylistLoader = function() {
         if (foundStream) {
           // Figure out the duration of the media item, the HLS stream source does
           // not expose this, but other sources, such as mp4 may.
-          var foundDuration = playlistItem.sources.some(function(source) {
-            if (source.duration) {
-              mediaItem.duration = source.duration;
-              return true;
-            }
-            return false;
-          });
+          var foundDuration = false;
+          
+          if (playlistItem.duration) {
+              mediaItem.duration = playlistItem.duration;
+              foundDuration = true;
+          }
+          
+          if (!foundDuration) {
+              foundDuration = playlistItem.sources.some(function(source) {
+                if (source.duration) {
+                  mediaItem.duration = source.duration;
+                  return true;
+                }
+                return false;
+              });
+          }
 
           if (!foundDuration) {
             // No duration has been found
