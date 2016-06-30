@@ -56,7 +56,7 @@ ViewManager.registerView("ItemDetail", function(doc) {
 
     for(var i=0; i<related.items.length; i++) {
       var relatedItem = related.items.item(i);
-      if (relatedItem.externalID != media_id) {
+      if (relatedItem.mediaid != media_id) {
         var templateData = Utils.extend(relatedItem, {
           parentView: "ItemDetail"
         });

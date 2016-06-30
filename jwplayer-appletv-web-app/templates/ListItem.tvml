@@ -1,6 +1,6 @@
 <lockup
   data-href="templates/ItemDetail.tvml"
-  data-media-id="${this.externalID}"
+  data-media-id="${this.mediaid}"
   data-related-playlist="${this.related}"
   data-parent-view="${this.parentView}"
   data-view="ListItem">

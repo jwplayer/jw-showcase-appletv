@@ -17,7 +17,7 @@
 ViewManager.registerView("ListCollection", function(doc) {
   var document = doc.ownerDocument;
   var loader = new TemplateLoader(document);
-  var listLoader = new PlaylistLoader();
+  var playlistLoader = new PlaylistLoader();
   var collectionDoc = doc;
 
   var playlists = collectionDoc.firstChild.getAttribute("data-playlists").split(",");
@@ -67,7 +67,7 @@ ViewManager.registerView("ListCollection", function(doc) {
     }
 
     // Bind the placeholder to the callback so it can be replaced with the templated markup
-    listLoader.loadPlaylist(playlistId, renderPlaylist.bind(placeholder));
+    playlistLoader.load(playlistId, renderPlaylist.bind(placeholder));
   }
 
   function renderPlaylist(list) {
@@ -75,7 +75,7 @@ ViewManager.registerView("ListCollection", function(doc) {
       template,
       placeholder = this;
 
-    if (list.id == featured) {
+    if (list.feedid == featured) {
       section = document.getElementById("featured-playlist");
       template = templates.featured;
 
@@ -97,7 +97,7 @@ ViewManager.registerView("ListCollection", function(doc) {
   function insertItems(section, template, list) {
     for(var i=0; i<list.items.length; i++) {
       var item = list.items.item(i);
-      item.related = list.id;
+      item.related = list.feedid;
       item.parentView = "ListCollection"
       var itemDoc = loader.duplicateFragment(template, item);
       loader.applyView(itemDoc);

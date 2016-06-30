@@ -16,16 +16,12 @@
 
 var VERSION = '1.0.0';
 var OPTIONS, CONFIG, PLAYLISTS, MEDIA_ITEMS;
-var templateLoader;
-var domParser;
 
 /** Launch the app **/
 App.onLaunch = function(opts) {
   OPTIONS = opts;
   PLAYLISTS = {};
   MEDIA_ITEMS = {};
-
-  domParser = new DOMParser();
 
   console.log("Initing with options %o", OPTIONS);
 
@@ -37,7 +33,7 @@ App.onLaunch = function(opts) {
     `${OPTIONS.baseURL}/js/he.js`,
     `${OPTIONS.baseURL}/js/TemplateLoader.js`,
     `${OPTIONS.baseURL}/js/ViewManager.js`,
-    `${OPTIONS.baseURL}/js/PlaylistLoader.js`,
+    `${OPTIONS.baseURL}/js/playlist/PlaylistLoader.js`,
     `${OPTIONS.baseURL}/js/analytics/TVOSAnalytics.js`,
     `${OPTIONS.baseURL}/js/playback/PlayerStates.js`,
     `${OPTIONS.baseURL}/js/playback/Playback.js`,
@@ -55,12 +51,33 @@ App.onLaunch = function(opts) {
 
 }
 
+App.onResume = function() {
+  reloadPlaylists();
+}
+
+function reloadPlaylists() {
+  PLAYLISTS = {};
+  MEDIA_ITEMS = {};
+  var templateLoader = new TemplateLoader();
+  templateLoader.load("templates/ListCollection.tvml", function (templateDoc) {
+    // Replace all the ListCollection docs on the stack.
+    navigationDocument.documents.forEach(function (doc) {
+      if (doc.firstChild) {
+        var view = doc.firstChild.getAttribute("data-view");
+        if (view && view === 'ListCollection') {
+          navigationDocument.replaceDocument(templateDoc, doc);
+        }
+      }
+    });
+  });
+}
+
 function configLoaded(config) {
   CONFIG = config;
   EventBus.publish(Events.CONFIG_LOADED, {
     config: CONFIG
   });
-  templateLoader = new TemplateLoader();
+  var templateLoader = new TemplateLoader();
   templateLoader.load("templates/index.tvml", function(templateDoc) {
     navigationDocument.pushDocument(templateDoc);
   });
@@ -82,6 +99,7 @@ function showAlert(alertTitle, alertText) {
   </alertTemplate>
 </document>`;
 
+  var domParser = new DOMParser();
   var alertDoc = domParser.parseFromString(alertTVML, "application/xml");
   navigationDocument.pushDocument(alertDoc);
 }

@@ -26,9 +26,7 @@ ViewManager.registerView("SplashScreen", function(doc) {
   if (nextScreen) {
     var loader = new TemplateLoader();
     loader.load(nextScreen, displayNextPage);
-
     setTimeout(timeoutDone, delay * 1000)
-
   }
 
   function timeoutDone() {
@@ -45,5 +43,5 @@ ViewManager.registerView("SplashScreen", function(doc) {
       navigationDocument.replaceDocument(nextDoc, doc);
     }
   }
-  
+
 });

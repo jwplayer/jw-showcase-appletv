@@ -20,75 +20,76 @@
  * hard-coded parameters.
  */
 var TVOSAnalytics = (function () {
-  var serverURL = "jwpltx.com",
-    apiVersion = "v1",
-    bucketName = "jwplayer6",
-    embedId = Utils.genId(12),
+  const SERVER_URL = "jwpltx.com",
+    API_VERSION = "v1",
+    BUCKET_NAME = "jwplayer6";
+
+  var embedId = Utils.genId(12),
     itemId,
     lastTime = 0,
     lastPingSent;
 
-    /** @const */ var PARAM_CHECKSUM = 'h';
+    const PARAM_CHECKSUM = 'h';
 
     //sent with all events
-    /** @const */ var PARAM_TRACKER_VERSION     = 'tv';
-    /** @const */ var PARAM_NONCE               = 'n';
-    /** @const */ var PARAM_ANALYTICS_TOKEN     = 'aid';
-    /** @const */ var PARAM_EVENT_TYPE          = 'e';
-    /** @const */ var PARAM_IFRAME              = 'i';
-    /** @const */ var PARAM_IFRAME_DEPTH        = 'ifd';
-    /** @const */ var PARAM_PLAYER_VERSION      = 'pv';
-    /** @const */ var PARAM_PAGE_URL            = 'pu';
-    /** @const */ var PARAM_PAGE_TITLE          = 'pt';
-    /** @const */ var PARAM_SDK_PLATFORM        = 'sdk';
-    /** @const */ var PARAM_AUTOSTART           = 'd';
-    /** @const */ var PARAM_AD_BLOCK            = 'eb';
-    /** @const */ var PARAM_EMBED_ID            = 'emi';
-    /** @const */ var PARAM_RENDERING_MODE      = 'm';
-    /** @const */ var PARAM_MEDIA_URL           = 'mu';
-    /** @const */ var PARAM_PLAYER_HOSTING      = 'ph';
-    /** @const */ var PARAM_ITEM_ID             = 'pli';
-    /** @const */ var PARAM_PLAYER_SIZE         = 'ps';
-    /** @const */ var PARAM_MOBILE_SDK_VERSION  = 'sv';
-    /** @const */ var PARAM_TITLE               = 't';
+    const PARAM_TRACKER_VERSION     = 'tv';
+    const PARAM_NONCE               = 'n';
+    const PARAM_ANALYTICS_TOKEN     = 'aid';
+    const PARAM_EVENT_TYPE          = 'e';
+    const PARAM_IFRAME              = 'i';
+    const PARAM_IFRAME_DEPTH        = 'ifd';
+    const PARAM_PLAYER_VERSION      = 'pv';
+    const PARAM_PAGE_URL            = 'pu';
+    const PARAM_PAGE_TITLE          = 'pt';
+    const PARAM_SDK_PLATFORM        = 'sdk';
+    const PARAM_AUTOSTART           = 'd';
+    const PARAM_AD_BLOCK            = 'eb';
+    const PARAM_EMBED_ID            = 'emi';
+    const PARAM_RENDERING_MODE      = 'm';
+    const PARAM_MEDIA_URL           = 'mu';
+    const PARAM_PLAYER_HOSTING      = 'ph';
+    const PARAM_ITEM_ID             = 'pli';
+    const PARAM_PLAYER_SIZE         = 'ps';
+    const PARAM_MOBILE_SDK_VERSION  = 'sv';
+    const PARAM_TITLE               = 't';
 
     //mobile SDK specific
-    /** @const */ var PARAM_MOBILE_APP_BUNDLEID = 'bi';
-    /** @const */ var PARAM_MOBILE_APP_NAME     = 'an';
-    /** @const */ var PARAM_MOBILE_DEVICE_ID    = 'did';
-    /** @const */ var PARAM_PLAYER_DEVICE_MODEL = 'dm';
+    const PARAM_MOBILE_APP_BUNDLEID = 'bi';
+    const PARAM_MOBILE_APP_NAME     = 'an';
+    const PARAM_MOBILE_DEVICE_ID    = 'did';
+    const PARAM_PLAYER_DEVICE_MODEL = 'dm';
 
     // Tracking Parameter Keys
-    /** @const */ var PARAM_EDITION               = 'ed';
-    /** @const */ var PARAM_TIME_INTERVAL         = 'ti';
-    /** @const */ var PARAM_TIME_WATCHED          = 'pw';
-    /** @const */ var PARAM_VIDEO_SIZE            = 'vs';
-    /** @const */ var PARAM_PLAYER_WIDTH          = 'wd';
-    /** @const */ var PARAM_PLAYER_HEIGHT         = 'pl';
-    /** @const */ var PARAM_VIDEO_LENGTH          = 'l';
-    /** @const */ var PARAM_QUANTILES             = 'q';
-    /** @const */ var PARAM_MEDIA_ID              = 'id';
-    /** @const */ var PARAM_FLASH_VERSION         = 'fv';
-    /** @const */ var PARAM_SETUP_TIME            = 'st';
-    /** @const */ var PARAM_FIRST_FRAME           = 'ff';
-    /** @const */ var PARAM_PROVIDER              = 'pp';
-    /** @const */ var PARAM_VISUAL_PLAYLIST       = 'vp';
-    /** @const */ var PARAM_POSTER_IMAGE          = 'po';
-    /** @const */ var PARAM_SHARING               = 's';
-    /** @const */ var PARAM_RELATED               = 'r';
-    /** @const */ var PARAM_SKIN_NAME             = 'sn';
-    /** @const */ var PARAM_CASTING_BLOCK         = 'cb';
-    /** @const */ var PARAM_GA_BLOCK              = 'ga';
-    /** @const */ var PARAM_PLAY_REASON           = 'pr';
-    /** @const */ var PARAM_DASHBOARD_CONFIG_KEY  = 'pid';
-    /** @const */ var PARAM_DISPLAY_DESCRIPTION   = 'dd';
-    /** @const */ var PARAM_CHROMELESS_PLAYER     = 'cp';
-    /** @const */ var PARAM_ADVERTISING_BLOCK     = 'ab';
+    const PARAM_EDITION               = 'ed';
+    const PARAM_TIME_INTERVAL         = 'ti';
+    const PARAM_TIME_WATCHED          = 'pw';
+    const PARAM_VIDEO_SIZE            = 'vs';
+    const PARAM_PLAYER_WIDTH          = 'wd';
+    const PARAM_PLAYER_HEIGHT         = 'pl';
+    const PARAM_VIDEO_LENGTH          = 'l';
+    const PARAM_QUANTILES             = 'q';
+    const PARAM_MEDIA_ID              = 'id';
+    const PARAM_FLASH_VERSION         = 'fv';
+    const PARAM_SETUP_TIME            = 'st';
+    const PARAM_FIRST_FRAME           = 'ff';
+    const PARAM_PROVIDER              = 'pp';
+    const PARAM_VISUAL_PLAYLIST       = 'vp';
+    const PARAM_POSTER_IMAGE          = 'po';
+    const PARAM_SHARING               = 's';
+    const PARAM_RELATED               = 'r';
+    const PARAM_SKIN_NAME             = 'sn';
+    const PARAM_CASTING_BLOCK         = 'cb';
+    const PARAM_GA_BLOCK              = 'ga';
+    const PARAM_PLAY_REASON           = 'pr';
+    const PARAM_DASHBOARD_CONFIG_KEY  = 'pid';
+    const PARAM_DISPLAY_DESCRIPTION   = 'dd';
+    const PARAM_CHROMELESS_PLAYER     = 'cp';
+    const PARAM_ADVERTISING_BLOCK     = 'ab';
 
     // Tracking Events
-    /** @const */ var EVENT_VIDEO_EMBED  = 'e';
-    /** @const */ var EVENT_VIDEO_PLAY   = 's';
-    /** @const */ var EVENT_TIME_WATCHED = 't';
+    const EVENT_VIDEO_EMBED  = 'e';
+    const EVENT_VIDEO_PLAY   = 's';
+    const EVENT_TIME_WATCHED = 't';
 
     function _hashParam(s) {
       s = decodeURIComponent(s);
@@ -104,7 +105,12 @@ var TVOSAnalytics = (function () {
     }
 
     /** Generate ping URL and send it **/
-    function sendEvent(event, data) {
+    function sendEvent(event, data /*, buckets... */) {
+      // Don't send analytics pings without an analyticsToken
+      if (!CONFIG['analyticsToken'] || arguments.length < sendEvent.length + 1) {
+        return;
+      }
+
       var parameters = {};
       parameters[PARAM_NONCE] = Math.random().toFixed(16).substr(2, 16);
       parameters[PARAM_ANALYTICS_TOKEN] = CONFIG['analyticsToken'];
@@ -138,27 +144,24 @@ var TVOSAnalytics = (function () {
       /** MD5 hash for server-side integrity check **/
       var hash = _hashParam(trackingArgsStr);
 
-      /** Compose ping URL **/
-      var trackerURL = `https://${serverURL}/${apiVersion}/${bucketName}/ping.gif?${hash}&${trackingArgsStr}`;
+      for (var i = sendEvent.length; i < arguments.length; i++) {
+        var bucketName = arguments[i];
+        // Compose ping URL
+        var trackerURL = `https://${SERVER_URL}/${API_VERSION}/${bucketName}/ping.gif?${hash}&${trackingArgsStr}`;
+        // Make a request to the analytics endpoint. No need to wait for a result
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", trackerURL);
+        xhr.send();
+      }
 
-      /** Record the last time a ping was sent **/
+      // Record the last time a ping was sent
       lastPingSent = new Date();
-
-      /** Don't send analytics pings without an analyticsToken **/
-      if (!CONFIG['analyticsToken']) return;
-
-      /** Make a request to the analytics endpoint. No need to wait for a result **/
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", trackerURL);
-      xhr.send();
-      console.log(trackerURL);
-      return trackerURL;
     }
 
     function _mediaParams(mediaItem) {
       var params = {};
       params[PARAM_MEDIA_URL] = mediaItem.url;
-      params[PARAM_MEDIA_ID] = mediaItem.externalID;
+      params[PARAM_MEDIA_ID] = mediaItem.mediaid;
       params[PARAM_TITLE] = mediaItem.title;
       params[PARAM_ITEM_ID] = itemId;
       return params;
@@ -174,7 +177,7 @@ var TVOSAnalytics = (function () {
       evt[PARAM_PROVIDER] = "";
       evt[PARAM_PLAY_REASON] = playReason ? playReason : 1; // 1: User interaction by default
 
-      sendEvent(EVENT_VIDEO_PLAY, evt);
+      sendEvent(EVENT_VIDEO_PLAY, evt, BUCKET_NAME);
     };
 
     function _sendEmbed() {
@@ -195,7 +198,7 @@ var TVOSAnalytics = (function () {
       evt[PARAM_DASHBOARD_CONFIG_KEY] = "";
       evt[PARAM_ADVERTISING_BLOCK] = 0; // TODO: Set this appropriately if/when ads are implemented
 
-      sendEvent(EVENT_VIDEO_EMBED, evt);
+      sendEvent(EVENT_VIDEO_EMBED, evt, BUCKET_NAME);
     };
 
     function _numQuantiles(duration) {
@@ -233,7 +236,7 @@ var TVOSAnalytics = (function () {
       evt[PARAM_TIME_INTERVAL] = _timeDiff(new Date(), lastPingSent);
 
       if (currentQuantile != lastQuantile) {
-        sendEvent(EVENT_TIME_WATCHED, evt);
+        sendEvent(EVENT_TIME_WATCHED, evt, BUCKET_NAME);
       }
 
       lastTime = currentTime;
