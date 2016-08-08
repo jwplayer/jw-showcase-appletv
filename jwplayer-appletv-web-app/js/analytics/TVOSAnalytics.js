@@ -91,6 +91,17 @@ var TVOSAnalytics = (function () {
     const EVENT_VIDEO_PLAY   = 's';
     const EVENT_TIME_WATCHED = 't';
 
+    const EDITION_MAP = {
+      'free': 0,
+      'pro': 1,
+      'premium': 2,
+      'ads': 3,
+      'invalid': 4,
+      'enterprise': 6,
+      'trial': 7,
+      'platinum': 8
+    };
+
     function _hashParam(s) {
       s = decodeURIComponent(s);
       var h = 0;
@@ -106,14 +117,16 @@ var TVOSAnalytics = (function () {
 
     /** Generate ping URL and send it **/
     function sendEvent(event, data /*, buckets... */) {
-      // Don't send analytics pings without an analyticsToken
-      if (!CONFIG['analyticsToken'] || arguments.length < sendEvent.length + 1) {
+      // Don't send analytics pings without an analyticsToken or edition
+      if (!CONFIG['analyticsToken'] || !EDITION_MAP[CONFIG['edition']]
+          || arguments.length < sendEvent.length + 1) {
         return;
       }
 
       var parameters = {};
       parameters[PARAM_NONCE] = Math.random().toFixed(16).substr(2, 16);
       parameters[PARAM_ANALYTICS_TOKEN] = CONFIG['analyticsToken'];
+      parameters[PARAM_EDITION] = EDITION_MAP[CONFIG['edition']];
       parameters[PARAM_EVENT_TYPE] = event;
       parameters[PARAM_SDK_PLATFORM] = 4; // 4 = AppleTV
       parameters[PARAM_MOBILE_SDK_VERSION] = VERSION;
