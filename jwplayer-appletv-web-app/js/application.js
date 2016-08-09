@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  **/
 
-var VERSION = '1.0.0';
+var VERSION = '1.0.1';
 var OPTIONS, CONFIG, PLAYLISTS, MEDIA_ITEMS;
 
 /** Launch the app **/
