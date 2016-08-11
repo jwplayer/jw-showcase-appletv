@@ -1,4 +1,4 @@
-# JW Player for Apple TV
+# JW Showcase for Apple TV
 
 This app enables you to easily put your JW Player-hosted video content on the new Apple TV® with no coding and minimal configuration. It works with any JW Player edition, from Free to Enterprise (note that usage will count against your monthly JW streaming limits).
 
