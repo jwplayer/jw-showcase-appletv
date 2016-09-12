@@ -89,7 +89,8 @@ var PlaylistLoader = function() {
         mediaItem.mediaid = playlistItem.mediaid;
         mediaItem.description = playlistItem.description;
         mediaItem.title = playlistItem.title;
-        mediaItem.artworkImageURL = _checkScheme(playlistItem.image);
+        mediaItem.artworkImageURL = playlistItem.image ?
+          _checkScheme(playlistItem.image) : "";
         // Set the feed id in the MediaItem so it can be retraced to the global playlist.
         mediaItem.feedid = feedid;
 
@@ -110,12 +111,12 @@ var PlaylistLoader = function() {
           // Figure out the duration of the media item, the HLS stream source does
           // not expose this, but other sources, such as mp4 may.
           var foundDuration = false;
-          
+
           if (playlistItem.duration) {
               mediaItem.duration = playlistItem.duration;
               foundDuration = true;
           }
-          
+
           if (!foundDuration) {
               foundDuration = playlistItem.sources.some(function(source) {
                 if (source.duration) {
