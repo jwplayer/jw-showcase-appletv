@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<document data-view="ItemDetail" data-media-id="${this.item.mediaid}" data-related-playlist="${this.related.feedid}">
+<document data-view="ItemDetail" data-media-id="${this.item.mediaid}" data-related-playlist="${this.related ? this.related.feedid : ''}">
   <head>
     <style>
       .showTextOnHighlight {
@@ -49,7 +49,7 @@
     </banner>
     <shelf id="related-section">
       <header>
-        <title class="playlist-title">${he.encode(this.related.title)}</title>
+        <title class="playlist-title">${this.related ? he.encode(this.related.title) : ''}</title>
       </header>
       <section id="related-items"></section>
     </shelf>

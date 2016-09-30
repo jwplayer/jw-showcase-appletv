@@ -23,7 +23,7 @@ ViewManager.registerView("ItemDetail", function(doc) {
   self.item = MEDIA_ITEMS[media_id];
 
   var related_id = doc.firstChild.getAttribute("data-related-playlist")
-  if (related_id != "undefined") {
+  if (related_id != "undefined" && related_id.length > 0) {
     var related = PLAYLISTS[related_id];
     showRelated();
   }

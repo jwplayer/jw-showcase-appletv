@@ -103,7 +103,14 @@ ViewManager.registerView("ListCollection", function(doc) {
       loader.applyView(itemDoc);
       section.appendChild(itemDoc);
     }
-
   }
+
+  var searchButton = doc.getElementById("search-button");
+  searchButton.addEventListener("select", function() {
+    // Load SearchTemplate
+    loader.load("templates/Search.tvml", function(templateDoc) {
+      navigationDocument.pushDocument(templateDoc);
+    });
+  });
 
 });

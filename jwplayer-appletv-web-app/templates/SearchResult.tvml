@@ -1,0 +1,7 @@
+<lockup
+  data-media-id="${this.mediaid}"
+  data-href="templates/ItemDetail.tvml"
+  data-view="SearchResult">
+  <img class="search-result-image" src="${this.image}"/>
+  <title class="search-result-title">${he.encode(this.title)}</title>
+</lockup>

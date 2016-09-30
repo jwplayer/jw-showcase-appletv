@@ -17,7 +17,8 @@
 Playback.AutoAdvance = (function() {
 
   var _overlayDocument,
-    _overlaySet = false;
+    _overlaySet = false,
+    _disabled = false;
 
   EventBus.subscribe(Events.CONFIG_LOADED, _configLoadedHandler);
 
@@ -32,6 +33,14 @@ Playback.AutoAdvance = (function() {
 
   function _playlistLoadedHandler(event) {
     var playlist = PLAYLISTS[event.playlist.item(0).feedid];
+    if (!playlist) {
+      // Nothing to do.
+      _disabled = true;
+      return;
+    }
+
+    _disabled = false;
+
     // Rebuild the loaded playlist.
     var index;
     for (var i = 0; i < playlist.items.length; i++) {
@@ -55,7 +64,7 @@ Playback.AutoAdvance = (function() {
   }
 
   function _timeHandler(event) {
-    if (Playback.player.nextMediaItem
+    if (!_disabled && Playback.player.nextMediaItem
       && event.time >= Playback.player.currentMediaItem.duration - CONFIG.autoAdvanceWarningOffset
       && !Playback.player.currentMediaItem.ad) {
       // Display the overlay
@@ -93,13 +102,17 @@ Playback.AutoAdvance = (function() {
   }
 
   function _mediaChangeHandler(event) {
-    Playback.setOverlay(null); // Remove the auto advance overlay
-    _overlaySet = false;
+    if (!_disabled) {
+      Playback.setOverlay(null); // Remove the auto advance overlay
+      _overlaySet = false;
+    }
   }
 
   function _playlistCompleteHandler(event) {
     // Playlist completed, take the user back to the main screen.
-    navigationDocument.popToRootDocument();
+    if (!_disabled) {
+      navigationDocument.popToRootDocument();
+    }
   }
 
   return {};

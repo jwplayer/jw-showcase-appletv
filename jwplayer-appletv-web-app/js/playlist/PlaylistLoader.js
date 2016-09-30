@@ -83,59 +83,12 @@ var PlaylistLoader = function() {
 
     function _parseMediaItems(playlist, feedid) {
       var mediaItems = new Playlist();
+      var playlistParser = new PlaylistParser();
 
       playlist.forEach(function(playlistItem) {
-        var mediaItem = new MediaItem();
-        mediaItem.mediaid = playlistItem.mediaid;
-        mediaItem.description = playlistItem.description;
-        mediaItem.title = playlistItem.title;
-        mediaItem.artworkImageURL = playlistItem.image ?
-          _checkScheme(playlistItem.image) : "";
-        // Set the feed id in the MediaItem so it can be retraced to the global playlist.
-        mediaItem.feedid = feedid;
-
-        // Figure out the url of the stream for this playlist item.
-        var foundStream = false;
-        if (playlistItem.sources && playlistItem.sources instanceof Array) {
-          foundStream = playlistItem.sources.some(function(source) {
-            if (source.type && source.type === 'application/vnd.apple.mpegurl'
-                || source.type === 'application/x-mpegURL') {
-                  mediaItem.url = _checkScheme(source.file);
-                  return true;
-                }
-            return false;
-          });
-        }
-
-        if (foundStream) {
-          // Figure out the duration of the media item, the HLS stream source does
-          // not expose this, but other sources, such as mp4 may.
-          var foundDuration = false;
-
-          if (playlistItem.duration) {
-              mediaItem.duration = playlistItem.duration;
-              foundDuration = true;
-          }
-
-          if (!foundDuration) {
-              foundDuration = playlistItem.sources.some(function(source) {
-                if (source.duration) {
-                  mediaItem.duration = source.duration;
-                  return true;
-                }
-                return false;
-              });
-          }
-
-          if (!foundDuration) {
-            // No duration has been found
-            mediaItem.duration = 0;
-          }
-
+        var mediaItem = playlistParser.parseItem(playlistItem, feedid);
+        if (mediaItem) {
           mediaItems.push(mediaItem);
-        } else {
-           console.warn('Warning: No HLS stream available for video with media id: '
-            + mediaItem.mediaid);
         }
       });
 
