@@ -20,8 +20,10 @@ var OPTIONS, CONFIG, PLAYLISTS, MEDIA_ITEMS;
 /** Launch the app **/
 App.onLaunch = function(opts) {
   OPTIONS = opts;
+  // TODO: Create some kind of model to manage and encapsulate this data.
   PLAYLISTS = {};
   MEDIA_ITEMS = {};
+  RELATED_FEEDS = {};
 
   console.log("Initing with options %o", OPTIONS);
 

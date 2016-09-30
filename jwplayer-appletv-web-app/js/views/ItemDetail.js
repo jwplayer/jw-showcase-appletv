@@ -26,6 +26,24 @@ ViewManager.registerView("ItemDetail", function(doc) {
   if (related_id != "undefined" && related_id.length > 0) {
     var related = PLAYLISTS[related_id];
     showRelated();
+  } else if (CONFIG.relatedFeed && typeof(CONFIG.relatedFeed) === "string") {
+    // A related playlist has not been set, but a relatedFeed has been set.
+    // In this case we want to load a Data-Driven recommendations feed.
+    var feedLoader = new FeedLoader();
+    feedLoader.loadRecommendationsFeed(CONFIG.relatedFeed, media_id,
+      function(recommendations) {
+        if (recommendations.playlist && recommendations.playlist.length > 0) {
+          loader.loadFragment("templates/ListItem.tvml", function(templateDoc) {
+            var section = doc.getElementById("related-items");
+            recommendations.playlist.forEach(function(recommendation) {
+              renderRelatedItem(section, templateDoc,
+                 MEDIA_ITEMS[recommendation.mediaid]);
+            });
+          }, false);
+        }
+    }, function(error) {
+      // noop
+    });
   }
 
   var description = doc.getElementsByTagName("description").item(0);
@@ -57,15 +75,19 @@ ViewManager.registerView("ItemDetail", function(doc) {
     for(var i=0; i<related.items.length; i++) {
       var relatedItem = related.items.item(i);
       if (relatedItem.mediaid != media_id) {
-        var templateData = Utils.extend(relatedItem, {
-          parentView: "ItemDetail"
-        });
-        var itemDoc = loader.duplicateFragment(template, templateData);
-        loader.applyView(itemDoc);
-        section.appendChild(itemDoc);
+        renderRelatedItem(section, template, relatedItem);
       }
     }
 
+  }
+
+  function renderRelatedItem(section, templateDoc, relatedItem) {
+    var templateData = Utils.extend(relatedItem, {
+      parentView: "ItemDetail"
+    });
+    var itemDoc = loader.duplicateFragment(templateDoc, templateData);
+    loader.applyView(itemDoc);
+    section.appendChild(itemDoc);
   }
 
 

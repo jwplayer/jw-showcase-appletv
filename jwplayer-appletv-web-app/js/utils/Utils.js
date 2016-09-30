@@ -13,7 +13,7 @@
  * express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  **/
- 
+
 var Utils = (function () {
 
   /**
@@ -45,8 +45,22 @@ var Utils = (function () {
     return obj;
   }
 
+  /**
+   * Utility function to create XHR GET requests for JSON feeds.
+   */
+  function get(url, completeCallback, errorCallback) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+    xhr.addEventListener("load", completeCallback, false);
+    xhr.addEventListener("error", errorCallback, false);
+    xhr.open("GET", url, true);
+    xhr.send();
+    return xhr;
+  }
+
   return {
     genId: genId,
-    extend: extend
+    extend: extend,
+    get: get
   }
 })();
