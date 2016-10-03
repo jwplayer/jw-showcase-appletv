@@ -40,9 +40,6 @@
       <background>
         <img height="400" src="${CONFIG.configURL}/${CONFIG.bannerImage}" width="1920"/>
       </background>
-      <button id="search-button">
-        <title>Search</title>
-      </button>
     </banner>
     <collectionList>
       <carousel>

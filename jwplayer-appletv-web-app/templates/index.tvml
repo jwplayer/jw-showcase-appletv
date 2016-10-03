@@ -2,7 +2,7 @@
 <document
   data-view="SplashScreen"
   data-splash-delay="2"
-  data-splash-next="templates/ListCollection.tvml">
+  data-splash-next="${CONFIG.searchFeed ? 'templates/Menu.tvml' : 'templates/ListCollection.tvml'}">
 
   <divTemplate>
     <img src="${CONFIG.configURL}/${CONFIG.splashScreen}"
