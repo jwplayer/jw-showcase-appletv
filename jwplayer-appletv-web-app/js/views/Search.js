@@ -15,9 +15,10 @@
 **/
 
 ViewManager.registerView("Search", function(doc) {
-  if (!CONFIG.searchFeed || !typeof(CONFIG.searchFeed) === "string") {
+  if (!CONFIG.searchFeed || !typeof(CONFIG.searchFeed) === "string"
+    || CONFIG.searchFeed.length < 1) {
     // Search hasn't been setup.
-    console.error("Search hasn't been set-up, please make configure a searchFeed in your config.");
+    console.error("Search hasn't been set-up, please configure a searchFeed in your config.");
     return;
   }
 
