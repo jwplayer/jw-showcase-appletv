@@ -22,16 +22,25 @@ ViewManager.registerView("ListItem", function(doc) {
   var related = doc.getAttribute("data-related-playlist");
   var parent_view = doc.getAttribute("data-parent-view");
 
-  var item = MEDIA_ITEMS[media_id];
+  var item = PlaylistManager.getMediaItem(media_id);
 
   doc.addEventListener("select", docSelected);
 
   function docSelected(evt) {
+    // Related will be undefined if a user landed on this page after searching.
+    if (related !== undefined || PlaylistManager.hasPlaylist(related)) {
+      PlaylistManager.getPlaylist(related)
+        .then(replaceDoc);
+    } else {
+      replaceDoc();
+    }
+  }
+
+  function replaceDoc(playlist) {
     var loader = new TemplateLoader(doc.ownerDocument, {
       item: item,
-      related: PLAYLISTS[related]
+      related: playlist
     });
-
     loader.load(href, detailTemplateLoaded);
   }
 

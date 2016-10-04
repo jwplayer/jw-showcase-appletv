@@ -45,22 +45,8 @@ var Utils = (function () {
     return obj;
   }
 
-  /**
-   * Utility function to create XHR GET requests for JSON feeds.
-   */
-  function get(url, completeCallback, errorCallback) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = "json";
-    xhr.addEventListener("load", completeCallback, false);
-    xhr.addEventListener("error", errorCallback, false);
-    xhr.open("GET", url, true);
-    xhr.send();
-    return xhr;
-  }
-
   return {
     genId: genId,
-    extend: extend,
-    get: get
+    extend: extend
   }
 })();

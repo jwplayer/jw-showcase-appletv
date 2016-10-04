@@ -22,8 +22,7 @@ ViewManager.registerView("Search", function(doc) {
     return;
   }
 
-  var _feedLoader = new FeedLoader(),
-    _templateLoader = new TemplateLoader(doc),
+  var _templateLoader = new TemplateLoader(doc),
     _searchField = doc.getElementsByTagName("searchField").item(0),
     _keyboard = _searchField.getFeature("Keyboard"),
     _collectionList = doc.getElementsByTagName("collectionList").item(0),
@@ -58,16 +57,15 @@ ViewManager.registerView("Search", function(doc) {
   };
 
   function _search(query) {
-    _feedLoader.loadSearchFeed(CONFIG.searchFeed, query, _onSearchFeedLoaded);
-  }
-
-  function _onSearchFeedLoaded(results) {
-    if (!results.playlist) {
-      // No search results
-      _renderNoSearchResults();
-    } else {
-      _renderSearchResults(results.playlist);
-    }
+    PlaylistManager.getSearchFeed(CONFIG.searchFeed, query)
+      .then(function(results) {
+        if (!results.playlist) {
+          // No search results
+          _renderNoSearchResults();
+        } else {
+          _renderSearchResults(results.playlist);
+        }
+    });
   }
 
   function _renderSearchResults(results) {

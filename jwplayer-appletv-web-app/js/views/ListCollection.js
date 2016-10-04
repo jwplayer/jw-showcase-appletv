@@ -17,7 +17,6 @@
 ViewManager.registerView("ListCollection", function(doc) {
   var document = doc.ownerDocument;
   var loader = new TemplateLoader(document);
-  var playlistLoader = new PlaylistLoader();
   var collectionDoc = doc;
 
   var playlists = collectionDoc.firstChild.getAttribute("data-playlists").split(",");
@@ -66,8 +65,12 @@ ViewManager.registerView("ListCollection", function(doc) {
       collectionList.appendChild(placeholder);
     }
 
-    // Bind the placeholder to the callback so it can be replaced with the templated markup
-    playlistLoader.load(playlistId, renderPlaylist.bind(placeholder));
+    PlaylistManager.getPlaylist(playlistId)
+      // Bind the placeholder to the callback so it can be replaced with the templated markup
+      .then(renderPlaylist.bind(placeholder))
+      .catch(function(error) {
+        console.log("Failed to load playlist " + playlistId + ".\n" + error);
+      });
   }
 
   function renderPlaylist(list) {
@@ -104,5 +107,5 @@ ViewManager.registerView("ListCollection", function(doc) {
       section.appendChild(itemDoc);
     }
   }
-  
+
 });

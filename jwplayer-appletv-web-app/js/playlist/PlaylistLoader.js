@@ -15,90 +15,39 @@
  **/
 
 var PlaylistLoader = function() {
-    /**
-     * Loads a playlist from the platform.
-     */
-    this.load = function(playlistId, callback) {
-      var url = `https://content.jwplatform.com/feeds/${playlistId}.json`
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = "json";
-      xhr.addEventListener("load", function(xhr) {
-        _playlistLoaded(playlistId, xhr.target.response, callback);
-      }, false);
-      xhr.addEventListener("error", function(e) {
-        _playlistLoadError(playlistId, e);
-      }, false);
-      xhr.open("GET", url, true);
-      xhr.send();
-      return xhr;
-    }
-
-    function _playlistLoaded(playlistId, playlist, callback) {
-      // At minimum we need playlist.playlist to be defined.
-      if (!playlist.playlist || !playlist.playlist instanceof Array) {
-        console.warn('Unable to parse playlist ' + playlistId + '.');
-        return;
-      }
-
-      // Parse MediaItems out of the playlist
-      playlist.items = _parseMediaItems(playlist.playlist, playlist.feedid);
-
-      // Iff we managed to parse media items out of the playlist
-      // register the playlist and execute the callback.
-      if (playlist.items.length > 0) {
-        // Register the playlist.
-        _registerPlaylist(playlist);
-
-        // Execute callback.
-        callback(playlist);
-      }
-    }
-
-    function _registerPlaylist(playlist) {
-      // Only register new playlists
-      if (PLAYLISTS[playlist.feedid]) {
-        return;
-      }
-      PLAYLISTS[playlist.feedid] = playlist;
-
-      // Register media items
-      for (var i = 0; i < playlist.items.length; i++) {
-        var item = playlist.items.item(i);
-        MEDIA_ITEMS[item.mediaid] = item;
-      }
-    }
-
-    function _playlistLoadError(playlistId, err) {
-      // TODO: Publish error event?
-      if (err.target.status == 404) {
-        console.error('Error loading playlist ' + playlistId
-          + ': playlist does not exist.');
-      } else if (err.target.response) {
-        console.error('Error loading playlist ' + playlistId
-          + ': %O', err.target.response);
-      } else {
-        console.error('Error loading playlist ' + playlistId);
-      }
-    }
 
     function _parseMediaItems(playlist, feedid) {
       var mediaItems = new Playlist();
       var playlistParser = new PlaylistParser();
-
       playlist.forEach(function(playlistItem) {
         var mediaItem = playlistParser.parseItem(playlistItem, feedid);
         if (mediaItem) {
           mediaItems.push(mediaItem);
         }
       });
-
       return mediaItems;
     }
 
-    function _checkScheme(url) {
-      if (url.startsWith("//")) {
-        return 'https:' + url;
+    /**
+     * Loads a playlist from the platform.
+     * Loaded playlists will be cached in the PlaylistManager.
+     */
+    return {
+      load: function(playlistId) {
+        return new Promise(function(resolve, reject) {
+          http(`https://content.jwplatform.com/feeds/${playlistId}.json`)
+            .get()
+            .then(function(response) {
+              // At minimum we need playlist.playlist to be defined.
+              if (!response.playlist || !response.playlist instanceof Array) {
+                reject('Unable to parse playlist ' + playlistId + ':' + ' Unexpected response.');
+              }
+              // Parse MediaItems out of the playlist.
+              response.items = _parseMediaItems(response.playlist, response.feedid);
+              resolve(response);
+            }, reject);
+        });
       }
-      return url;
-    }
+    };
+
 };

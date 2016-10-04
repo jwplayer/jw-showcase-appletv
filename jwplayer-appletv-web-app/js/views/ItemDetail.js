@@ -15,35 +15,41 @@
 **/
 
 ViewManager.registerView("ItemDetail", function(doc) {
+  // TODO: cleanup
   var self = this;
-
+  var related;
   var loader = new TemplateLoader(doc, this);
-
   var media_id = doc.firstChild.getAttribute("data-media-id");
-  self.item = MEDIA_ITEMS[media_id];
+  self.item = PlaylistManager.getMediaItem(media_id);
 
   var related_id = doc.firstChild.getAttribute("data-related-playlist")
-  if (related_id != "undefined" && related_id.length > 0) {
-    var related = PLAYLISTS[related_id];
-    showRelated();
+  if (related_id.length > 0) {
+    // Display the rest of the playlist as "related".
+    PlaylistManager.getPlaylist(related_id)
+      .then(function(playlist) {
+        related = playlist;
+        showRelated();
+      });
   } else if (CONFIG.relatedFeed && typeof(CONFIG.relatedFeed) === "string") {
     // A related playlist has not been set, but a relatedFeed has been set.
     // In this case we want to load a Data-Driven recommendations feed.
-    var feedLoader = new FeedLoader();
-    feedLoader.loadRecommendationsFeed(CONFIG.relatedFeed, media_id,
-      function(recommendations) {
+    PlaylistManager.getRelatedFeed(CONFIG.relatedFeed, media_id)
+      .then(function(recommendations) {
         if (recommendations.playlist && recommendations.playlist.length > 0) {
           loader.loadFragment("templates/ListItem.tvml", function(templateDoc) {
             var section = doc.getElementById("related-items");
             recommendations.playlist.forEach(function(recommendation) {
               renderRelatedItem(section, templateDoc,
-                 MEDIA_ITEMS[recommendation.mediaid]);
+                 PlaylistManager.getMediaItem(recommendation.mediaid));
             });
           }, false);
         }
-    }, function(error) {
-      // noop
-    });
+      })
+      .catch(function(error) {
+        // Remove the related section if it can't be loaded.
+        console.log("Failed to load related section: " + error);
+        removeRelatedSection();
+      });
   }
 
   var description = doc.getElementsByTagName("description").item(0);
@@ -64,6 +70,11 @@ ViewManager.registerView("ItemDetail", function(doc) {
     Playback.load(playlist);
     Playback.play();
   });
+
+  function removeRelatedSection() {
+    var relatedSection = doc.getElementById("related-section");
+    relatedSection.parentNode.removeChild(relatedSection);
+  }
 
   function showRelated() {
     loader.loadFragment("templates/ListItem.tvml", templateLoaded, false);

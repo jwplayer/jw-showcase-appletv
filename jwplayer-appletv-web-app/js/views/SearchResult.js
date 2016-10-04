@@ -22,7 +22,7 @@ ViewManager.registerView("SearchResult", function(doc) {
 
   function _docSelected(evt) {
     var loader = new TemplateLoader(doc.ownerDocument, {
-      item: MEDIA_ITEMS[MEDIA_ID]
+      item: PlaylistManager.getMediaItem(MEDIA_ID)
     });
     loader.load(HREF, _detailTemplateLoaded);
   }

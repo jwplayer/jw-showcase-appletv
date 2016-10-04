@@ -24,95 +24,50 @@
    /**
     * Loads a Data-Driven search feed.
     */
-   this.loadSearchFeed = function(searchFeedId, searchPhrase, callback) {
-     if (arguments.length < 3) {
-       // Nothing to do.
-       return;
-     }
-
+   this.loadSearchFeed = function(searchFeedId, searchPhrase) {
      // Construct the query URL.
      var url = `${BASE_URL}?feed_id=${searchFeedId}&search=${encodeURIComponent(searchPhrase)}`;
+     return new Promise(function(resolve, reject) {
+       http(url)
+        .get()
+        .then(function(response) {
+          if (!response.kind || response.kind != "SEARCH") {
+            // Feed is not a SEARCH feed.
+            reject('Error: Feed ' + searchFeedId + ' is not a search feed!');
+            return;
+          }
+          if (response.playlist) {
+            _parseMediaItems(response.playlist);
+          }
+          resolve(response);
+        }, reject);
+     });
+   }
 
-     // Open XHR
-     return Utils.get(url, function(xhr) {
-       _onSearchFeedLoaded(searchFeedId, xhr.target.response, callback);
-     }, function(error) {
-       _onFeedError(searchFeedId, e);
+   this.loadRelatedFeed = function(relatedFeedId, mediaId) {
+    // Construct a query URL.
+     var url = `${BASE_URL}?feed_id=${relatedFeedId}&related_media_id=${mediaId}`;
+     return new Promise(function(resolve, reject) {
+       http(url)
+        .get()
+        .then(function(response) {
+          if (!response.kind || response.kind != "FEED") {
+            reject('Error: Feed ' + relatedFeedId + ' is not a related feed!');
+          }
+          if (response.playlist) {
+            _parseMediaItems(response.playlist);
+          }
+          resolve(response);
+        }, reject);
      });
    };
 
-   this.loadRecommendationsFeed = function(recommendationsFeedId, mediaId, callback) {
-     if (arguments.length < 3) {
-       // Nothing to do.
-       return;
-     }
-
-     // Check if we already downloaded a related feed for this media id.
-     if (RELATED_FEEDS[mediaId]) {
-       // TODO: Build some proper model that manages this data.
-       callback(RELATED_FEEDS[mediaId]);
-       return;
-     }
-
-     var url = `${BASE_URL}?feed_id=${recommendationsFeedId}&related_media_id=${mediaId}`;
-     return Utils.get(url, function(xhr) {
-        _onRecommendationsFeedLoaded(recommendationsFeedId,
-          mediaId, xhr.target.response, callback);
-     }, function(error) {
-       _onFeedError(recommendationsFeedId, error);
-     });
-   };
-
-   function _onSearchFeedLoaded(feedId, response, callback) {
-     if (!response.kind || response.kind != "SEARCH") {
-       // Feed is not a SEARCH feed.
-       // TODO: Publish eror event?
-       console.error('Error: Feed ' + feedId + ' is not a search feed!');
-       return;
-     }
-
-     // Parse and register MediaItems.
-     if (response.playlist) {
-       _registerMediaItems(response.playlist);
-     }
-
-     callback(response);
-   }
-
-   function _onRecommendationsFeedLoaded(feedId, mediaId, response, callback) {
-     if (!response.kind || response.kind != "FEED") {
-       console.error('Error: Feed ' + feedid + ' is not a related feed!');
-     }
-
-     if (response.playlist) {
-       _registerMediaItems(response.playlist);
-       RELATED_FEEDS[mediaId] = response;
-     }
-
-     callback(response);
-   }
-
-   function _onFeedError(feedId, error) {
-     // TODO: Publish error event?
-     if (error.target.status == 404) {
-       console.error('Error loading feed ' + feedId
-         + ': feed does not exist. Are you entitled to feeds?');
-     } else if (error.target.response) {
-       console.error('Error loading feed ' + feedId
-         + ': %O', error.target.response);
-     } else {
-       console.error('Error loading feed ' + feedId);
-     }
-   }
-
-   function _registerMediaItems(playlist) {
+   function _parseMediaItems(playlist) {
      var playlistParser = new PlaylistParser();
      playlist.forEach(function(playlistItem) {
        var mediaItem = playlistParser.parseItem(playlistItem);
        if (mediaItem) {
          playlistItem.mediaItem = mediaItem;
-         // TODO: Find a nicer way to manage MEDIA_ITEMS
-         MEDIA_ITEMS[playlistItem.mediaid] = mediaItem;
        }
      });
    }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<document data-view="ItemDetail" data-media-id="${this.item.mediaid}" data-related-playlist="${this.related ? this.related.feedid : ''}">
+<document data-view="ItemDetail"
+  data-media-id="${this.item.mediaid}"
+  data-related-playlist="${this.related ? this.related.feedid : ''}">
   <head>
     <style>
       .showTextOnHighlight {
