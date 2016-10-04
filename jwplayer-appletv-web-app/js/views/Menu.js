@@ -15,6 +15,7 @@
 **/
 
 ViewManager.registerView("Menu", function(doc) {
+  var documents = {};
   var menuBarDocument = doc.getElementsByTagName("menuBar").item(0).getFeature("MenuBarDocument");
 
   doc.addEventListener("select", function(event) {
@@ -24,10 +25,15 @@ ViewManager.registerView("Menu", function(doc) {
       return;
     }
 
-    var templateLoader = new TemplateLoader(doc.ownerDocument);
-    templateLoader.load(href, function(templateDoc) {
-      menuBarDocument.setDocument(templateDoc, selectedElement);
-    });
+    if (documents[href]) {
+      menuBarDocument.setDocument(documents[href], selectedElement);
+    } else {
+      var templateLoader = new TemplateLoader(doc.ownerDocument);
+      templateLoader.load(href, function(templateDoc) {
+        documents[href] = templateDoc;
+        menuBarDocument.setDocument(templateDoc, selectedElement);
+      });
+    }
   });
 
 });
