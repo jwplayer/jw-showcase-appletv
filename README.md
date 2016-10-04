@@ -14,6 +14,7 @@ NOTE: The app is only supported on 4th Generation (2015) Apple TV devices.
 - Auto Advancing of playlists, when a video in a playlist has completed playback, JW Player can automatically play the next item in the playlist.
 - Customize the user interface with your own branding. The default app is configured for JW Player branding and content but you can easily change this to use your own assets by modifying the config.json file. Advanced customization is possible, but you will need to modify the source code.
 - Basic playback analytics reporting to your JW Dashboard.
+- Search and Recommendations (requires Recommendations entitlement).
 
 ### Unsupported Features
 
@@ -22,7 +23,6 @@ Due to the lack of UIWebView support in tvOS, our app framework is not based on 
 - Ad integrations (VAST, VPAID, GoogleIMA, etc.)
 - Security-related features (encrypted HLS, DRM, signed URLs)
 - Captions
-- Search
 
 ## Usage Instructions (JW Platform integration)
 
@@ -48,6 +48,13 @@ The Auto Advance feature has the following configuration options:
 
 * `autoAdvanceWarningOffset`: The amount of seconds before the end of playback of the current item to show the `autoAdvanceMessage`.
 * `autoAdvanceMessage`: The message to display before auto advancing to the next playlist item, this message takes one variable, `{$offset}`, which is the number of seconds remaining before the next video starts.
+
+## Search and Recommendations
+
+If you're a customer who has [Data-Driven recommendations](https://support.jwplayer.com/customer/en/portal/articles/2191721-data-driven-recommendations-beta) enabled. You can make use of Search and Recommendations.
+
+In order to do this, you need to set up a Search Feed and a Recommendations Feed in your `config.json` file.
+At this moment it's possible to create Recommendation feeds through your dashboard, but you'll have to create a search feed through the [API](https://developer.jwplayer.com/jw-platform/reference/v1/methods/channels/create.html). Please contact us if you need help setting this up.
 
 ## Requirements
 

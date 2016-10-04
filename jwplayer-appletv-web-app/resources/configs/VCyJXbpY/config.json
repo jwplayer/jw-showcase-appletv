@@ -10,5 +10,7 @@
   "backgroundColor": "#7e0023",
   "autoAdvance": true,
   "autoAdvanceWarningOffset": 10,
-  "autoAdvanceMessage": "The next video will start in ${offset} seconds."
+  "autoAdvanceMessage": "The next video will start in ${offset} seconds.",
+  "searchFeed": "",
+  "relatedFeed": ""
 }

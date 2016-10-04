@@ -1,0 +1,13 @@
+<document
+  data-view="Menu">
+   <menuBarTemplate>
+      <menuBar>
+         <menuItem href="templates/ListCollection.tvml">
+            <title>Videos</title>
+         </menuItem>
+         <menuItem href="templates/Search.tvml">
+            <title>Search</title>
+         </menuItem>
+      </menuBar>
+   </menuBarTemplate>
+</document>
