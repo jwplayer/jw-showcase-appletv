@@ -41,30 +41,28 @@ Playback.AutoAdvance = (function() {
 
     _disabled = false;
 
-    PlaylistManager.getPlaylist(playlistId)
-      /* This promise should resolve immediately. */
-      .then(function(playlist) {
-        // Rebuild the loaded playlist.
-        var index;
-        for (var i = 0; i < playlist.items.length; i++) {
-          if (playlist.items.item(i) == event.playlist.item(0)) {
-            index = i;
-            break;
-          }
-        }
+    var playlist = PlaylistManager.getCachedPlaylist(playlistId);
+    
+    // Rebuild the loaded playlist.
+    var index;
+    for (var i = 0; i < playlist.items.length; i++) {
+      if (playlist.items.item(i) == event.playlist.item(0)) {
+        index = i;
+        break;
+      }
+    }
 
-        if (typeof index != 'undefined') {
-          var newPlaylist = new Playlist();
-          for (var i = index; i < playlist.items.length; i++) {
-            newPlaylist.push(playlist.items.item(i));
-          }
-          Playback.load(newPlaylist, false);
-        }
+    if (typeof index != 'undefined') {
+      var newPlaylist = new Playlist();
+      for (var i = index; i < playlist.items.length; i++) {
+        newPlaylist.push(playlist.items.item(i));
+      }
+      Playback.load(newPlaylist, false);
+    }
 
-        EventBus.publish(Events.AUTOADVANCE_INITIALIZED, {
-          playlist: newPlaylist
-        });
-      });
+    EventBus.publish(Events.AUTOADVANCE_INITIALIZED, {
+      playlist: newPlaylist
+    });
   }
 
   function _timeHandler(event) {

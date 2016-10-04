@@ -70,6 +70,14 @@ var PlaylistManager = (function() {
   }
 
   /**
+   * Returns a playlist or undefined from the cache.
+   * Only use this when you are certain the playlist has been loaded.
+   */
+  function getCachedPlaylist(playlistId) {
+    return _playlists[playlistId];
+  }
+
+  /**
    * Returns a promise which either resolves to a Related Feed or an error.
    */
   function getRelatedFeed(relatedFeedId, mediaId) {
@@ -147,6 +155,7 @@ var PlaylistManager = (function() {
   // Expose public methods.
   return {
     getPlaylist: getPlaylist,
+    getCachedPlaylist: getCachedPlaylist,
     getRelatedFeed: getRelatedFeed,
     getSearchFeed: getSearchFeed,
     hasPlaylist: hasPlaylist,
