@@ -50,6 +50,8 @@ ViewManager.registerView("ItemDetail", function(doc) {
         console.log("Failed to load related section: " + error);
         removeRelatedSection();
       });
+  } else {
+    removeRelatedSection();
   }
 
   var description = doc.getElementsByTagName("description").item(0);
