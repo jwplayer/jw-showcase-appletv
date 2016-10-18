@@ -27,10 +27,16 @@
 
    return {
 
-     ajax: function(method, url) {
+     ajax: function(method, url, options) {
        var promise = new Promise(function(resolve, reject) {
          var client = new XMLHttpRequest();
-         client.responseType = "json";
+         if (options) {
+           for (property in options) {
+             if (options.hasOwnProperty(property)) {
+               client[property] = options[property];
+             }
+           }
+         }
          client.onload = function() {
            if (this.status >= 200 && this.status < 300) {
              resolve(this.response);
@@ -47,9 +53,14 @@
        return promise;
      },
 
-     get: function(args) {
-       // TODO: args
-       return this.ajax('GET', url);
+     get: function(options) {
+       if (!options) {
+         // If options are not defined, assume that we want to load a JSON document.
+         options = {
+           responseType: "json"
+         };
+       }
+       return this.ajax('GET', url, options);
      }
    };
 
