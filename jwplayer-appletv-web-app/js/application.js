@@ -24,6 +24,7 @@ App.onLaunch = function(opts) {
 
   var scripts = [
     `${OPTIONS.baseURL}/js/utils/Utils.js`,
+    `${OPTIONS.baseURL}/js/utils/Promise.js`,
     `${OPTIONS.baseURL}/js/utils/Http.js`,
     `${OPTIONS.baseURL}/js/events/EventBus.js`,
     `${OPTIONS.baseURL}/js/events/Events.js`,

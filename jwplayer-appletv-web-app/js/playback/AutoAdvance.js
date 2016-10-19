@@ -42,26 +42,26 @@ Playback.AutoAdvance = (function() {
     _disabled = false;
 
     var playlist = PlaylistManager.getCachedPlaylist(playlistId);
-    
+
     // Rebuild the loaded playlist.
     var index;
     for (var i = 0; i < playlist.items.length; i++) {
       if (playlist.items.item(i) == event.playlist.item(0)) {
-        index = i;
+        index = i + 1;
         break;
       }
     }
 
     if (typeof index != 'undefined') {
-      var newPlaylist = new Playlist();
+      var newPlaylist = [];
       for (var i = index; i < playlist.items.length; i++) {
         newPlaylist.push(playlist.items.item(i));
       }
-      Playback.load(newPlaylist, false);
+      Playback.splicePlaylist(1, event.playlist.length - 1, newPlaylist);
     }
 
     EventBus.publish(Events.AUTOADVANCE_INITIALIZED, {
-      playlist: newPlaylist
+      playlist: Playback.player.playlist
     });
   }
 

@@ -24,10 +24,11 @@ var TVOSAnalytics = (function () {
     API_VERSION = "v1",
     BUCKET_NAME = "jwplayer6";
 
-  var embedId = Utils.genId(12),
-    itemId,
-    lastTime = 0,
-    lastPingSent;
+  var _embedId = Utils.genId(12),
+    _itemId,
+    _lastTime = 0,
+    _lastPingSent,
+    _startPingSent = [];
 
     const PARAM_CHECKSUM = 'h';
 
@@ -138,7 +139,7 @@ var TVOSAnalytics = (function () {
       parameters[PARAM_PAGE_TITLE] = "";
       parameters[PARAM_AUTOSTART] = 1;
       parameters[PARAM_AD_BLOCK] = 0;
-      parameters[PARAM_EMBED_ID] = embedId;
+      parameters[PARAM_EMBED_ID] = _embedId;
       parameters[PARAM_RENDERING_MODE] = "";
       parameters[PARAM_PLAYER_HOSTING] = 0;
       parameters[PARAM_PLAYER_SIZE] = "";
@@ -168,7 +169,7 @@ var TVOSAnalytics = (function () {
       }
 
       // Record the last time a ping was sent
-      lastPingSent = new Date();
+      _lastPingSent = new Date();
     }
 
     function _mediaParams(mediaItem) {
@@ -176,12 +177,12 @@ var TVOSAnalytics = (function () {
       params[PARAM_MEDIA_URL] = mediaItem.url;
       params[PARAM_MEDIA_ID] = mediaItem.mediaid;
       params[PARAM_TITLE] = mediaItem.title;
-      params[PARAM_ITEM_ID] = itemId;
+      params[PARAM_ITEM_ID] = _itemId;
       return params;
     }
 
     function _sendStart(mediaItem, playReason) {
-      itemId = Utils.genId(12);
+      _itemId = Utils.genId(12);
       var evt = _mediaParams(mediaItem);
       evt[PARAM_VIDEO_LENGTH] = mediaItem.duration;
       evt[PARAM_QUANTILES] = _numQuantiles(mediaItem.duration);
@@ -241,19 +242,18 @@ var TVOSAnalytics = (function () {
       var evt = _mediaParams(mediaItem);
 
       var currentQuantile = _pctQuantiles(currentTime, mediaItem.duration);
-      var lastQuantile = _pctQuantiles(lastTime, mediaItem.duration)
+      var lastQuantile = _pctQuantiles(_lastTime, mediaItem.duration)
       var numQuantiles = _numQuantiles(mediaItem.duration);
 
       evt[PARAM_TIME_WATCHED] = currentQuantile;
       evt[PARAM_QUANTILES] = _numQuantiles(mediaItem.duration);
-      evt[PARAM_TIME_INTERVAL] = _timeDiff(new Date(), lastPingSent);
+      evt[PARAM_TIME_INTERVAL] = _timeDiff(new Date(), _lastPingSent);
 
       if (currentQuantile != lastQuantile) {
         sendEvent(EVENT_TIME_WATCHED, evt, BUCKET_NAME);
       }
 
-      lastTime = currentTime;
-
+      _lastTime = currentTime;
     };
 
     EventBus.subscribe(Events.PLAYLIST_START, _mediaStartHandler);
@@ -265,14 +265,15 @@ var TVOSAnalytics = (function () {
     });
 
     function _mediaStartHandler(event) {
-      if (Playback.player.currentMediaItem) {
+      var mediaItem = Playback.player.currentMediaItem;
+      if (mediaItem && _startPingSent.indexOf(mediaItem) < 0) {
         if (event.reason &&
-          (PlayerStates[event.reason] == 'PLAYED_TO_END' || PlayerStates[event.reason] == 'FORWARDED_TO_END')
-          && !event.previousMediaItem.ad) {
+          (PlayerStates[event.reason] == 'PLAYED_TO_END' || PlayerStates[event.reason] == 'FORWARDED_TO_END')) {
           _sendStart(Playback.player.currentMediaItem, 6); // playReason 6 -> playlist progression, see spec.
         } else {
           _sendStart(Playback.player.currentMediaItem);
         }
+        _startPingSent.push(mediaItem);
       }
     }
 
@@ -281,7 +282,9 @@ var TVOSAnalytics = (function () {
     }
 
     function _completeHandler(event) {
-      _sendTime(event.item.duration, Playback.player.currentMediaItem);
+      var mediaItem = event.item;
+      _sendTime(mediaItem.duration, mediaItem);
+      _startPingSent.slice(_startPingSent.indexOf(mediaItem), 1);
     }
 
     return {
