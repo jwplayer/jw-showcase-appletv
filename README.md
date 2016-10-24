@@ -24,6 +24,10 @@ Due to the lack of UIWebView support in tvOS, our app framework is not based on 
 - Captions
 - Search
 
+## Advertising Support
+
+- We are Beta testing preroll, midroll and postroll advertising using VAST and VMAP. If you would like to be a Beta tester, [contact JW Player](https://www.jwplayer.com/contact-us/).
+
 ## Usage Instructions (JW Platform integration)
 
 1. Log in to your [JW Player Dashboard](https://dashboard.jwplayer.com). If you do not have an account, you can [create a free one](http://www.jwplayer.com).
