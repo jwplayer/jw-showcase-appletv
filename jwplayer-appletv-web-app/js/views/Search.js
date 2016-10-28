@@ -15,8 +15,8 @@
 **/
 
 ViewManager.registerView("Search", function(doc) {
-  if (!CONFIG.searchFeed || !typeof(CONFIG.searchFeed) === "string"
-    || CONFIG.searchFeed.length < 1) {
+  if (!CONFIG.searchPlaylistId || !typeof(CONFIG.searchPlaylistId) === "string"
+    || CONFIG.searchPlaylistId.length < 1) {
     // Search hasn't been setup.
     console.error("Search hasn't been set-up, please configure a searchFeed in your config.");
     return;
@@ -57,7 +57,7 @@ ViewManager.registerView("Search", function(doc) {
   };
 
   function _search(query) {
-    PlaylistManager.getSearchFeed(CONFIG.searchFeed, query)
+    PlaylistManager.getSearchFeed(CONFIG.searchPlaylistId, query)
       .then(function(results) {
         if (!results.playlist) {
           // No search results

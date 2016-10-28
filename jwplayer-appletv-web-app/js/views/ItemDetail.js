@@ -30,10 +30,10 @@ ViewManager.registerView("ItemDetail", function(doc) {
         related = playlist;
         showRelated();
       });
-  } else if (CONFIG.relatedFeed && typeof(CONFIG.relatedFeed) === "string") {
+  } else if (CONFIG.recommendedPlaylistId && typeof(CONFIG.recommendedPlaylistId) === "string") {
     // A related playlist has not been set, but a relatedFeed has been set.
     // In this case we want to load a Data-Driven recommendations feed.
-    PlaylistManager.getRelatedFeed(CONFIG.relatedFeed, media_id)
+    PlaylistManager.getRelatedFeed(CONFIG.recommendedPlaylistId, media_id)
       .then(function(recommendations) {
         if (recommendations.playlist && recommendations.playlist.length > 0) {
           loader.loadFragment("templates/ListItem.tvml", function(templateDoc) {
