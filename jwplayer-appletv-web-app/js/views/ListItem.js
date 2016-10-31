@@ -27,8 +27,8 @@ ViewManager.registerView("ListItem", function(doc) {
   doc.addEventListener("select", docSelected);
 
   function docSelected(evt) {
-    // Related will be undefined if a user landed on this page after searching.
-    if (related != "undefined" || PlaylistManager.hasPlaylist(related)) {
+    // Related won't be set if a user landed on this page after searching.
+    if (related != "" || PlaylistManager.hasPlaylist(related)) {
       PlaylistManager.getPlaylist(related)
         .then(replaceDoc);
     } else {
