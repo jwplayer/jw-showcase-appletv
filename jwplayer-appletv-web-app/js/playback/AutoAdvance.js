@@ -36,6 +36,11 @@ Playback.AutoAdvance = (function() {
     if (!PlaylistManager.hasPlaylist(playlistId)) {
       // Nothing to do.
       _disabled = true;
+      // We do however want to broadcast the "AUTOADVANCE_INITIALIZED" to
+      // indicate that we've handled the playlistLoaded event.
+      EventBus.publish(Events.AUTOADVANCE_INITIALIZED, {
+        playlist: event.playlist
+      });
       return;
     }
 
