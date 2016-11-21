@@ -39,7 +39,7 @@ Due to the lack of UIWebView support in tvOS, our app framework is not based on 
 1. In the `jwplayer-appletv-web-app/resources/configs` directory, rename the `VCyJXbpY` directory to the JW Player API key that you recorded in step 2.
 1. Open the `config.json` file in a text editor and replace the default values with your own (playlists, images, etc). The recommended image sizes are 1920x1080 for the `splashScreen` image and 1920x400 for the `bannerImage`.
 1. Open the `jwplayer-appletv-tvos-app/jwplayer-for-tv.xcodeproj` project in Xcode.
-1. Open the `AppDelegate.swift` file. Change the `baseURL` variable to your web app server location.
+1. Open the `AppDelegate.swift` file. Change the `TVBaseURL` and `TVConfigURL` variables to your web app server location.
 1. Open the `Info.plist` file. Change the `jwplayer.account_key` value to the JW Player API key that you recorded in step 2, and the `Bundle name` to your desired app name.
 2. Open the `Assets.xcassets` bundle and replace the top shelf and default app icon assets with your own images. For image specs, see the [AppleTV Branding Guide](jwplayer-appletv-app-branding.pdf) in this repo. You can further customize your app by styling the TVML templates. See the [TVML documentation](https://developer.apple.com/library/tvos/documentation/LanguagesUtilities/Conceptual/ATV_Template_Guide/index.html) for more details.
 1. Build the project in Xcode. We recommend running the app in the Xcode Apple TV emulator to test that everything is configured properly. For instructions on using the emulator, see the Xcode documentation.
