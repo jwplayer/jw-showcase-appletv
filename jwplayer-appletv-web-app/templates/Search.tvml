@@ -1,0 +1,14 @@
+<document data-view="Search">
+  <head>
+    <style>
+      .search-result-image {
+        width: 720px;
+        height: 404px;
+      }
+    </style>
+  </head>
+  <searchTemplate>
+    <searchField/>
+    <collectionList/>
+  </searchTemplate>
+</document>

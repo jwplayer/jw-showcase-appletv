@@ -14,6 +14,7 @@ NOTE: The app is only supported on 4th Generation (2015) Apple TV devices.
 - Auto Advancing of playlists, when a video in a playlist has completed playback, JW Player can automatically play the next item in the playlist.
 - Customize the user interface with your own branding. The default app is configured for JW Player branding and content but you can easily change this to use your own assets by modifying the config.json file. Advanced customization is possible, but you will need to modify the source code.
 - Basic playback analytics reporting to your JW Dashboard.
+- Search and Recommendations (requires JW Recommendations entitlement).
 
 ### Unsupported Features
 
@@ -22,7 +23,10 @@ Due to the lack of UIWebView support in tvOS, our app framework is not based on 
 - Ad integrations (VAST, VPAID, GoogleIMA, etc.)
 - Security-related features (encrypted HLS, DRM, signed URLs)
 - Captions
-- Search
+
+## Advertising Support
+
+- We are Beta testing preroll, midroll and postroll advertising using VAST and VMAP. If you would like to be a Beta tester, [contact JW Player](https://www.jwplayer.com/contact-us/).
 
 ## Advertising Support
 
@@ -31,8 +35,8 @@ Due to the lack of UIWebView support in tvOS, our app framework is not based on 
 ## Usage Instructions (JW Platform integration)
 
 1. Log in to your [JW Player Dashboard](https://dashboard.jwplayer.com). If you do not have an account, you can [create a free one](http://www.jwplayer.com).
-1. Click Account > Properties > Settings gear icon >     copy your API key (for example, `WT2yg4NU`).
-1. Click Playlists then click the title of a playlist that you want to include in your app.
+1. Click Account > Properties > Settings gear icon and copy the API key (for example, `WT2yg4NU`) for the desired property.
+1. Return to the main dashboard screen. Under Playlists, click Curated, then click the title of a playlist that you want to include in your app.
 1. In the playlist details page that opens, record the Playlist ID (for example, `PQkCnnIH`). Repeat this for all the playlists that you want in your app. You can add as many playlists as you want and also specify one "featured" playlist.
 1. Clone this repo or [download the Zip  archive](https://github.com/jwplayer/appletv/archive/master.zip).
 1. Copy the `jwplayer-appletv-web-app` directory to your web app server.
@@ -53,10 +57,18 @@ The Auto Advance feature has the following configuration options:
 * `autoAdvanceWarningOffset`: The amount of seconds before the end of playback of the current item to show the `autoAdvanceMessage`.
 * `autoAdvanceMessage`: The message to display before auto advancing to the next playlist item, this message takes one variable, `{$offset}`, which is the number of seconds remaining before the next video starts.
 
+## Search and Recommendations
+
+If you're a customer who has [JW Recommendations](https://support.jwplayer.com/customer/portal/articles/2191721-jw-recommendations) enabled (formerly called Feeds), you can make use of Search and Recommended playlists. If you have a Search playlist specified, a Search box will appear in your Apple TV app UI. The Recommended playlist will be used to suggest related videos when a user selects a search result.
+
+To enable search, you must specify a Search playlist ID and a Related playlist ID in your `config.json` file. The parameter for the Search playlist is `searchPlaylist` and the parameter for Recommended playlist is `recommendedPlaylist`.
+
+Make sure you have set up Search and Recommended playlists through your JW Dashboard or through the [Platform API](https://developer.jwplayer.com/jw-platform/reference/v1/methods/channels/create.html).
+
 ## Requirements
 
-- Apple Xcode 7.1 or later.
-- Apple TV 4th generation (2015) running tvOS 9.0 or later.
+- Apple Xcode 8 or later.
+- Apple TV 4th generation (2015) running tvOS 9.1 or later. tvOS 10 is required for the Ads support Beta.
 - A text editor.
 - An HTTP server (or Amazon S3 bucket, etc.) to host your app's TVML, JavaScript, and config files.
 - An Apple Developer account (only required if you want to list your app in the Apple Store).

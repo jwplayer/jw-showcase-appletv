@@ -1,7 +1,7 @@
 <lockup
   data-href="templates/ItemDetail.tvml"
   data-media-id="${this.mediaid}"
-  data-related-playlist="${this.related}"
+  data-related-playlist="${this.related ? this.related : ''}"
   data-parent-view="${this.parentView}"
   data-view="ListItem">
   <img class="item-image" src="${this.artworkImageURL}" />

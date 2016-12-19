@@ -14,26 +14,28 @@
  * governing permissions and limitations under the License.
  **/
 
-var VERSION = '1.0.2';
-var OPTIONS, CONFIG, PLAYLISTS, MEDIA_ITEMS;
+var VERSION = '1.0.3';
+var OPTIONS, CONFIG;
 
 /** Launch the app **/
 App.onLaunch = function(opts) {
   OPTIONS = opts;
-  PLAYLISTS = {};
-  MEDIA_ITEMS = {};
-
   console.log("Initing with options %o", OPTIONS);
 
   var scripts = [
     `${OPTIONS.baseURL}/js/utils/Utils.js`,
+    `${OPTIONS.baseURL}/js/utils/Promise.js`,
+    `${OPTIONS.baseURL}/js/utils/Http.js`,
     `${OPTIONS.baseURL}/js/events/EventBus.js`,
     `${OPTIONS.baseURL}/js/events/Events.js`,
     `${OPTIONS.baseURL}/js/ConfigLoader.js`,
     `${OPTIONS.baseURL}/js/he.js`,
     `${OPTIONS.baseURL}/js/TemplateLoader.js`,
     `${OPTIONS.baseURL}/js/ViewManager.js`,
+    `${OPTIONS.baseURL}/js/playlist/PlaylistParser.js`,
     `${OPTIONS.baseURL}/js/playlist/PlaylistLoader.js`,
+    `${OPTIONS.baseURL}/js/feeds/FeedLoader.js`,
+    `${OPTIONS.baseURL}/js/playlist/PlaylistManager.js`,
     `${OPTIONS.baseURL}/js/analytics/TVOSAnalytics.js`,
     `${OPTIONS.baseURL}/js/playback/PlayerStates.js`,
     `${OPTIONS.baseURL}/js/playback/Playback.js`,
@@ -56,8 +58,7 @@ App.onResume = function() {
 }
 
 function reloadPlaylists() {
-  PLAYLISTS = {};
-  MEDIA_ITEMS = {};
+  PlaylistManager.reset();
   var templateLoader = new TemplateLoader();
   templateLoader.load("templates/ListCollection.tvml", function (templateDoc) {
     // Replace all the ListCollection docs on the stack.

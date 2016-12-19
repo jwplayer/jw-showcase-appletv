@@ -72,6 +72,22 @@ var Playback = (function() {
   }
 
   /**
+   * Deletes the indicated playlist elements and replaces them with the specified elements.
+   * Used to modify contents of the playlist while it's loaded, i.e. for inserting ads between content.
+   */
+  function splicePlaylist(index, howMany, elements) {
+    if (elements instanceof Playlist) {
+      var elementsArray = [];
+      for (var i = 0; i < elements.length; i++) {
+        elementsArray.push(elements.item(i));
+      }
+      return player.playlist.splice(index, howMany, elementsArray);
+    } else if (elements instanceof Array) {
+      return player.playlist.splice(index, howMany, elements);
+    }
+  }
+
+  /**
    * Handles player stateDidChange event
    */
   function stateHandler(evt) {
@@ -96,9 +112,12 @@ var Playback = (function() {
    */
   function timeHandler(evt) {
     var time = evt.time ? evt.time : evt.boundary;
-    if (time == player.currentMediaItem.duration) {
+    // We are making a copy of the currentMediaItem here in order to prevent
+    // synchronization issues with the underlying native MediaItem object.
+    var mediaItem = Utils.extend({}, evt.target.currentMediaItem);
+    if (time == mediaItem.duration) {
       EventBus.publish(Events.MEDIA_COMPLETE, {
-        item: player.currentMediaItem
+        item: mediaItem
       });
     } else if (time) {
       EventBus.publish(Events.MEDIA_TIME, {
@@ -182,6 +201,7 @@ var Playback = (function() {
     mediaItemChangedHandler: mediaItemChangedHandler,
     mediaItemWillChangeHandler: mediaItemWillChangeHandler,
     //requestSeekToTimeHandler: requestSeekToTimeHandler,
-    timedMetadataHandler: timedMetadataHandler
+    timedMetadataHandler: timedMetadataHandler,
+    splicePlaylist: splicePlaylist
   }
 })();

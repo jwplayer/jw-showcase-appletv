@@ -17,7 +17,8 @@
 Playback.AutoAdvance = (function() {
 
   var _overlayDocument,
-    _overlaySet = false;
+    _overlaySet = false,
+    _disabled = false;
 
   EventBus.subscribe(Events.CONFIG_LOADED, _configLoadedHandler);
 
@@ -31,31 +32,46 @@ Playback.AutoAdvance = (function() {
   }
 
   function _playlistLoadedHandler(event) {
-    var playlist = PLAYLISTS[event.playlist.item(0).feedid];
+    var playlistId = event.playlist.item(0).feedid;
+    if (!PlaylistManager.hasPlaylist(playlistId)) {
+      // Nothing to do.
+      _disabled = true;
+      // We do however want to broadcast the "AUTOADVANCE_INITIALIZED" to
+      // indicate that we've handled the playlistLoaded event.
+      EventBus.publish(Events.AUTOADVANCE_INITIALIZED, {
+        playlist: event.playlist
+      });
+      return;
+    }
+
+    _disabled = false;
+
+    var playlist = PlaylistManager.getCachedPlaylist(playlistId);
+
     // Rebuild the loaded playlist.
     var index;
     for (var i = 0; i < playlist.items.length; i++) {
       if (playlist.items.item(i) == event.playlist.item(0)) {
-        index = i;
+        index = i + 1;
         break;
       }
     }
 
     if (typeof index != 'undefined') {
-      var newPlaylist = new Playlist();
+      var newPlaylist = [];
       for (var i = index; i < playlist.items.length; i++) {
         newPlaylist.push(playlist.items.item(i));
       }
-      Playback.load(newPlaylist, false);
+      Playback.splicePlaylist(1, event.playlist.length - 1, newPlaylist);
     }
 
     EventBus.publish(Events.AUTOADVANCE_INITIALIZED, {
-      playlist: newPlaylist
+      playlist: Playback.player.playlist
     });
   }
 
   function _timeHandler(event) {
-    if (Playback.player.nextMediaItem
+    if (!_disabled && Playback.player.nextMediaItem
       && event.time >= Playback.player.currentMediaItem.duration - CONFIG.autoAdvanceWarningOffset
       && !Playback.player.currentMediaItem.ad) {
       // Display the overlay
@@ -93,13 +109,17 @@ Playback.AutoAdvance = (function() {
   }
 
   function _mediaChangeHandler(event) {
-    Playback.setOverlay(null); // Remove the auto advance overlay
-    _overlaySet = false;
+    if (!_disabled) {
+      Playback.setOverlay(null); // Remove the auto advance overlay
+      _overlaySet = false;
+    }
   }
 
   function _playlistCompleteHandler(event) {
     // Playlist completed, take the user back to the main screen.
-    navigationDocument.popToRootDocument();
+    if (!_disabled) {
+      navigationDocument.popToRootDocument();
+    }
   }
 
   return {};

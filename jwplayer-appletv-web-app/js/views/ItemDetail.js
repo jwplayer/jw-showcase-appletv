@@ -15,17 +15,43 @@
 **/
 
 ViewManager.registerView("ItemDetail", function(doc) {
+  // TODO: cleanup
   var self = this;
-
+  var related;
   var loader = new TemplateLoader(doc, this);
-
   var media_id = doc.firstChild.getAttribute("data-media-id");
-  self.item = MEDIA_ITEMS[media_id];
+  self.item = PlaylistManager.getMediaItem(media_id);
 
   var related_id = doc.firstChild.getAttribute("data-related-playlist")
-  if (related_id != "undefined") {
-    var related = PLAYLISTS[related_id];
-    showRelated();
+  if (related_id.length > 0) {
+    // Display the rest of the playlist as "related".
+    PlaylistManager.getPlaylist(related_id)
+      .then(function(playlist) {
+        related = playlist;
+        showRelated();
+      });
+  } else if (CONFIG.recommendationsPlaylist && typeof(CONFIG.recommendationsPlaylist) === "string") {
+    // A related playlist has not been set, but a relatedFeed has been set.
+    // In this case we want to load a Data-Driven recommendations feed.
+    PlaylistManager.getRelatedFeed(CONFIG.recommendationsPlaylist, media_id)
+      .then(function(recommendations) {
+        if (recommendations.playlist && recommendations.playlist.length > 0) {
+          loader.loadFragment("templates/ListItem.tvml", function(templateDoc) {
+            var section = doc.getElementById("related-items");
+            recommendations.playlist.forEach(function(recommendation) {
+              renderRelatedItem(section, templateDoc,
+                 PlaylistManager.getMediaItem(recommendation.mediaid));
+            });
+          }, false);
+        }
+      })
+      .catch(function(error) {
+        // Remove the related section if it can't be loaded.
+        console.log("Failed to load related section: " + error);
+        removeRelatedSection();
+      });
+  } else {
+    removeRelatedSection();
   }
 
   var description = doc.getElementsByTagName("description").item(0);
@@ -47,6 +73,11 @@ ViewManager.registerView("ItemDetail", function(doc) {
     Playback.play();
   });
 
+  function removeRelatedSection() {
+    var relatedSection = doc.getElementById("related-section");
+    relatedSection.parentNode.removeChild(relatedSection);
+  }
+
   function showRelated() {
     loader.loadFragment("templates/ListItem.tvml", templateLoaded, false);
   }
@@ -57,15 +88,19 @@ ViewManager.registerView("ItemDetail", function(doc) {
     for(var i=0; i<related.items.length; i++) {
       var relatedItem = related.items.item(i);
       if (relatedItem.mediaid != media_id) {
-        var templateData = Utils.extend(relatedItem, {
-          parentView: "ItemDetail"
-        });
-        var itemDoc = loader.duplicateFragment(template, templateData);
-        loader.applyView(itemDoc);
-        section.appendChild(itemDoc);
+        renderRelatedItem(section, template, relatedItem);
       }
     }
 
+  }
+
+  function renderRelatedItem(section, templateDoc, relatedItem) {
+    var templateData = Utils.extend(relatedItem, {
+      parentView: "ItemDetail"
+    });
+    var itemDoc = loader.duplicateFragment(templateDoc, templateData);
+    loader.applyView(itemDoc);
+    section.appendChild(itemDoc);
   }
 
 
