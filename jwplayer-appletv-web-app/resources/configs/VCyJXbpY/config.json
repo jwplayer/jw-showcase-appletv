@@ -1,16 +1,16 @@
 {
   "playlists": [
-    "K6Sl8yPJ",
-    "BXatQw7p",
-    "E12RS6r7"
+    "YjQP6aMS",
+    "2qo44Ywd",
+    "4CqW5y6U"
   ],
-  "featuredPlaylist": "1AxTdxJn",
+  "featuredPlaylist": "qISnTr5d",
   "splashScreen": "images/jw-main.png",
   "bannerImage": "images/jw-header.png",
   "backgroundColor": "#7e0023",
   "autoAdvance": true,
   "autoAdvanceWarningOffset": 10,
   "autoAdvanceMessage": "The next video will start in ${offset} seconds.",
-  "searchFeed": "",
-  "relatedFeed": ""
+  "searchPlaylist": "lLzgFeCm",
+  "recommendedPlaylist": "rjPGsdfa"
 }
