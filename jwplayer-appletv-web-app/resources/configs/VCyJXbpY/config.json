@@ -11,6 +11,6 @@
   "autoAdvance": true,
   "autoAdvanceWarningOffset": 10,
   "autoAdvanceMessage": "The next video will start in ${offset} seconds.",
-  "searchFeed": "",
-  "relatedFeed": ""
+  "searchPlaylist": "",
+  "recommendationsPlaylist": ""
 }
