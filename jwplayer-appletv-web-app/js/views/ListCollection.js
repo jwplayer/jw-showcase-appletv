@@ -79,9 +79,7 @@ ViewManager.registerView("ListCollection", function(doc) {
       placeholder = this;
 
     if (list.feedid == featured) {
-      section = document.getElementById("featured-playlist");
-      template = templates.featured;
-
+      renderFeaturedPlaylist(list);
     } else {
       // Create a new List fragment from the template
       var listShelf = loader.duplicateFragment(templates.list, list);
@@ -91,10 +89,32 @@ ViewManager.registerView("ListCollection", function(doc) {
 
       section = listShelf.getElementsByTagName("section").item(0);
       template = templates.item;
+      insertItems(section, template, list);
     }
+  }
 
-    insertItems(section, template, list);
+  function renderFeaturedPlaylist(list) {
+    // Create a carousel.
+    // We're doing this in JavaScript in order to prevent
+    // a crash when populating a carousel that is already
+    // present in the view hierarchy in tvOS 10.1.
+    var carousel = document.createElement('carousel');
+    
+    // Create a new section within the carousel.
+    section = document.createElement('section');
+    section.id = 'featured-playlist';
+    carousel.appendChild(section);
 
+    // Populate the section with plalist items.
+    insertItems(section, templates.featured, list);
+    
+    // Insert the featured playlist as first child of the collectionList.
+    // In order to ensure it's always being displayed at the top.
+    if (!collectionList.firstChild) {
+      collectionList.appendChild(carousel);
+    } else {
+      collectionList.insertBefore(carousel, collectionList.firstChild);
+    }
   }
 
   function insertItems(section, template, list) {
