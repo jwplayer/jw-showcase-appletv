@@ -42,9 +42,6 @@
       </background>
     </banner>
     <collectionList>
-      <carousel>
-        <section id="featured-playlist"></section>
-      </carousel>
     </collectionList>
   </stackTemplate>
 </document>
