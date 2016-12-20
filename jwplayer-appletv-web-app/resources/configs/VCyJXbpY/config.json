@@ -12,5 +12,5 @@
   "autoAdvanceWarningOffset": 10,
   "autoAdvanceMessage": "The next video will start in ${offset} seconds.",
   "searchPlaylist": "lLzgFeCm",
-  "recommendedPlaylist": "rjPGsdfa"
+  "recommendationsPlaylist": "rjPGsdfa"
 }
