@@ -59,11 +59,11 @@ The Auto Advance feature has the following configuration options:
 
 ## Search and Recommendations
 
-If you're a customer who has [JW Recommendations](https://support.jwplayer.com/customer/portal/articles/2191721-jw-recommendations) enabled (formerly called Feeds), you can make use of Search and Recommended playlists. If you have a Search playlist specified, a Search box will appear in your Apple TV app UI. The Recommended playlist will be used to suggest related videos when a user selects a search result.
+If you're a customer who has [JW Recommendations](https://support.jwplayer.com/customer/portal/articles/2191721-jw-recommendations) enabled (formerly called Feeds), you can make use of Search and Recommendations playlists. If you have a Search playlist specified, a Search box will appear in your Apple TV app UI. The Recommendations playlist will be used to suggest related videos when a user selects a search result.
 
-To enable search, you must specify a Search playlist ID and a Related playlist ID in your `config.json` file. The parameter for the Search playlist is `searchPlaylist` and the parameter for Recommended playlist is `recommendedPlaylist`.
+To enable search, you must specify a Search playlist ID and a Related playlist ID in your `config.json` file. The parameter for the Search playlist is `searchPlaylist` and the parameter for Recommendations playlist is `recommendationsPlaylist`.
 
-Make sure you have set up Search and Recommended playlists through your JW Dashboard or through the [Platform API](https://developer.jwplayer.com/jw-platform/reference/v1/methods/channels/create.html).
+Make sure you have set up Search and Recommendations playlists through your JW Dashboard or through the [Platform API](https://developer.jwplayer.com/jw-platform/reference/v1/methods/channels/create.html).
 
 ## Requirements
 
