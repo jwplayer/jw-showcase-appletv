@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  **/
 
-var VERSION = '1.0.3';
+var VERSION = '1.0.4';
 var OPTIONS, CONFIG;
 
 /** Launch the app **/
