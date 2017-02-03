@@ -141,7 +141,7 @@ var TVOSAnalytics = (function () {
       parameters[PARAM_AD_BLOCK] = 0;
       parameters[PARAM_EMBED_ID] = _embedId;
       parameters[PARAM_RENDERING_MODE] = "";
-      parameters[PARAM_PLAYER_HOSTING] = 0;
+      parameters[PARAM_PLAYER_HOSTING] = 4;
       parameters[PARAM_PLAYER_SIZE] = "";
       parameters = Utils.extend(parameters, data);
 
