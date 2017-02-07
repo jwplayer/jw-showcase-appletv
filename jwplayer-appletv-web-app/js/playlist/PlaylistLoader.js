@@ -35,7 +35,7 @@ var PlaylistLoader = function() {
     return {
       load: function(playlistId) {
         return new Promise(function(resolve, reject) {
-          http(`https://content.jwplatform.com/feeds/${playlistId}.json`)
+          http(`https://content.jwplatform.com/feed.json?feed_id=${playlistId}`)
             .get()
             .then(function(response) {
               // At minimum we need playlist.playlist to be defined.
