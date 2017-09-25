@@ -143,6 +143,9 @@ var TVOSAnalytics = (function () {
       parameters[PARAM_RENDERING_MODE] = "";
       parameters[PARAM_PLAYER_HOSTING] = 4;
       parameters[PARAM_PLAYER_SIZE] = "";
+      parameters[PARAM_MOBILE_APP_BUNDLEID] = Device.appIdentifier;
+      parameters[PARAM_MOBILE_DEVICE_ID] = Device.vendorIdentifier;
+      parameters[PARAM_MOBILE_SDK_VERSION] = VERSION;
       parameters = Utils.extend(parameters, data);
 
       /** Generate list of key/value URL parameter pairs **/
